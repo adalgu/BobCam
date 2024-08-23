@@ -8,6 +8,28 @@
 2. 식사 행동 분석 (먹고 있는지 아닌지 판단)
 3. 시각적 피드백 제공 (한글 메시지 표시)
 
+## 스크린샷
+
+### 식사 중 감지
+
+![screenshot_eating](https://github.com/user-attachments/assets/951998a7-99c0-472e-bc82-38ea59019b74)
+아이가 식사를 하고 있을 때 앱이 이를 감지하고 긍정적인 메시지를 표시합니다.
+
+### 얼굴 미감지
+
+![screenshot_not-detecting](https://github.com/user-attachments/assets/a916676b-0191-428a-9680-997ccc80f2f8)
+카메라에 얼굴이 감지되지 않을 때 앱이 알림을 표시합니다.
+
+### 식사하지 않음 (예시 1)
+
+![screenshot_not-eating1](https://github.com/user-attachments/assets/0b69c5f6-e552-495d-8f96-7a77ba7ccce8)
+아이가 식사를 하지 않고 있을 때 앱이 이를 감지하고 독려 메시지를 표시합니다.
+
+### 식사하지 않음 (예시 2)
+
+![screenshot_not-eatting2](https://github.com/user-attachments/assets/09a5e60e-732b-424e-8a5d-d7610775f6ff)
+다른 각도에서 아이가 식사를 하지 않고 있는 상황을 감지한 모습입니다.
+
 ## 기술 스택
 
 - Python
