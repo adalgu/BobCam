@@ -13,22 +13,26 @@ bobcam은 '밥'을 먹는지를 모니터링하는 카메라(캠)의 약자로, 
 ### 식사 중 감지
 
 ![screenshot_eating](https://github.com/user-attachments/assets/951998a7-99c0-472e-bc82-38ea59019b74)
-아이가 식사를 하고 있을 때 bobcam이 이를 감지하고 긍정적인 메시지를 표시합니다.
+
+- 아이가 식사를 하고 있을 때 bobcam이 이를 감지하고 긍정적인 메시지를 표시합니다.
 
 ### 얼굴 미감지
 
 ![screenshot_not-detecting](https://github.com/user-attachments/assets/a916676b-0191-428a-9680-997ccc80f2f8)
-카메라에 얼굴이 감지되지 않을 때 bobcam이 알림을 표시합니다.
+
+- 카메라에 얼굴이 감지되지 않을 때 bobcam이 알림을 표시합니다.
 
 ### 식사하지 않음 (예시 1)
 
 ![screenshot_not-eating1](https://github.com/user-attachments/assets/0b69c5f6-e552-495d-8f96-7a77ba7ccce8)
-아이가 식사를 하지 않고 입을 다물고 있을 때 bobcam이 이를 감지하고 독려 메시지를 표시합니다.
+
+- 아이가 식사를 하지 않고 입을 다물고 있을 때 bobcam이 이를 감지하고 독려 메시지를 표시합니다.
 
 ### 식사하지 않음 (예시 2)
 
 ![screenshot_not-eatting2](https://github.com/user-attachments/assets/09a5e60e-732b-424e-8a5d-d7610775f6ff)
-아이가 식사를 하지 않고 입을 벌리고 있는 상황을 감지한 모습입니다.
+
+- 아이가 식사를 하지 않고 입을 벌리고 있는 상황을 감지한 모습입니다.
 
 ## 기술 스택
 
