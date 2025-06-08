@@ -1,8 +1,22 @@
-# 환경 설정 파일
+# Environment variables
 .env
 
-# 운영체제 관련
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# OS-specific files
 .DS_Store
 
-# 특정 폴더
-__pycache__/
+# Editor directories
+.vscode/
+
+# Media files
+*.mp4

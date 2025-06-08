@@ -2,104 +2,73 @@
 
 BobCam은 '밥(Bob)'을 먹는지를 모니터링하는 카메라(Cam)의 약자로, 컴퓨터 비전과 머신러닝을 활용하여 아이의 식사 행동을 모니터링하는 애플리케이션입니다. 부모의 수고를 덜어주면서 아이의 건강한 식습관 형성을 돕는 것이 목표입니다.
 
-## 주요 기능
+---
 
-1. 실시간 얼굴 감지 및 입 움직임 추적
-2. 식사 행동 분석 (먹고 있는지 아닌지 판단)
-3. 시각적 피드백 제공 (한글 메시지 표시)
+## 🌟 Core Features
 
-## 스크린샷
+*   **Real-time Eating Detection**: Uses MediaPipe FaceMesh to accurately track lip movements and distinguish between eating and other activities like talking.
+*   **Automatic Video Control**: Seamlessly plays and pauses a selected video file based on the detected eating status.
+*   **Stable &amp; Robust Architecture**: Built with a single-threaded processing model in Tkinter to ensure a smooth, crash-free user experience.
+*   **Live Visual Feedback**: The application displays the live webcam feed with detected lip landmarks overlaid, providing a clear visual of what the algorithm is "seeing."
+*   **Intuitive UI**: A clean interface shows the camera feed, video playback, and a status bar with icons indicating the current state (e.g., "Mouth Moving," "Eating").
+*   **Screen Fade Effect**: The video screen subtly fades wheneating stops and brightens when it resumes, providing a gentle, non-intrusive cue.
 
-### 식사 중 감지
+---
 
-![screenshot_eating](https://github.com/user-attachments/assets/951998a7-99c0-472e-bc82-38ea59019b74)
+## ⚙️ 기술 스택 (Tech Stack)
 
-- 아이가 식사를 하고 있을 때 bobcam이 이를 감지하고 긍정적인 메시지를 표시합니다.
+*   **Python 3**: Core programming language.
+*   **Tkinter**: For the graphical user interface.
+*   **OpenCV**: For all camera and video processing.
+*   **MediaPipe**: For real-time facial landmark detection.
+*   **Pillow (PIL)**: For integrating OpenCV images with Tkinter.
 
-### 얼굴 미감지
+---
 
-![screenshot_not-detecting](https://github.com/user-attachments/assets/a916676b-0191-428a-9680-997ccc80f2f8)
+## 🚀 How to Run
 
-- 카메라에 얼굴이 감지되지 않을 때 bobcam이 알림을 표시합니다.
+1.  **Prerequisites**:
+    *   Python 3 installed.
+    *   A webcam connected to your computer.
 
-### 식사하지 않음 (예시 1)
+2.  **Install Dependencies**:
+    It is recommended to use a virtual environment.
+    ```bash
+    pip install opencv-python mediapipe numpy pillow
+    ```
 
-![screenshot_not-eating1](https://github.com/user-attachments/assets/0b69c5f6-e552-495d-8f96-7a77ba7ccce8)
+3.  **Run the Application**:
+    Execute the main script from your terminal:
+    ```bash
+    python main_stable.py
+    ```
 
-- 아이가 식사를 하지 않고 입을 다물고 있을 때 bobcam이 이를 감지하고 독려 메시지를 표시합니다.
+4.  **How to Use**:
+    *   The application will start, and you should see your webcam feed.
+    *   Click the "Select Video" button to choose a video file you want to play.
+    *   The application will begin monitoring your mouth movements.
+    *   When you start eating, the video will play. When you stop, it will pause.
+    *   You can use the manual "Play" and "Pause" buttons to override the automatic controls at any time.
+    *   To quit, simply close the application window.
 
-### 식사하지 않음 (예시 2)
+---
 
-![screenshot_not-eatting2](https://github.com/user-attachments/assets/09a5e60e-732b-424e-8a5d-d7610775f6ff)
+## 🏗️ System Architecture
 
-- 아이가 식사를 하지 않고 입을 벌리고 있는 상황을 감지한 모습입니다.
+The application uses a dedicated background thread for camera capture to prevent the GUI from freezing, while all processing and UI updates happen on the main thread. This ensures stability.
 
-## 기술 스택
+```mermaid
+graph TD
+    subgraph MainThread
+        A[Tkinter Main Loop] --&gt; B{Get Frame from Queue};
+        B --&gt; C[Face Detection (MediaPipe)];
+        C --&gt; D[Update EatingStatus];
+        D --&gt; E[Update GUI];
+        E --&gt; A;
+    end
 
-- Python
-- OpenCV
-- dlib
-- NumPy
-- SciPy
-- Pillow
+    subgraph CameraThread
+        G[Camera Capture] --&gt; H{Put Frame to Queue};
+    end
 
-## 설치 방법
-
-1. 필요한 라이브러리 설치:
-
-   ```
-   pip install opencv-python dlib numpy scipy pillow
-   ```
-
-2. dlib의 얼굴 랜드마크 모델 다운로드:
-
-   - [shape_predictor_68_face_landmarks.dat](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2) 파일을 다운로드하고 프로젝트 디렉토리에 압축 해제
-
-3. 한글 폰트 설정:
-   - AppleSDGothicNeo.ttc 또는 원하는 한글 폰트 파일을 준비하고 경로를 코드에서 수정
-
-## 사용 방법
-
-1. bobcam 실행:
-
-   ```
-   python main.py
-   ```
-
-2. 웹캠을 통해 아이의 얼굴이 화면에 나오도록 조정합니다.
-3. bobcam이 아이의 식사 행동을 자동으로 분석하고 피드백을 제공합니다.
-4. 종료하려면 'q' 키를 누르세요.
-
-## 향후 계획
-
-- YOLO(You Only Look Once)를 이용한 객체 탐지 개선
-  - 음식 객체 인식을 통한 더 정확한 식사 행동 감지
-  - 다양한 식사 환경에서의 성능 향상
-- Flask를 이용한 웹 애플리케이션 개발
-- 사용자 인터페이스 개선
-- 식사 데이터 저장 및 분석 기능 추가
-- 다양한 연령대와 식사 환경에 대한 모델 확장
-
-## 개발 현황
-
-현재 개발 중인 기능과 개선 사항은 `dev` 폴더에서 확인할 수 있습니다. 이 폴더에는 다음과 같은 내용이 포함됩니다:
-
-- YOLO 모델 통합 실험
-- 웹 애플리케이션 프로토타입
-- 성능 최적화 테스트
-
-최신 개발 현황은 정기적으로 이 폴더에 업데이트됩니다. 개발에 참여하거나 진행 상황을 확인하고 싶은 분들은 `dev` 폴더를 참조해 주세요.
-
-## 기여 방법
-
-bobcam 프로젝트에 기여하고 싶으시다면, 풀 리퀘스트를 보내주세요. 모든 기여를 환영합니다!
-
-1. 프로젝트를 포크합니다.
-2. 새로운 기능 브랜치를 생성합니다 (`git checkout -b feature/AmazingFeature`).
-3. 변경 사항을 커밋합니다 (`git commit -m 'Add some AmazingFeature'`).
-4. 브랜치에 푸시합니다 (`git push origin feature/AmazingFeature`).
-5. 풀 리퀘스트를 오픈합니다.
-
-## 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 있습니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+    H --&gt; B;
