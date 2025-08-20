@@ -73,6 +73,10 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     @Published var currentAccuracy: AccuracyMetrics?
     @Published var currentPerformance: PerformanceMetrics?
     
+    // MARK: - Debug Support
+    @Published var debugLandmarks: VNFaceLandmarks2D?
+    @Published var debugFaceObservation: VNFaceObservation?
+    
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
     private let configuration: LipDetectionConfiguration
@@ -145,6 +149,19 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         optimizedLipDetectionService.reset()
     }
     
+    // MARK: - Debug Methods
+    
+    /// Update stored landmarks for debug visualization
+    func updateDebugLandmarks(_ landmarks: VNFaceLandmarks2D?, faceObservation: VNFaceObservation?) {
+        self.debugLandmarks = landmarks
+        self.debugFaceObservation = faceObservation
+    }
+    
+    /// Get current landmarks for debug overlay
+    func getCurrentLandmarksForDebug() -> (VNFaceLandmarks2D?, VNFaceObservation?) {
+        return (debugLandmarks, debugFaceObservation)
+    }
+    
     func processFrame(_ pixelBuffer: CVPixelBuffer) {
         guard isTracking, serviceState == .running else { return }
         
@@ -186,6 +203,8 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         guard let results = request.results as? [VNFaceObservation] else {
             DispatchQueue.main.async {
                 self.isEating = false
+                // Clear debug landmarks when no face detected
+                self.updateDebugLandmarks(nil, faceObservation: nil)
             }
             return
         }
@@ -195,6 +214,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
               let landmarks = firstFace.landmarks else {
             DispatchQueue.main.async {
                 self.isEating = false
+                self.updateDebugLandmarks(nil, faceObservation: nil)
             }
             return
         }
@@ -204,6 +224,8 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         
         DispatchQueue.main.async {
             self.isEating = (detectionState == .eating)
+            // Update debug landmarks for visualization
+            self.updateDebugLandmarks(landmarks, faceObservation: firstFace)
         }
     }
     
