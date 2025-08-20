@@ -39,6 +39,7 @@ struct CameraView: UIViewRepresentable {
 // MARK: - Video Player View
 struct VideoPlayerView: View {
     @ObservedObject var videoService: VideoService
+    @ObservedObject var videoSelectionService: VideoSelectionService
     
     var body: some View {
         GeometryReader { geometry in
@@ -53,14 +54,16 @@ struct VideoPlayerView: View {
                         .animation(.easeInOut(duration: 0.5), value: videoService.playerOpacity)
                 } else {
                     // 플레이스홀더
-                    VStack {
+                    VStack(spacing: 16) {
                         Image(systemName: "video.slash")
                             .font(.system(size: 48))
                             .foregroundColor(.gray)
                         
-                        Text("비디오를 로드해주세요")
+                        Text("비디오를 선택해주세요")
                             .foregroundColor(.gray)
                             .font(.headline)
+                        
+                        VideoSelectionButton(selectionService: videoSelectionService)
                     }
                 }
                 
@@ -80,7 +83,7 @@ struct VideoPlayerView: View {
                 
                 // 에러 표시
                 if case .failed(let error) = videoService.playbackState {
-                    VStack {
+                    VStack(spacing: 16) {
                         Image(systemName: "exclamationmark.triangle")
                             .font(.system(size: 32))
                             .foregroundColor(.red)
@@ -94,21 +97,23 @@ struct VideoPlayerView: View {
                             .font(.caption)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
+                        
+                        VideoSelectionButton(selectionService: videoSelectionService)
                     }
                 }
+                
+                // 상단 좌측 비디오 선택 버튼 (비디오가 재생 중일 때)
+                if videoService.avPlayer != nil {
+                    VStack {
+                        HStack {
+                            VideoSelectionButton(selectionService: videoSelectionService)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                }
             }
-        }
-        .onAppear {
-            // 기본 비디오 로드 (임시)
-            loadDefaultVideo()
-        }
-    }
-    
-    private func loadDefaultVideo() {
-        // 기본 비디오 URL (추후 사용자 선택으로 대체)
-        if let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4"),
-           let videoURL = URL(string: "file://\(bundlePath)") {
-            videoService.loadVideo(from: videoURL)
         }
     }
 }
