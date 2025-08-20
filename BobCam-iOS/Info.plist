@@ -49,6 +49,10 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>BobCam이 비디오 오디오를 재생하기 위해 마이크 접근이 필요할 수 있습니다.</string>
     
+    <!-- 포토 라이브러리 권한 요청 -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>BobCam이 재생할 비디오를 선택하기 위해 사진 라이브러리 접근이 필요합니다. 선택된 비디오는 기기 내에서만 사용되며 외부로 전송되지 않습니다.</string>
+    
     <!-- 백그라운드 모드 (선택사항) -->
     <key>UIBackgroundModes</key>
     <array>
@@ -72,6 +76,14 @@
             <key>NSPrivacyAccessedAPITypeReasons</key>
             <array>
                 <string>Face detection for feeding behavior analysis</string>
+            </array>
+        </dict>
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryPhotoLibrary</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <string>Video selection for playback during feeding sessions</string>
             </array>
         </dict>
     </array>

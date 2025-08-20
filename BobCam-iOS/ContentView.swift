@@ -6,6 +6,14 @@ struct ContentView: View {
     @StateObject private var cameraService = CameraService()
     @StateObject private var visionService = VisionService()
     @StateObject private var videoService = VideoService()
+    @StateObject private var videoSelectionService: VideoSelectionService
+    @State private var showingSettings = false
+    
+    init() {
+        let videoService = VideoService()
+        _videoService = StateObject(wrappedValue: videoService)
+        _videoSelectionService = StateObject(wrappedValue: VideoSelectionService(videoService: videoService))
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,14 +27,31 @@ struct ContentView: View {
                     }
                 
                 // 비디오 플레이어 (우측 60%)
-                VideoPlayerView(videoService: videoService)
-                    .frame(width: geometry.size.width * 0.6)
+                VideoPlayerView(
+                    videoService: videoService,
+                    videoSelectionService: videoSelectionService
+                )
+                .frame(width: geometry.size.width * 0.6)
             }
             .overlay(alignment: .bottom) {
                 StatusBar(
                     isEating: visionService.isEating,
                     sensitivity: $visionService.sensitivity
                 )
+                .padding()
+            }
+            .overlay(alignment: .topTrailing) {
+                // 설정 버튼
+                Button(action: {
+                    showingSettings = true
+                }) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(Color.black.opacity(0.6))
+                        .clipShape(Circle())
+                }
                 .padding()
             }
         }
@@ -38,6 +63,14 @@ struct ContentView: View {
             } else {
                 videoService.pauseVideo()
             }
+        }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView(
+                videoSelectionService: videoSelectionService,
+                videoService: videoService,
+                visionService: visionService,
+                isPresented: $showingSettings
+            )
         }
     }
 }
