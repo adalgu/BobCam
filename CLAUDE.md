@@ -211,24 +211,53 @@ claude -p "Memory optimization strategies for Vision Framework" &
 codex exec "Automated performance benchmarking tools" --model "o4-mini" &
 ```
 
+## MANDATORY: Expert Subagent Usage
+
+**CRITICAL REQUIREMENT**: All development tasks MUST utilize expert subagents through the Task tool or Zen MCP tools. This is a non-negotiable project requirement.
+
+### Required Workflow Pattern
+1. **Initial Analysis**: Use appropriate expert agents to analyze tasks
+2. **Implementation**: Coordinate through multiple specialized agents
+3. **Quality Assurance**: Always validate with expert review agents
+4. **Integration**: Use collaborative agents for system-wide changes
+
+### Subagent Selection Guidelines
+- **Complex algorithms**: Use `typescript-pro`, `ios-developer`, or `python-pro`
+- **Architecture decisions**: Use `backend-architect` or `architect-reviewer`
+- **Testing**: Use `test-automator` or `debugger`
+- **Code quality**: Always use `code-reviewer` after implementation
+- **Performance**: Use `performance-engineer` for optimization
+- **Planning**: Use Zen MCP `planner` or `consensus` tools
+
 ## Handoff Context & Next Tasks
 
-### Current Phase: Phase 2 - Algorithm Accuracy Improvement
-Based on the latest handoff prompts, the project is currently focused on:
+### Current Phase: Phase 2 - Algorithm Accuracy Improvement (Priority: HIGHEST)
+Based on handoff document `handoff_20250821_phase2_development_start.md`, the project is focused on:
 
-1. **Immediate Priority**: Integrate `OptimizedLipDetectionService` into `VisionService.swift`
-2. **Next Steps**: Implement real-time accuracy monitoring and testing framework
-3. **Target**: Achieve 70% accuracy in lip movement detection
+#### Immediate Priorities (70% Accuracy Goal)
+1. **Algorithm Tuning System** - Build test harness with pre-recorded videos
+2. **Data Collection Pipeline** - Gather diverse children's eating videos with ground truth labels
+3. **Parameter Optimization** - Tune `LipDetectionConfiguration` parameters systematically
+4. **Debug UI Implementation** - Visual overlay for real-time algorithm debugging
 
-### Recent Achievements
-- **Phase 1 Complete**: Full Vision Framework implementation with expert review
-- **Architecture Foundation**: Monitoring and Utils systems established
-- **Algorithm Enhancement**: EMA smoothing and improved detection service ready
+#### Core Development Tasks
+1. **Video Selection Feature** - Replace hardcoded `sample_video.mp4` with `PHPickerViewController`
+2. **Settings Screen** - Complete `SettingsView` with video selection and privacy settings
+3. **Polish & Testing** - Final UI/UX refinement and exception handling
+4. **App Store Preparation** - Ensure production-ready stability
 
-### Handoff Continuity
-- **Project Path**: `/Users/gunn.kim/study/BobCam/`
-- **Key Files**: VisionService.swift, OptimizedLipDetectionService, monitoring systems
-- **Next Session**: Focus on algorithm integration and accuracy measurement
+### Key Architecture Updates Since Phase 1
+- **`OptimizedLipDetectionService`**: Advanced algorithm with EMA smoothing and `CircularBuffer`
+- **Monitoring Integration**: `AccuracyMonitor` and `PerformanceMonitor` for real-time metrics
+- **Enhanced UI Controls**: `StatusBar` with user sensitivity controls and manual overrides
+- **Validation Framework**: `Phase2ValidationTest` for integration testing
+
+### Critical Files for Phase 2
+- `BobCam-iOS/VisionService.swift`: Core service requiring algorithm integration
+- `BobCam-iOS/LipDetectionImproved.swift`: Algorithm needing 70% accuracy tuning
+- `BobCam-iOS/VideoService.swift`: Needs video selection capability
+- `BobCam-iOS/SettingsView.swift`: Currently placeholder, needs full implementation
+- `BobCam-iOS/Monitoring/`: Real-time performance tracking infrastructure
 
 ## Common Development Tasks
 
