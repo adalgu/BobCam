@@ -7,34 +7,81 @@ struct SettingsView: View {
     @ObservedObject var visionService: VisionService
     @Binding var isPresented: Bool
     
+    // Local state for settings
+    @State private var isDebugModeEnabled = false
+    @State private var showPerformanceMetrics = false
+    @State private var showAccuracyDisplay = false
+    @State private var showingResetConfirmation = false
+    @State private var showingPrivacyPolicy = false
+    @State private var selectedSensitivity: Double = 0.5
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    // 비디오 설정 섹션
+                    // Video Management Settings
                     VideoSettingsSection(
                         selectionService: videoSelectionService,
                         videoService: videoService
                     )
                     
-                    // 감지 설정 섹션
-                    DetectionSettingsSection(visionService: visionService)
+                    // Algorithm Parameter Controls
+                    AlgorithmSettingsSection(
+                        visionService: visionService,
+                        selectedSensitivity: $selectedSensitivity,
+                        isDebugModeEnabled: $isDebugModeEnabled,
+                        showPerformanceMetrics: $showPerformanceMetrics,
+                        showAccuracyDisplay: $showAccuracyDisplay
+                    )
                     
-                    // 앱 정보 섹션
-                    AppInfoSection()
+                    // User Experience Settings
+                    UserExperienceSection(
+                        showingResetConfirmation: $showingResetConfirmation,
+                        showPerformanceMetrics: $showPerformanceMetrics,
+                        showAccuracyDisplay: $showAccuracyDisplay
+                    )
+                    
+                    // Privacy and App Information
+                    PrivacyAndAppInfoSection(
+                        showingPrivacyPolicy: $showingPrivacyPolicy
+                    )
                 }
                 .padding()
             }
-            .navigationTitle("설정")
+            .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("완료") {
+                    Button("Done") {
                         isPresented = false
                     }
+                    .accessibilityLabel("Close settings")
                 }
             }
         }
+        .onAppear {
+            selectedSensitivity = Double(visionService.sensitivity)
+        }
+        .sheet(isPresented: $showingPrivacyPolicy) {
+            PrivacyPolicyView()
+        }
+        .alert("Reset to Defaults", isPresented: $showingResetConfirmation) {
+            Button("Reset", role: .destructive) {
+                resetToDefaults()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will reset all settings to their default values. This action cannot be undone.")
+        }
+    }
+    
+    private func resetToDefaults() {
+        visionService.sensitivity = 0.5
+        selectedSensitivity = 0.5
+        isDebugModeEnabled = false
+        showPerformanceMetrics = false
+        showAccuracyDisplay = false
+        videoSelectionService.resetToDefaultVideo()
     }
 }
 
@@ -69,59 +116,118 @@ struct VideoSettingsSection: View {
     }
 }
 
-// MARK: - Detection Settings Section  
-struct DetectionSettingsSection: View {
+// MARK: - Algorithm Parameter Controls Section  
+struct AlgorithmSettingsSection: View {
     @ObservedObject var visionService: VisionService
+    @Binding var selectedSensitivity: Double
+    @Binding var isDebugModeEnabled: Bool
+    @Binding var showPerformanceMetrics: Bool
+    @Binding var showAccuracyDisplay: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeader(title: "감지 설정", icon: "eye")
+            SectionHeader(title: "Algorithm Settings", icon: "brain.head.profile")
             
-            // 감도 설정
-            VStack(alignment: .leading, spacing: 8) {
+            // Sensitivity Control
+            VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text("감지 감도")
+                    Text("Detection Sensitivity")
                         .font(.subheadline)
                         .fontWeight(.medium)
                     
                     Spacer()
                     
-                    Text(String(format: "%.1f", visionService.sensitivity))
+                    Text(String(format: "%.1f", selectedSensitivity))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                        .accessibilityLabel("Current sensitivity: \(String(format: "%.1f", selectedSensitivity))")
                 }
                 
                 Slider(
-                    value: $visionService.sensitivity,
+                    value: $selectedSensitivity,
                     in: 0.1...2.0,
                     step: 0.1
                 ) {
-                    Text("감도")
+                    Text("Sensitivity")
                 } minimumValueLabel: {
-                    Text("낮음")
+                    Text("Low")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 } maximumValueLabel: {
-                    Text("높음")
+                    Text("High")
                         .font(.caption)
                         .foregroundColor(.secondary)
+                }
+                .onChange(of: selectedSensitivity) { newValue in
+                    visionService.sensitivity = Float(newValue)
+                }
+                .accessibilityValue("Sensitivity \(String(format: "%.1f", selectedSensitivity))")
+                
+                Text("Higher sensitivity detects subtle movements, lower sensitivity requires more pronounced eating motions.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 4)
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            
+            // Current Detection Status
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Current Status")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                
+                HStack {
+                    Circle()
+                        .fill(visionService.isEating ? .green : .red)
+                        .frame(width: 12, height: 12)
+                    
+                    Text(visionService.isEating ? "Eating Detected" : "Not Eating")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    Text(visionService.serviceState.displayString)
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(visionService.serviceState.color.opacity(0.2))
+                        .foregroundColor(visionService.serviceState.color)
+                        .clipShape(Capsule())
                 }
             }
             .padding()
             .background(Color.secondary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             
-            // 현재 상태 표시
-            HStack {
-                Circle()
-                    .fill(visionService.isEating ? .green : .red)
-                    .frame(width: 12, height: 12)
-                
-                Text(visionService.isEating ? "먹는 중 감지됨" : "먹지 않음")
+            // Debug Mode Toggle
+            VStack(alignment: .leading, spacing: 8) {
+                Toggle("Debug Mode", isOn: $isDebugModeEnabled)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .fontWeight(.medium)
                 
-                Spacer()
+                if isDebugModeEnabled {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Debug features enabled:")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Text("• Real-time algorithm monitoring")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        
+                        Text("• Performance metrics display")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        
+                        Text("• Detailed logging")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.top, 4)
+                }
             }
             .padding()
             .background(Color.secondary.opacity(0.1))
