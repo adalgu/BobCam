@@ -1,0 +1,88 @@
+---
+alwaysApply: false
+---
+# Hand-off Rules for Development Sessions
+
+1. Overview
+
+This guideline standardizes how session progress and handoff logs are recorded for collaborative or agent-assisted development. It ensures clarity, traceability, and easy resumption across any programming language, platform, or automation framework.
+
+⸻
+
+2. Log File Structure
+   • Directory: All handoff logs live in docs/handoffs/.
+   • Filename: <ProjectName>\_Handoff-YYYYMMDD-HHMM.md
+   • Example: MyAgentWorkflow_Handoff-20250722-1815.md
+   • Uses an ISO 8601 timestamp for chronological sorting and collision avoidance.
+   • Encoding: UTF-8, LF line endings.
+
+⸻
+
+3. Section Layout
+
+Each markdown file must include these sections in order: 1. # [ProjectName] Handoff Log 2. ## Brief Context
+• One to two sentences describing the session’s goal or focus. 3. ## Completed Work
+• Bullet list of concrete actions taken, code written, or analyses performed. 4. ## Current State
+• Short description of the system/code/data as of the handoff. 5. ## Next Steps
+• Prioritized, actionable list (supports hierarchical numbering: 1., 1.1, 1.2, 2., etc.). 6. ## References
+• File paths, URLs, code snippets, or other resources. 7. ## Notes (optional)
+• Edge cases, blockers, or user/agent preferences.
+
+⸻
+
+4. Naming & Numbering Conventions
+   • Filename always includes the project name and exact creation timestamp.
+   • Section headings in English for cross-agent compatibility (content may be in any language).
+   • Hierarchy:
+   • Top-level: 1., 2., 3., …
+   • Sub-steps: 1.1, 1.2, 2.1, …
+   • Code blocks use fenced syntax with language tag:
+
+# your code here
+
+⸻
+
+5. Automation Triggers
+   • When to log:
+   • Immediately before switching tasks or agents.
+   • Upon explicit “handoff” command or when context-window usage (e.g., >50%) is reached.
+   • What to do:
+   • Auto-generate and commit a new markdown file following this template.
+   • Populate filename and all sections programmatically.
+
+⸻
+
+6. Example
+
+# MyAgentWorkflow Handoff Log
+
+## Brief Context
+
+- Focused on refactoring the input-parsing module and improving error handling.
+
+## Completed Work
+
+- Enhanced `normalize_input()` for Unicode normalization.
+- Added retry logic (max_retries=3) on network failures.
+- Wrote and passed 5 new unit tests.
+
+## Current State
+
+- Input-parsing module functions correctly, including retry behavior.
+
+## Next Steps
+
+1. Integrate external API  
+   1.1. Implement OAuth authentication  
+   1.2. Handle rate limiting
+2. Standardize log output formatting by level
+3. Add linting and tests to CI pipeline
+
+## References
+
+- `src/parsing/input_handler.py`
+- Tests: `tests/test_input_handler.py`
+
+## Notes
+
+- Error messages are currently mixed Korean/English; decide on single language.
