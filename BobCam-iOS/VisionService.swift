@@ -240,7 +240,6 @@ extension VisionService: AccuracyMonitorDelegate {
         }
     }
 }
-}
 
 // MARK: - Camera Service Delegate
 extension VisionService: CameraServiceDelegate {
