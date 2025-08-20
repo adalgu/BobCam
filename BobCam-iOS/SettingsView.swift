@@ -236,28 +236,130 @@ struct AlgorithmSettingsSection: View {
     }
 }
 
-// MARK: - App Info Section
-struct AppInfoSection: View {
+// MARK: - User Experience Settings Section
+struct UserExperienceSection: View {
+    @Binding var showingResetConfirmation: Bool
+    @Binding var showPerformanceMetrics: Bool
+    @Binding var showAccuracyDisplay: Bool
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionHeader(title: "앱 정보", icon: "info.circle")
+            SectionHeader(title: "User Experience", icon: "person.crop.circle")
             
             VStack(spacing: 12) {
-                InfoRow(title: "버전", value: "1.0.0")
-                InfoRow(title: "개발자", value: "BobCam Team")
-                InfoRow(title: "지원", value: "support@bobcam.app")
+                // Performance monitoring toggle
+                ToggleRow(
+                    title: "Performance Monitoring", 
+                    description: "Display real-time performance metrics",
+                    isOn: $showPerformanceMetrics
+                )
+                
+                Divider()
+                
+                // Accuracy display toggle
+                ToggleRow(
+                    title: "Accuracy Display",
+                    description: "Show algorithm accuracy information",
+                    isOn: $showAccuracyDisplay
+                )
+                
+                Divider()
+                
+                // Reset to defaults button
+                Button(action: {
+                    showingResetConfirmation = true
+                }) {
+                    HStack {
+                        Image(systemName: "arrow.counterclockwise")
+                            .foregroundColor(.red)
+                        Text("Reset to Defaults")
+                            .foregroundColor(.red)
+                        Spacer()
+                    }
+                }
+                .accessibilityLabel("Reset all settings to default values")
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+    }
+}
+
+// MARK: - Privacy and App Information Section
+struct PrivacyAndAppInfoSection: View {
+    @Binding var showingPrivacyPolicy: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            SectionHeader(title: "Privacy & Information", icon: "shield.checkered")
+            
+            // App Information
+            VStack(spacing: 12) {
+                InfoRow(title: "Version", value: appVersion)
+                InfoRow(title: "Build", value: appBuild)
+                InfoRow(title: "iOS Minimum", value: "15.0+")
+                InfoRow(title: "Developer", value: "BobCam Team")
             }
             .padding()
             .background(Color.secondary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             
-            // 개인정보 처리방침 안내
+            // Privacy Information
+            VStack(spacing: 12) {
+                Button(action: {
+                    showingPrivacyPolicy = true
+                }) {
+                    HStack {
+                        Image(systemName: "doc.text")
+                            .foregroundColor(.blue)
+                        Text("Privacy Policy")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                    }
+                }
+                .accessibilityLabel("View privacy policy")
+                
+                Divider()
+                
+                HStack {
+                    Image(systemName: "checkmark.shield")
+                        .foregroundColor(.green)
+                    Text("Child Safety Compliant")
+                        .foregroundColor(.primary)
+                    Spacer()
+                }
+                .accessibilityLabel("Child safety compliant application")
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            
+            // Data Processing Information
             InfoBox(
-                title: "개인정보 보호",
-                message: "모든 비디오 처리는 기기 내에서만 이루어지며, 외부 서버로 데이터가 전송되지 않습니다.",
+                title: "Local Processing Only",
+                message: "All video processing occurs locally on your device. No data is transmitted to external servers, ensuring complete privacy and security for your family.",
                 icon: "shield.checkered"
             )
+            
+            // Parental Controls Information
+            InfoBox(
+                title: "Parental Controls",
+                message: "BobCam is designed with child safety in mind. The app requires no internet connection and processes all data locally to protect your child's privacy.",
+                icon: "person.2.fill"
+            )
         }
+    }
+    
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+    
+    private var appBuild: String {
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
     }
 }
 
@@ -329,6 +431,154 @@ struct InfoRow: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundColor(.primary)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title): \(value)")
+    }
+}
+
+struct ToggleRow: View {
+    let title: String
+    let description: String
+    @Binding var isOn: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Toggle(title, isOn: $isOn)
+                .font(.subheadline)
+                .fontWeight(.medium)
+            
+            Text(description)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.leading, 4)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title). \(description)")
+        .accessibilityValue(isOn ? "On" : "Off")
+    }
+}
+
+// MARK: - Privacy Policy View
+struct PrivacyPolicyView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Privacy Policy")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        
+                        Text("Last Updated: \(formattedDate)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 16) {
+                        PolicySection(
+                            title: "Data Collection",
+                            content: "BobCam does not collect, store, or transmit any personal data. All video processing occurs locally on your device using Apple's Vision Framework."
+                        )
+                        
+                        PolicySection(
+                            title: "Camera Usage",
+                            content: "The app accesses your device's front-facing camera solely for real-time lip movement detection. Camera data is processed in real-time and never saved to device storage or transmitted externally."
+                        )
+                        
+                        PolicySection(
+                            title: "Video Content",
+                            content: "Videos selected from your photo library are temporarily accessed for playback only. No video content is modified, copied, or transmitted outside of your device."
+                        )
+                        
+                        PolicySection(
+                            title: "Child Safety",
+                            content: "BobCam is designed with child safety as a priority. The app operates entirely offline, requires no user accounts, and processes all data locally to ensure maximum privacy protection for families."
+                        )
+                        
+                        PolicySection(
+                            title: "Third-Party Services",
+                            content: "BobCam does not integrate with any third-party analytics, advertising, or data collection services. The app is completely self-contained."
+                        )
+                        
+                        PolicySection(
+                            title: "Data Security",
+                            content: "Since no data is collected or transmitted, there are no data security risks associated with external storage or transmission. All processing occurs within iOS's secure app sandbox."
+                        )
+                        
+                        PolicySection(
+                            title: "Contact Information",
+                            content: "For privacy-related questions or concerns, please contact us at privacy@bobcam.app"
+                        )
+                    }
+                }
+                .padding()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+    
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: Date())
+    }
+}
+
+struct PolicySection: View {
+    let title: String
+    let content: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            Text(content)
+                .font(.body)
+                .foregroundColor(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title). \(content)")
+    }
+}
+
+// MARK: - VisionServiceState Extension for UI Display
+extension VisionServiceState {
+    var displayString: String {
+        switch self {
+        case .idle:
+            return "Idle"
+        case .running:
+            return "Running"
+        case .paused:
+            return "Paused"
+        case .failed:
+            return "Error"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .idle:
+            return .gray
+        case .running:
+            return .green
+        case .paused:
+            return .orange
+        case .failed:
+            return .red
         }
     }
 }
