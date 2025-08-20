@@ -32,12 +32,22 @@ BobCam is a smart eating monitor that uses computer vision to track lip movement
 
 ### Core Components
 
-#### iOS Application (Phase 1 Complete - Production Ready)
+#### iOS Application (Phase 1 Complete - Phase 2 In Progress)
 - **VisionService.swift**: Real-time lip tracking using Vision Framework with optimized 15fps processing
 - **CameraService.swift**: AVFoundation-based camera capture with memory optimization (CVPixelBufferPool)
 - **VideoService.swift**: AVPlayer-based video control with automatic play/pause and fade effects
 - **ContentView.swift**: SwiftUI dual-view interface (camera 40% + video 60%)
 - **StatusBar.swift**: Real-time sensitivity control and manual override system
+- **LipDetectionImproved.swift**: Enhanced detection algorithms with EMA smoothing
+- **Monitoring/**: Real-time performance and accuracy monitoring infrastructure
+- **Utils/**: Supporting utilities including `CircularBuffer` for data management
+
+#### New Phase 2 Components
+- **AccuracyMonitor.swift**: Real-time accuracy measurement against ground truth
+- **PerformanceMonitor.swift**: FPS, latency, and resource usage tracking
+- **MetricsCalculator.swift**: Statistical analysis utilities for algorithm performance
+- **CircularBuffer.swift**: Efficient data structure for temporal pattern analysis
+- **Phase2ValidationTest.swift**: Integration testing framework for new components
 
 #### Python Prototype (Legacy/Development)
 - **main_stable.py**: Core application with MediaPipe FaceMesh processing
@@ -279,9 +289,39 @@ Based on handoff document `handoff_20250821_phase2_development_start.md`, the pr
 3. Test across different device sizes
 4. Maintain consistent design language
 
-### Multi-Agent Development Workflow
-1. Define clear roles for each subagent based on task requirements
-2. Use parallel execution for independent analysis tasks
-3. Implement sequential pipelines for dependent workflows
-4. Coordinate through Zen agent for strategic decisions
-5. Consolidate results systematically with quality validation
+### Multi-Agent Development Workflow (MANDATORY)
+**IMPORTANT**: Every development task requires expert subagent involvement. No exceptions.
+
+1. **Task Initiation**: Always start with Task tool to select appropriate expert agent
+2. **Parallel Execution**: Use multiple specialized agents for independent analysis
+3. **Sequential Validation**: Implement review pipelines with expert validation
+4. **Quality Gates**: Use `code-reviewer`, `architect-reviewer` for all code changes
+5. **Strategic Coordination**: Coordinate complex decisions through Zen MCP tools
+
+### Phase 2 Specific Workflows
+- **Algorithm Tuning**: Use `ios-developer` + `performance-engineer` + Zen `consensus`
+- **UI Implementation**: Use `frontend-developer` + `ui-ux-designer` + `code-reviewer`
+- **Testing Framework**: Use `test-automator` + `debugger` + validation agents
+- **Integration Tasks**: Always use `architect-reviewer` for system-wide changes
+
+## Acceptance Criteria & Quality Gates
+
+### Phase 2 Success Metrics
+- **Primary Goal**: Lip detection algorithm achieves 70%+ accuracy across diverse test videos
+- **User Experience**: Video selection from photo library with persistent settings
+- **Debug Capability**: Real-time performance/accuracy metrics display in debug mode
+- **Stability**: All settings screen functions operational and stable
+- **Production Ready**: App Store submission quality with comprehensive error handling
+
+### Quality Validation Process
+1. **Algorithm Accuracy**: Validated against ground truth labeled dataset
+2. **Performance Benchmarks**: Meets target 15fps processing with <200ms latency
+3. **User Interface**: Complete settings functionality with proper navigation
+4. **Error Handling**: Graceful degradation for all edge cases
+5. **Privacy Compliance**: Local processing with no external data transmission
+
+### Technical Debt Resolution
+- No hardcoded video paths (`sample_video.mp4` replacement)
+- Complete settings screen implementation (currently placeholder)
+- Debug UI overlay system for development and tuning
+- Comprehensive test coverage for new algorithm components
