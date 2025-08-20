@@ -3,6 +3,7 @@ import Vision
 import Combine
 import CoreVideo
 import UIKit
+import CoreGraphics
 
 // MARK: - 개선된 Configuration 및 에러 처리
 struct LipDetectionConfiguration {
@@ -10,12 +11,14 @@ struct LipDetectionConfiguration {
     let minMovementThreshold: Float
     let eatingPatternThreshold: Float
     let varianceThreshold: Float
+    let emaAlpha: Float
     
     static let `default` = LipDetectionConfiguration(
         historySize: 10,
         minMovementThreshold: 0.05,
         eatingPatternThreshold: 0.15,
-        varianceThreshold: 0.001
+        varianceThreshold: 0.001,
+        emaAlpha: 0.3
     )
 }
 
@@ -62,9 +65,13 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     @Published var serviceState: VisionServiceState = .idle
     @Published var sensitivity: Float = 0.5 {
         didSet {
-            lipMovementDetector.updateSensitivity(sensitivity)
+            optimizedLipDetectionService.updateSensitivity(sensitivity)
         }
     }
+    
+    // MARK: - Performance Monitoring
+    @Published var currentAccuracy: AccuracyMetrics?
+    @Published var currentPerformance: PerformanceMetrics?
     
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
@@ -90,7 +97,8 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         return request
     }()
     
-    private let lipMovementDetector: LipMovementDetector
+    // Phase 2: 새로운 OptimizedLipDetectionService 사용
+    private let optimizedLipDetectionService: OptimizedLipDetectionService
     private var isTracking = false
     private var consecutiveErrors = 0
     private let maxConsecutiveErrors = 3
@@ -98,7 +106,22 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     // MARK: - Initialization
     init(configuration: LipDetectionConfiguration = .default) {
         self.configuration = configuration
-        self.lipMovementDetector = LipMovementDetector(configuration: configuration)
+        self.optimizedLipDetectionService = OptimizedLipDetectionService(configuration: configuration)
+        
+        // 모니터링 델리게이트 설정
+        setupMonitoringDelegates()
+    }
+    
+    private func setupMonitoringDelegates() {
+        // Performance 모니터링 설정
+        if let performanceService = optimizedLipDetectionService.performanceMonitor as? PerformanceMonitorService {
+            performanceService.delegate = self
+        }
+        
+        // Accuracy 모니터링 설정
+        if let accuracyService = optimizedLipDetectionService.accuracyMonitor as? AccuracyMonitorService {
+            accuracyService.delegate = self
+        }
     }
     
     // MARK: - Public Methods
@@ -111,7 +134,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     func stopTracking() {
         serviceState = .paused
         isTracking = false
-        lipMovementDetector.reset()
+        optimizedLipDetectionService.reset()
     }
     
     func reset() {
@@ -119,7 +142,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         isTracking = false
         isEating = false
         consecutiveErrors = 0
-        lipMovementDetector.reset()
+        optimizedLipDetectionService.reset()
     }
     
     func processFrame(_ pixelBuffer: CVPixelBuffer) {
@@ -176,11 +199,11 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             return
         }
         
-        // 립 움직임 감지
-        let eatingDetected = lipMovementDetector.detectEatingMotion(from: landmarks)
+        // Phase 2: OptimizedLipDetectionService 사용
+        let detectionState = optimizedLipDetectionService.detect(from: landmarks)
         
         DispatchQueue.main.async {
-            self.isEating = eatingDetected
+            self.isEating = (detectionState == .eating)
         }
     }
     
@@ -201,114 +224,20 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     }
 }
 
-// MARK: - 개선된 립 움직임 감지 알고리즘
-class LipMovementDetector {
-    
-    // MARK: - Properties
-    private let configuration: LipDetectionConfiguration
-    private var lipDistanceHistory: [Float] = []
-    private var sensitivity: Float = 0.5
-    
-    // MARK: - Initialization
-    init(configuration: LipDetectionConfiguration = .default) {
-        self.configuration = configuration
-    }
-    
-    // MARK: - Public Methods
-    func detectEatingMotion(from landmarks: VNFaceLandmarks2D) -> Bool {
-        guard let lipDistance = calculateSafeLipDistance(landmarks) else {
-            return false
-        }
-        
-        updateHistory(with: lipDistance)
-        return analyzeEatingPattern()
-    }
-    
-    func updateSensitivity(_ newSensitivity: Float) {
-        sensitivity = max(0.1, min(1.0, newSensitivity)) // 범위 제한
-    }
-    
-    func reset() {
-        lipDistanceHistory.removeAll()
-    }
-    
-    // MARK: - Private Methods (Expert Analysis 개선사항 반영)
-    
-    /// 안전한 립 거리 계산 - 하드코딩된 인덱스 의존성 제거
-    private func calculateSafeLipDistance(_ landmarks: VNFaceLandmarks2D) -> Float? {
-        guard let outerLips = landmarks.outerLips else {
-            return nil
-        }
-        
-        let points = outerLips.normalizedPoints
-        guard points.count >= 12 else { // 최소 요구 포인트 수
-            return nil
-        }
-        
-        // 더 안전한 상하 입술 포인트 계산
-        let sortedByY = points.sorted { $0.y < $1.y }
-        let topPoints = Array(sortedByY.prefix(3))
-        let bottomPoints = Array(sortedByY.suffix(3))
-        
-        let topCenter = topPoints.reduce(CGPoint.zero) { result, point in
-            CGPoint(x: result.x + point.x, y: result.y + point.y)
-        }
-        let bottomCenter = bottomPoints.reduce(CGPoint.zero) { result, point in
-            CGPoint(x: result.x + point.x, y: result.y + point.y)
-        }
-        
-        let avgTop = CGPoint(x: topCenter.x / 3, y: topCenter.y / 3)
-        let avgBottom = CGPoint(x: bottomCenter.x / 3, y: bottomCenter.y / 3)
-        
-        let distance = sqrt(pow(avgTop.x - avgBottom.x, 2) + 
-                           pow(avgTop.y - avgBottom.y, 2))
-        return Float(distance)
-    }
-    
-    private func updateHistory(with distance: Float) {
-        lipDistanceHistory.append(distance)
-        
-        // 설정 가능한 히스토리 크기 사용
-        if lipDistanceHistory.count > configuration.historySize {
-            lipDistanceHistory.removeFirst()
+// MARK: - Performance Monitoring Delegates
+extension VisionService: PerformanceMonitorDelegate {
+    func didUpdatePerformance(metrics: PerformanceMetrics) {
+        DispatchQueue.main.async {
+            self.currentPerformance = metrics
         }
     }
-    
-    private func analyzeEatingPattern() -> Bool {
-        guard lipDistanceHistory.count >= configuration.historySize else {
-            return false
+}
+
+extension VisionService: AccuracyMonitorDelegate {
+    func didUpdateAccuracy(metrics: AccuracyMetrics) {
+        DispatchQueue.main.async {
+            self.currentAccuracy = metrics
         }
-        
-        let halfSize = configuration.historySize / 2
-        let recentAverage = Array(lipDistanceHistory.suffix(halfSize)).reduce(0, +) / Float(halfSize)
-        let olderAverage = Array(lipDistanceHistory.prefix(halfSize)).reduce(0, +) / Float(halfSize)
-        let changeRate = abs(recentAverage - olderAverage)
-        
-        // 민감도를 반영한 임계값 조정
-        let adjustedThreshold = configuration.eatingPatternThreshold * sensitivity
-        
-        let hasEatingPattern = changeRate > adjustedThreshold && 
-                               detectRhythmicMovement()
-        
-        return hasEatingPattern
-    }
-    
-    private func detectRhythmicMovement() -> Bool {
-        guard lipDistanceHistory.count >= 6 else { return false }
-        
-        let recent = Array(lipDistanceHistory.suffix(6))
-        let variance = calculateVariance(recent)
-        
-        // 설정 가능한 분산 임계값 사용
-        return variance > configuration.varianceThreshold
-    }
-    
-    private func calculateVariance(_ values: [Float]) -> Float {
-        guard !values.isEmpty else { return 0 }
-        
-        let mean = values.reduce(0, +) / Float(values.count)
-        let squaredDifferences = values.map { pow($0 - mean, 2) }
-        return squaredDifferences.reduce(0, +) / Float(values.count)
     }
 }
 }
