@@ -1,0 +1,20 @@
+# Gemfile for BobCam iOS Project
+source "https://rubygems.org"
+
+ruby ">= 2.7.0"
+
+# Fastlane for iOS automation
+gem "fastlane", "~> 2.219"
+
+# Additional tools for iOS development
+gem "cocoapods", "~> 1.14"
+
+# Code quality and testing
+gem "slather", "~> 2.8"  # Code coverage
+
+# For CI/CD support
+gem "xcpretty", "~> 0.3"
+
+# Utility gems
+gem "plist", "~> 3.7"
+gem "CFPropertyList", "~> 3.0"
