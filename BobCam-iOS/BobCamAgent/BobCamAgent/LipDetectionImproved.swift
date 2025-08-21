@@ -103,14 +103,17 @@ class OptimizedLipDetectionService {
         }
 
         // EMA 적용
-        let currentPoint = CGPoint(x: (topCenter.x + bottomCenter.x) / 2, y: (topCenter.y + bottomCenter.y) / 2)
+        let currentPoint = CGPoint(
+            x: (topCenter.x + bottomCenter.x) / 2,
+            y: (topCenter.y + bottomCenter.y) / 2
+        )
         let smoothedPoint = applyEMA(to: currentPoint)
         self.lastSmoothedPoint = smoothedPoint
 
         // 부드러워진 좌표 기반 거리 계산
         let deltaX = topCenter.x - bottomCenter.x
         let deltaY = topCenter.y - bottomCenter.y
-        let distance = sqrt(pow(deltaX, 2) + pow(deltaY, 2))
+        let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
 
         return Float(distance)
     }
