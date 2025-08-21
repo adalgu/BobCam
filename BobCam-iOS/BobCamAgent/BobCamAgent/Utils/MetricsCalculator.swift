@@ -44,10 +44,10 @@ struct MetricsCalculator {
             return 0.0 // 첫 프레임은 Jitter 없음
         }
 
-        let dx = currentBox.midX - prevBox.midX
-        let dy = currentBox.midY - prevBox.midY
+        let deltaX = currentBox.midX - prevBox.midX
+        let deltaY = currentBox.midY - prevBox.midY
 
-        let distance = sqrt(dx * dx + dy * dy)
+        let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
 
         self.previousBox = currentBox
         return Double(distance)

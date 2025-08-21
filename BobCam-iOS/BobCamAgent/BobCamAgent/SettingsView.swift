@@ -162,10 +162,11 @@ struct AlgorithmSettingsSection: View {
                 }
                 .accessibilityValue("Sensitivity \(String(format: "%.1f", selectedSensitivity))")
 
-                Text("Higher sensitivity detects subtle movements, lower sensitivity requires more pronounced eating motions.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 4)
+                        Text("Higher sensitivity detects subtle movements, lower sensitivity requires more pronounced eating motions.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 4)
+                            .lineLimit(2)
             }
             .padding()
             .background(Color.secondary.opacity(0.1))

@@ -108,9 +108,9 @@ class OptimizedLipDetectionService {
         self.lastSmoothedPoint = smoothedPoint
 
         // 부드러워진 좌표 기반 거리 계산
-        let dx = topCenter.x - bottomCenter.x
-        let dy = topCenter.y - bottomCenter.y
-        let distance = sqrt(pow(dx, 2) + pow(dy, 2))
+        let deltaX = topCenter.x - bottomCenter.x
+        let deltaY = topCenter.y - bottomCenter.y
+        let distance = sqrt(pow(deltaX, 2) + pow(deltaY, 2))
 
         return Float(distance)
     }
