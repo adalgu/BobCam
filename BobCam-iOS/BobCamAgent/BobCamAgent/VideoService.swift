@@ -53,7 +53,7 @@ class VideoService: ObservableObject {
     @Published var playerOpacity: Double = 1.0
     
     // MARK: - Private Properties
-    private var player: AVPlayer?
+    private var player: AVQueuePlayer?
     private var playerLooper: AVPlayerLooper?
     private var playerItem: AVPlayerItem?
     
@@ -197,7 +197,7 @@ class VideoService: ObservableObject {
         playerItem.preferredForwardBufferDuration = Configuration.preferredForwardBufferDuration
         
         // AVPlayer 생성
-        player = AVPlayer(playerItem: playerItem)
+        player = AVQueuePlayer(playerItem: playerItem)
         
         guard let player = player else {
             playbackState = .failed(VideoServiceError.playerInitializationFailed)
@@ -307,11 +307,11 @@ class VideoService: ObservableObject {
 
 // MARK: - SwiftUI Integration Helper
 extension VideoService {
-    var avPlayer: AVPlayer? {
+    var avPlayer: AVQueuePlayer? {
         return player
     }
     
-    func getPlayerForUI() -> AVPlayer? {
+    func getPlayerForUI() -> AVQueuePlayer? {
         return player
     }
 }

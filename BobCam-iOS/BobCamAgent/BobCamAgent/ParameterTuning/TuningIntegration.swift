@@ -246,8 +246,8 @@ class TuningIntegrationManager: ObservableObject {
             let groundTruthFrames = groundTruthManager.generateGroundTruthFrames(from: dataset)
             
             for (frame, timestamp) in frames {
-                if let landmarks = await extractLandmarks(from: frame) {
-                    let prediction = service.detect(from: landmarks)
+                if let faceData = await extractLandmarks(from: frame) {
+                    let prediction = service.detect(from: faceData.landmarks, faceObservation: faceData.faceObservation)
                     
                     allPredictions.append(prediction)
                     allTimestamps.append(timestamp)
@@ -290,8 +290,8 @@ class TuningIntegrationManager: ObservableObject {
         
         // Process all test frames
         for (frame, timestamp) in testData.videoFrames {
-            if let landmarks = await extractLandmarks(from: frame) {
-                let prediction = service.detect(from: landmarks)
+            if let faceData = await extractLandmarks(from: frame) {
+                let prediction = service.detect(from: faceData.landmarks, faceObservation: faceData.faceObservation)
                 predictions.append(prediction)
                 timestamps.append(timestamp)
                 
@@ -309,7 +309,7 @@ class TuningIntegrationManager: ObservableObject {
         )
     }
     
-    private func extractLandmarks(from pixelBuffer: CVPixelBuffer) async -> VNFaceLandmarks2D? {
+    private func extractLandmarks(from pixelBuffer: CVPixelBuffer) async -> (landmarks: VNFaceLandmarks2D, faceObservation: VNFaceObservation)? {
         return await withCheckedContinuation { continuation in
             let request = VNDetectFaceLandmarksRequest { request, error in
                 guard let results = request.results as? [VNFaceObservation],
@@ -318,7 +318,7 @@ class TuningIntegrationManager: ObservableObject {
                     continuation.resume(returning: nil)
                     return
                 }
-                continuation.resume(returning: landmarks)
+                continuation.resume(returning: (landmarks: landmarks, faceObservation: face))
             }
             
             let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
@@ -355,13 +355,7 @@ class TuningIntegrationManager: ObservableObject {
     }
 }
 
-// MARK: - Configuration Extensions for Codable
 
-extension LipDetectionConfiguration: Codable {
-    enum CodingKeys: String, CodingKey {
-        case historySize, minMovementThreshold, eatingPatternThreshold, varianceThreshold, emaAlpha
-    }
-}
 
 // MARK: - Notification Names
 
@@ -416,7 +410,7 @@ class VisionServiceIntegration {
     }
     
     @objc private func handleOptimizedConfigurationUpdate(_ notification: Notification) {
-        guard let configuration = notification.object as? LipDetectionConfiguration else { return }
+        guard notification.object is LipDetectionConfiguration else { return }
         
         print("🔄 VisionService received optimized configuration update")
         
@@ -454,7 +448,7 @@ class OptimizationCLI {
     func runOptimization() async {
         print("🚀 BobCam Parameter Optimization CLI")
         print("Target: 70% accuracy for lip detection algorithm")
-        print("="*50)
+        print(String(repeating: "=", count: 50))
         
         let startTime = Date()
         
@@ -465,9 +459,9 @@ class OptimizationCLI {
         let duration = endTime.timeIntervalSince(startTime)
         
         // Print results
-        print("\n" + "="*50)
+        print("\n" + String(repeating: "=", count: 50))
         print("🎯 OPTIMIZATION RESULTS")
-        print("="*50)
+        print(String(repeating: "=", count: 50))
         print("Duration: \(String(format: "%.1f", duration / 60)) minutes")
         print("Final Accuracy: \(String(format: "%.2f", result.accuracy * 100))%")
         print("Target Achieved: \(result.achievedTarget ? "✅ YES" : "❌ NO")")
@@ -496,9 +490,9 @@ class OptimizationCLI {
             }
         }
         
-        print("="*50)
+        print(String(repeating: "=", count: 50))
         print(result.achievedTarget ? "🎉 OPTIMIZATION SUCCESSFUL!" : "⚠️  TARGET NOT ACHIEVED")
-        print("="*50)
+        print(String(repeating: "=", count: 50))
     }
 }
 

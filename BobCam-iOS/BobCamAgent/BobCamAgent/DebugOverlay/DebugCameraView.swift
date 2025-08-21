@@ -8,6 +8,7 @@
 import SwiftUI
 import AVFoundation
 import Vision
+import Combine
 
 /// Enhanced CameraView with debug overlay integration
 struct DebugCameraView: UIViewRepresentable {
@@ -156,45 +157,7 @@ class DebugCameraUIView: UIView {
     }
 }
 
-// MARK: - VisionService Debug Extension
-extension VisionService {
-    
-    /// Store current landmarks for debug visualization
-    private var currentLandmarks: VNFaceLandmarks2D? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.currentLandmarks) as? VNFaceLandmarks2D
-        }
-        set {
-            objc_setAssociatedObject(self, &AssociatedKeys.currentLandmarks, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-    
-    private var currentFaceObservation: VNFaceObservation? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.currentFaceObservation) as? VNFaceObservation
-        }
-        set {
-            objc_setAssociatedObject(self, &AssociatedKeys.currentFaceObservation, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-    
-    /// Enhanced version of getCurrentLandmarksForDebug
-    func getCurrentLandmarksForDebug() -> (VNFaceLandmarks2D?, VNFaceObservation?) {
-        return (currentLandmarks, currentFaceObservation)
-    }
-    
-    /// Update stored landmarks (called from handleVisionRequestUpdate)
-    func updateDebugLandmarks(_ landmarks: VNFaceLandmarks2D?, faceObservation: VNFaceObservation?) {
-        self.currentLandmarks = landmarks
-        self.currentFaceObservation = faceObservation
-    }
-}
 
-// MARK: - Associated Keys for Runtime Properties
-private enum AssociatedKeys {
-    static var currentLandmarks = "currentLandmarks"
-    static var currentFaceObservation = "currentFaceObservation"
-}
 
 // MARK: - Import required for objc_setAssociatedObject
 import ObjectiveC
@@ -242,6 +205,9 @@ struct DebugEnabledContentView: View {
             .overlay(alignment: .bottom) {
                 StatusBar(
                     isEating: visionService.isEating,
+                    visionService: visionService,
+                    videoService: videoService,
+                    videoSelectionService: videoSelectionService,
                     sensitivity: $visionService.sensitivity
                 )
                 .padding()

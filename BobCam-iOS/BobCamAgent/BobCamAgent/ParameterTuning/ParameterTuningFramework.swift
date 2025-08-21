@@ -192,7 +192,7 @@ class ParameterTuningEngine: ObservableObject {
         return combinations
     }
     
-    private func testParameterCombination(_ combination: ParameterCombination) async -> ValidationResult {
+    func testParameterCombination(_ combination: ParameterCombination) async -> ValidationResult {
         let startTime = CFAbsoluteTimeGetCurrent()
         
         // Create service with current parameters
@@ -213,8 +213,8 @@ class ParameterTuningEngine: ObservableObject {
             guard let groundTruth = findGroundTruthForTimestamp(timestamp) else { continue }
             
             // Get face landmarks from pixel buffer
-            if let landmarks = await extractFaceLandmarks(from: pixelBuffer) {
-                let detectionResult = service.detect(from: landmarks, groundTruthBox: groundTruth.lipBoundingBox)
+            if let faceData = await extractFaceLandmarks(from: pixelBuffer) {
+                let detectionResult = service.detect(from: faceData.landmarks, faceObservation: faceData.observation, groundTruthBox: groundTruth.lipBoundingBox)
                 let predictedEating = detectionResult == .eating
                 
                 // Update confusion matrix
@@ -230,8 +230,9 @@ class ParameterTuningEngine: ObservableObject {
                 
                 // Calculate IoU if ground truth box available
                 if let gtBox = groundTruth.lipBoundingBox,
-                   let outerLips = landmarks.outerLips {
-                    let predictedBox = outerLips.boundingBox
+                   let outerLips = faceData.landmarks.outerLips {
+                    // Calculate bounding box from landmark points
+                    let predictedBox = calculateBoundingBox(from: outerLips.normalizedPoints, observation: faceData.observation)
                     let iou = MetricsCalculator.calculateIoU(boxA: predictedBox, boxB: gtBox)
                     ioUSum += iou
                 }
@@ -271,7 +272,7 @@ class ParameterTuningEngine: ObservableObject {
         )
     }
     
-    private func extractFaceLandmarks(from pixelBuffer: CVPixelBuffer) async -> VNFaceLandmarks2D? {
+    private func extractFaceLandmarks(from pixelBuffer: CVPixelBuffer) async -> (landmarks: VNFaceLandmarks2D, observation: VNFaceObservation)? {
         return await withCheckedContinuation { continuation in
             let request = VNDetectFaceLandmarksRequest { request, error in
                 guard let results = request.results as? [VNFaceObservation],
@@ -280,7 +281,7 @@ class ParameterTuningEngine: ObservableObject {
                     continuation.resume(returning: nil)
                     return
                 }
-                continuation.resume(returning: landmarks)
+                continuation.resume(returning: (landmarks: landmarks, observation: face))
             }
             
             let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
@@ -290,6 +291,28 @@ class ParameterTuningEngine: ObservableObject {
                 continuation.resume(returning: nil)
             }
         }
+    }
+    
+    private func calculateBoundingBox(from normalizedPoints: [CGPoint], observation: VNFaceObservation) -> CGRect {
+        guard !normalizedPoints.isEmpty else { return .zero }
+        
+        // Find min/max normalized coordinates
+        let minX = normalizedPoints.map { $0.x }.min() ?? 0
+        let maxX = normalizedPoints.map { $0.x }.max() ?? 0
+        let minY = normalizedPoints.map { $0.y }.min() ?? 0
+        let maxY = normalizedPoints.map { $0.y }.max() ?? 0
+        
+        // Create normalized rect
+        let normalizedRect = CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+        
+        // Convert to image coordinates using face observation's bounding box
+        let faceBox = observation.boundingBox
+        return CGRect(
+            x: faceBox.origin.x + normalizedRect.origin.x * faceBox.width,
+            y: faceBox.origin.y + normalizedRect.origin.y * faceBox.height,
+            width: normalizedRect.width * faceBox.width,
+            height: normalizedRect.height * faceBox.height
+        )
     }
     
     private func findGroundTruthForTimestamp(_ timestamp: TimeInterval) -> GroundTruthFrame? {
@@ -324,9 +347,9 @@ class ParameterTuningEngine: ObservableObject {
         
         let passedTargets = results.filter { $0.passed70Percent }
         
-        print("\n" + "="*50)
+        print("\n" + String(repeating: "=", count: 50))
         print("🎯 PARAMETER OPTIMIZATION REPORT")
-        print("="*50)
+        print(String(repeating: "=", count: 50))
         print("Total combinations tested: \(results.count)")
         print("Combinations achieving 70% target: \(passedTargets.count)")
         print("Success rate: \(String(format: "%.1f", Double(passedTargets.count) / Double(results.count) * 100))%")
@@ -349,7 +372,7 @@ class ParameterTuningEngine: ObservableObject {
             print("❌ Target not achieved. Consider expanding search space or improving algorithm.")
         }
         
-        print("="*50)
+        print(String(repeating: "=", count: 50))
     }
 }
 

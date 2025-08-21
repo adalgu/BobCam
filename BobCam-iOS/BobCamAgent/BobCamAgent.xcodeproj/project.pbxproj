@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A10001001B00000000000001 /* BobCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001011B00000000000001 /* BobCamApp.swift */; };
+		A10001B11B00000000000001 /* BobCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001011B00000000000001 /* BobCamApp.swift */; };
 		A10001021B00000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001031B00000000000001 /* ContentView.swift */; };
 		A10001041B00000000000001 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001051B00000000000001 /* CameraService.swift */; };
 		A10001061B00000000000001 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001071B00000000000001 /* CameraView.swift */; };
@@ -62,7 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A10001001B00000000000001 /* BobCamAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BobCamAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10001B21B00000000000001 /* BobCamAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BobCamAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10001011B00000000000001 /* BobCamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobCamApp.swift; sourceTree = "<group>"; };
 		A10001031B00000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A10001051B00000000000001 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
@@ -104,21 +104,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A10001531B00000000000001 /* Frameworks */ = {
+		A10001F31B00000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A10001541B00000000000001 /* Frameworks */ = {
+		A10001F41B00000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A10001551B00000000000001 /* Frameworks */ = {
+		A10001F51B00000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -230,7 +230,7 @@
 		A1000115A1B00000000000001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A10001001B00000000000001 /* BobCamAgent.app */,
+				A10001B21B00000000000001 /* BobCamAgent.app */,
 				A10001511B00000000000001 /* BobCamAgentTests.xctest */,
 				A10001521B00000000000001 /* BobCamAgentUITests.xctest */,
 			);
@@ -245,7 +245,7 @@
 			buildConfigurationList = A10001002B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgent" */;
 			buildPhases = (
 				A10001531B00000000000001 /* Sources */,
-				A10001531B00000000000001 /* Frameworks */,
+				A10001F31B00000000000001 /* Frameworks */,
 				A10001601B00000000000001 /* Resources */,
 			);
 			buildRules = (
@@ -254,7 +254,7 @@
 			);
 			name = BobCamAgent;
 			productName = BobCamAgent;
-			productReference = A10001001B00000000000001 /* BobCamAgent.app */;
+			productReference = A10001B21B00000000000001 /* BobCamAgent.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A10001611B00000000000001 /* BobCamAgentTests */ = {
@@ -262,7 +262,7 @@
 			buildConfigurationList = A10001621B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgentTests" */;
 			buildPhases = (
 				A10001541B00000000000001 /* Sources */,
-				A10001541B00000000000001 /* Frameworks */,
+				A10001F41B00000000000001 /* Frameworks */,
 				A10001631B00000000000001 /* Resources */,
 			);
 			buildRules = (
@@ -280,7 +280,7 @@
 			buildConfigurationList = A10001661B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgentUITests" */;
 			buildPhases = (
 				A10001551B00000000000001 /* Sources */,
-				A10001551B00000000000001 /* Frameworks */,
+				A10001F51B00000000000001 /* Frameworks */,
 				A10001671B00000000000001 /* Resources */,
 			);
 			buildRules = (
@@ -365,7 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10001001B00000000000001 /* BobCamApp.swift in Sources */,
+				A10001B11B00000000000001 /* BobCamApp.swift in Sources */,
 				A10001021B00000000000001 /* ContentView.swift in Sources */,
 				A10001041B00000000000001 /* CameraService.swift in Sources */,
 				A10001061B00000000000001 /* CameraView.swift in Sources */,
@@ -390,13 +390,9 @@
 				A1000112C1B00000000000001 /* GroundTruthManager.swift in Sources */,
 				A1000112E1B00000000000001 /* OptimizationEngine.swift in Sources */,
 				A10001301B00000000000001 /* OptimizationRunner.swift in Sources */,
-				A10001321B00000000000001 /* OptimizationTestSuite.swift in Sources */,
 				A10001341B00000000000001 /* ParameterTuningFramework.swift in Sources */,
 				A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */,
 				A10001381B00000000000001 /* TuningIntegration.swift in Sources */,
-				A1000113A1B00000000000001 /* Phase2ValidationTest.swift in Sources */,
-				A1000113C1B00000000000001 /* VideoSelectionIntegrationTest.swift in Sources */,
-				A1000113E1B00000000000001 /* run_phase2_test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

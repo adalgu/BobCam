@@ -70,7 +70,7 @@ class OptimizationRunner: ObservableObject {
                 phaseProgress = 0.0
                 overallProgress = Double(index) / Double(phases.count)
                 
-                await executePhase(phase)
+                try await executePhase(phase)
                 
                 phaseProgress = 1.0
             }
@@ -165,21 +165,21 @@ class OptimizationRunner: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func executePhase(_ phase: OptimizationPhase) async {
+    private func executePhase(_ phase: OptimizationPhase) async throws {
         addLog("📋 Starting phase: \(phase.displayName)", type: .info)
         statusMessage = phase.statusMessage
         
         switch phase {
         case .initialization:
-            await initializationPhase()
+            try await initializationPhase()
         case .dataLoading:
-            await dataLoadingPhase()
+            try await dataLoadingPhase()
         case .parameterOptimization:
             await parameterOptimizationPhase()
         case .crossValidation:
-            await crossValidationPhase()
+            try await crossValidationPhase()
         case .statisticalValidation:
-            await statisticalValidationPhase()
+            try await statisticalValidationPhase()
         case .deployment:
             await deploymentPhase()
         case .finalValidation:
@@ -193,35 +193,35 @@ class OptimizationRunner: ObservableObject {
         addLog("✅ Completed phase: \(phase.displayName)", type: .success)
     }
     
-    private func initializationPhase() async {
+    private func initializationPhase() async throws {
         addLog("🔧 Initializing optimization components...", type: .info)
         
         // Initialize all components
         phaseProgress = 0.2
-        await Task.sleep(nanoseconds: 500_000_000) // 0.5 second delay for demo
+        try await Task.sleep(nanoseconds: 500_000_000) // 0.5 second delay for demo
         
         phaseProgress = 0.5
         addLog("🧪 Setting up test infrastructure...", type: .info)
-        await Task.sleep(nanoseconds: 500_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
         
         phaseProgress = 0.8
         addLog("📊 Preparing monitoring systems...", type: .info)
-        await Task.sleep(nanoseconds: 500_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
         
         phaseProgress = 1.0
         addLog("✅ Initialization complete", type: .success)
     }
     
-    private func dataLoadingPhase() async {
+    private func dataLoadingPhase() async throws {
         addLog("📂 Loading ground truth datasets...", type: .info)
         phaseProgress = 0.3
         
         // This would load actual datasets in a real implementation
-        await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         
         phaseProgress = 0.7
         addLog("🎥 Processing video frames...", type: .info)
-        await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         phaseProgress = 1.0
         addLog("✅ Data loading complete", type: .success)
@@ -241,29 +241,29 @@ class OptimizationRunner: ObservableObject {
         }
     }
     
-    private func crossValidationPhase() async {
+    private func crossValidationPhase() async throws {
         addLog("🔬 Running 5-fold cross-validation...", type: .info)
         
         phaseProgress = 0.2
-        await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         phaseProgress = 0.6
         addLog("📈 Calculating validation metrics...", type: .info)
-        await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         phaseProgress = 1.0
         addLog("✅ Cross-validation complete", type: .success)
     }
     
-    private func statisticalValidationPhase() async {
+    private func statisticalValidationPhase() async throws {
         addLog("📊 Performing statistical significance tests...", type: .info)
         
         phaseProgress = 0.4
-        await Task.sleep(nanoseconds: 800_000_000)
+        try await Task.sleep(nanoseconds: 800_000_000)
         
         phaseProgress = 0.8
         addLog("📈 Calculating confidence intervals...", type: .info)
-        await Task.sleep(nanoseconds: 800_000_000)
+        try await Task.sleep(nanoseconds: 800_000_000)
         
         phaseProgress = 1.0
         addLog("✅ Statistical validation complete", type: .success)

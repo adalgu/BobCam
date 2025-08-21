@@ -133,7 +133,6 @@ struct AlgorithmSettingsSection: View {
                 HStack {
                     Text("Detection Sensitivity")
                         .font(.subheadline)
-                        .fontWeight(.medium)
                     
                     Spacer()
                     
@@ -176,7 +175,6 @@ struct AlgorithmSettingsSection: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Current Status")
                     .font(.subheadline)
-                    .fontWeight(.medium)
                 
                 HStack {
                     Circle()
@@ -206,7 +204,6 @@ struct AlgorithmSettingsSection: View {
             VStack(alignment: .leading, spacing: 8) {
                 Toggle("Debug Mode", isOn: $isDebugModeEnabled)
                     .font(.subheadline)
-                    .fontWeight(.medium)
                 
                 if isDebugModeEnabled {
                     VStack(alignment: .leading, spacing: 4) {
@@ -398,7 +395,6 @@ struct InfoBox: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.subheadline)
-                    .fontWeight(.medium)
                     .foregroundColor(.primary)
                 
                 Text(message)
@@ -429,7 +425,6 @@ struct InfoRow: View {
             
             Text(value)
                 .font(.subheadline)
-                .fontWeight(.medium)
                 .foregroundColor(.primary)
         }
         .accessibilityElement(children: .combine)
@@ -446,7 +441,6 @@ struct ToggleRow: View {
         VStack(alignment: .leading, spacing: 4) {
             Toggle(title, isOn: $isOn)
                 .font(.subheadline)
-                .fontWeight(.medium)
             
             Text(description)
                 .font(.caption)
