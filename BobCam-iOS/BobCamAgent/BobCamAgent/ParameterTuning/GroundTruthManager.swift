@@ -20,11 +20,11 @@ struct EatingEvent {
     let endTime: TimeInterval
     let confidence: Float
     let eventType: EatingEventType
-    
+
     var duration: TimeInterval {
         return endTime - startTime
     }
-    
+
     func contains(_ timestamp: TimeInterval) -> Bool {
         return timestamp >= startTime && timestamp <= endTime
     }
@@ -75,89 +75,89 @@ enum ValidationStatus {
 // MARK: - Ground Truth Manager
 
 class GroundTruthManager: ObservableObject {
-    
+
     // MARK: - Properties
     @Published var availableDatasets: [GroundTruthDataset] = []
     @Published var loadingProgress: Double = 0.0
     @Published var isLoading: Bool = false
-    
+
     private var frameCache: [String: [(CVPixelBuffer, TimeInterval)]] = [:]
     private let cacheQueue = DispatchQueue(label: "groundtruth.cache", qos: .background)
-    
+
     // MARK: - Public Methods
-    
+
     func loadDefaultDatasets() async {
         await MainActor.run {
             isLoading = true
             loadingProgress = 0.0
         }
-        
+
         let datasets = await generateSyntheticDatasets()
-        
+
         await MainActor.run {
             availableDatasets = datasets
             isLoading = false
             loadingProgress = 1.0
         }
-        
+
         print("✅ Loaded \(datasets.count) ground truth datasets")
     }
-    
+
     func loadDatasetFromVideo(_ videoURL: URL) async -> GroundTruthDataset? {
         // TODO: Implement video analysis and manual annotation support
         // This would involve frame extraction and annotation tools
         return nil
     }
-    
+
     func extractFramesFromDataset(_ dataset: GroundTruthDataset) async -> [(CVPixelBuffer, TimeInterval)] {
         if let cached = frameCache[dataset.id] {
             return cached
         }
-        
+
         let frames = await extractVideoFrames(from: dataset.videoURL)
-        
+
         await cacheQueue.async {
             self.frameCache[dataset.id] = frames
         }
-        
+
         return frames
     }
-    
+
     func generateGroundTruthFrames(from dataset: GroundTruthDataset) -> [GroundTruthFrame] {
         var groundTruthFrames: [GroundTruthFrame] = []
-        
+
         // Generate frames at 15fps to match processing rate
         let frameDuration = 1.0 / 15.0
         var currentTime = 0.0
         let totalDuration = dataset.eatingEvents.last?.endTime ?? 30.0
-        
+
         while currentTime <= totalDuration {
             let isEating = dataset.eatingEvents.contains { $0.contains(currentTime) }
             let lipBox = dataset.lipBoundingBoxes[currentTime]
             let confidence: Float = isEating ? 0.9 : 0.1
-            
+
             let frame = GroundTruthFrame(
                 timestamp: currentTime,
                 isEating: isEating,
                 lipBoundingBox: lipBox,
                 confidence: confidence
             )
-            
+
             groundTruthFrames.append(frame)
             currentTime += frameDuration
         }
-        
+
         return groundTruthFrames
     }
-    
+
     func validateDatasetQuality(_ dataset: GroundTruthDataset) -> DatasetQualityReport {
         let totalEvents = dataset.eatingEvents.count
         let averageEventDuration = dataset.eatingEvents.map { $0.duration }.reduce(0, +) / Double(totalEvents)
         let confidenceScore = dataset.metadata.annotatorConfidence
         let boundingBoxCoverage = Double(dataset.lipBoundingBoxes.count) / (dataset.eatingEvents.reduce(0) { $0 + $1.duration } * 15.0)
-        
+
         let qualityScore = (Double(confidenceScore) + boundingBoxCoverage) / 2.0
-        
+
         return DatasetQualityReport(
             datasetId: dataset.id,
             totalEvents: totalEvents,
@@ -168,12 +168,12 @@ class GroundTruthManager: ObservableObject {
             recommendations: generateQualityRecommendations(qualityScore: qualityScore)
         )
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func generateSyntheticDatasets() async -> [GroundTruthDataset] {
         var datasets: [GroundTruthDataset] = []
-        
+
         // Dataset 1: Normal eating scenario
         let dataset1 = GroundTruthDataset(
             id: "normal_eating_01",
@@ -194,7 +194,7 @@ class GroundTruthManager: ObservableObject {
             )
         )
         datasets.append(dataset1)
-        
+
         // Dataset 2: Challenging lighting conditions
         let dataset2 = GroundTruthDataset(
             id: "dim_lighting_01",
@@ -214,7 +214,7 @@ class GroundTruthManager: ObservableObject {
             )
         )
         datasets.append(dataset2)
-        
+
         // Dataset 3: False positive scenarios (talking, yawning)
         let dataset3 = GroundTruthDataset(
             id: "false_positives_01",
@@ -235,7 +235,7 @@ class GroundTruthManager: ObservableObject {
             )
         )
         datasets.append(dataset3)
-        
+
         // Dataset 4: Different age group (elderly)
         let dataset4 = GroundTruthDataset(
             id: "elderly_eating_01",
@@ -256,7 +256,7 @@ class GroundTruthManager: ObservableObject {
             )
         )
         datasets.append(dataset4)
-        
+
         // Dataset 5: Child eating patterns
         let dataset5 = GroundTruthDataset(
             id: "child_eating_01",
@@ -278,14 +278,14 @@ class GroundTruthManager: ObservableObject {
             )
         )
         datasets.append(dataset5)
-        
+
         return datasets
     }
-    
+
     private func generateSyntheticBoundingBoxes(duration: Double) -> [TimeInterval: CGRect] {
         var boundingBoxes: [TimeInterval: CGRect] = [:]
         let frameInterval = 1.0 / 15.0 // 15fps
-        
+
         var currentTime = 0.0
         while currentTime <= duration {
             // Generate synthetic bounding box with slight variations
@@ -293,40 +293,40 @@ class GroundTruthManager: ObservableObject {
             let centerY = 0.6 + Float.random(in: -0.05...0.05)
             let width: Float = 0.15 + Float.random(in: -0.02...0.02)
             let height: Float = 0.08 + Float.random(in: -0.01...0.01)
-            
+
             let boundingBox = CGRect(
                 x: CGFloat(centerX - width/2),
                 y: CGFloat(centerY - height/2),
                 width: CGFloat(width),
                 height: CGFloat(height)
             )
-            
+
             boundingBoxes[currentTime] = boundingBox
             currentTime += frameInterval
         }
-        
+
         return boundingBoxes
     }
-    
+
     private func extractVideoFrames(from url: URL) async -> [(CVPixelBuffer, TimeInterval)] {
         // TODO: Implement actual video frame extraction using AVAssetReader
         // For now, return empty array as placeholder
         return []
     }
-    
+
     private func generateQualityRecommendations(qualityScore: Double) -> [String] {
         var recommendations: [String] = []
-        
+
         if qualityScore < 0.7 {
             recommendations.append("Consider re-annotating with higher precision")
             recommendations.append("Increase bounding box coverage density")
         }
-        
+
         if qualityScore < 0.5 {
             recommendations.append("Dataset quality too low for reliable training")
             recommendations.append("Manual review and correction required")
         }
-        
+
         return recommendations
     }
 }
@@ -341,11 +341,11 @@ struct DatasetQualityReport {
     let boundingBoxCoverage: Double
     let qualityScore: Double
     let recommendations: [String]
-    
+
     var isHighQuality: Bool {
         return qualityScore >= 0.8
     }
-    
+
     var isAcceptable: Bool {
         return qualityScore >= 0.6
     }
@@ -354,28 +354,28 @@ struct DatasetQualityReport {
 // MARK: - Enhanced Accuracy Calculator
 
 class GroundTruthAccuracyCalculator {
-    
+
     func calculateComprehensiveAccuracy(
         predictions: [LipDetectionState],
         groundTruth: [GroundTruthFrame],
         timestamps: [TimeInterval]
     ) -> ComprehensiveAccuracyMetrics {
-        
+
         guard predictions.count == groundTruth.count && predictions.count == timestamps.count else {
             fatalError("Mismatched array sizes in accuracy calculation")
         }
-        
+
         var truePositives = 0
         var falsePositives = 0
         var trueNegatives = 0
         var falseNegatives = 0
         var ioUSum = 0.0
         var temporalAccuracySum = 0.0
-        
+
         for i in 0..<predictions.count {
             let predicted = predictions[i] == .eating
             let actual = groundTruth[i].isEating
-            
+
             // Confusion matrix
             if predicted && actual {
                 truePositives += 1
@@ -386,7 +386,7 @@ class GroundTruthAccuracyCalculator {
             } else {
                 falseNegatives += 1
             }
-            
+
             // IoU calculation if bounding box available
             if let gtBox = groundTruth[i].lipBoundingBox {
                 // For synthetic data, assume predicted box is close to ground truth
@@ -400,16 +400,16 @@ class GroundTruthAccuracyCalculator {
                 ioUSum += iou
             }
         }
-        
+
         // Calculate metrics
         let precision = truePositives > 0 ? Double(truePositives) / Double(truePositives + falsePositives) : 0.0
         let recall = truePositives > 0 ? Double(truePositives) / Double(truePositives + falseNegatives) : 0.0
         let f1Score = (precision + recall) > 0 ? 2 * (precision * recall) / (precision + recall) : 0.0
         let iouAverage = predictions.count > 0 ? ioUSum / Double(predictions.count) : 0.0
-        
+
         // Temporal accuracy - measure continuity of eating events
         let temporalAccuracy = calculateTemporalContinuity(predictions: predictions, groundTruth: groundTruth)
-        
+
         return ComprehensiveAccuracyMetrics(
             precision: precision,
             recall: recall,
@@ -421,15 +421,15 @@ class GroundTruthAccuracyCalculator {
             timestamp: Date()
         )
     }
-    
+
     private func calculateTemporalContinuity(predictions: [LipDetectionState], groundTruth: [GroundTruthFrame]) -> Double {
         var continuityScore = 0.0
         var totalEvents = 0
-        
+
         // Find eating event boundaries in ground truth
         var inEatingEvent = false
         var eventStartIndex = 0
-        
+
         for i in 0..<groundTruth.count {
             if groundTruth[i].isEating && !inEatingEvent {
                 // Start of eating event
@@ -439,7 +439,7 @@ class GroundTruthAccuracyCalculator {
                 // End of eating event
                 inEatingEvent = false
                 totalEvents += 1
-                
+
                 // Calculate prediction accuracy within this event
                 let eventPredictions = Array(predictions[eventStartIndex..<i])
                 let correctPredictions = eventPredictions.filter { $0 == .eating }.count
@@ -447,7 +447,7 @@ class GroundTruthAccuracyCalculator {
                 continuityScore += eventAccuracy
             }
         }
-        
+
         return totalEvents > 0 ? continuityScore / Double(totalEvents) : 0.0
     }
 }
@@ -455,7 +455,7 @@ class GroundTruthAccuracyCalculator {
 // MARK: - Data Export and Import
 
 extension GroundTruthManager {
-    
+
     func exportDataset(_ dataset: GroundTruthDataset) -> Data? {
         do {
             let encoder = JSONEncoder()
@@ -466,7 +466,7 @@ extension GroundTruthManager {
             return nil
         }
     }
-    
+
     func importDataset(from data: Data) -> GroundTruthDataset? {
         do {
             let decoder = JSONDecoder()
@@ -489,4 +489,3 @@ extension LightingCondition: Codable {}
 extension CameraDistance: Codable {}
 extension FoodType: Codable {}
 extension ValidationStatus: Codable {}
-

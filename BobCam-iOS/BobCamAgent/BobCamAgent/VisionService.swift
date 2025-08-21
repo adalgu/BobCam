@@ -33,7 +33,7 @@ enum VisionServiceError: LocalizedError {
     case visionRequestFailed(Error)
     case landmarksNotAvailable
     case configurationInvalid
-    
+
     var errorDescription: String? {
         switch self {
         case .visionRequestFailed(let error):
@@ -59,7 +59,7 @@ protocol FaceTrackingServiceProtocol: ObservableObject {
 
 // MARK: - 개선된 Vision Service
 class VisionService: ObservableObject, FaceTrackingServiceProtocol {
-    
+
     // MARK: - Published Properties
     @Published var isEating: Bool = false
     @Published var serviceState: VisionServiceState = .idle
@@ -68,79 +68,79 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             optimizedLipDetectionService.updateSensitivity(sensitivity)
         }
     }
-    
+
     // MARK: - Performance Monitoring
     @Published var currentAccuracy: AccuracyMetrics?
     @Published var currentPerformance: PerformanceMetrics?
-    
+
     // MARK: - Debug Support
     @Published var debugLandmarks: VNFaceLandmarks2D?
     @Published var debugFaceObservation: VNFaceObservation?
-    
+
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
     let configuration: LipDetectionConfiguration
-    
+
     // O3 제안: VNSequenceRequestHandler 재사용으로 성능 최적화
     private lazy var sequenceRequestHandler = VNSequenceRequestHandler()
-    
+
     // 프레임 스로틀링을 위한 내부 제어 (Expert Analysis 제안)
     private var lastProcessedTime: CFTimeInterval = 0
     private let frameInterval: CFTimeInterval = 1.0 / 15.0  // 15fps
-    
+
     private lazy var faceDetectionRequest: VNDetectFaceLandmarksRequest = {
         let request = VNDetectFaceLandmarksRequest { [weak self] request, error in
             guard let self = self else { return }
             self.handleVisionRequestUpdate(request: request, error: error)
         }
-        
+
         // 성능 최적화 설정
         request.preferBackgroundProcessing = false
         request.usesCPUOnly = false
-        
+
         return request
     }()
-    
+
     // Phase 2: 새로운 OptimizedLipDetectionService 사용
     private let optimizedLipDetectionService: OptimizedLipDetectionService
     private var isTracking = false
     private var consecutiveErrors = 0
     private let maxConsecutiveErrors = 3
-    
+
     // MARK: - Initialization
     init(configuration: LipDetectionConfiguration = .default) {
         self.configuration = configuration
         self.optimizedLipDetectionService = OptimizedLipDetectionService(configuration: configuration)
-        
+
         // 모니터링 델리게이트 설정
         setupMonitoringDelegates()
     }
-    
+
     private func setupMonitoringDelegates() {
         // Performance 모니터링 설정
         if let performanceService = optimizedLipDetectionService.performanceMonitor as? PerformanceMonitorService {
             performanceService.delegate = self
         }
-        
+
         // Accuracy 모니터링 설정
         if let accuracyService = optimizedLipDetectionService.accuracyMonitor as? AccuracyMonitorService {
             accuracyService.delegate = self
         }
     }
-    
+
     // MARK: - Public Methods
     func startTracking() {
         serviceState = .running
         isTracking = true
         consecutiveErrors = 0
     }
-    
+
     func stopTracking() {
         serviceState = .paused
         isTracking = false
         optimizedLipDetectionService.reset()
     }
-    
+
     func reset() {
         serviceState = .idle
         isTracking = false
@@ -148,42 +148,42 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         consecutiveErrors = 0
         optimizedLipDetectionService.reset()
     }
-    
+
     // MARK: - Debug Methods
-    
+
     /// Update stored landmarks for debug visualization
     func updateDebugLandmarks(_ landmarks: VNFaceLandmarks2D?, faceObservation: VNFaceObservation?) {
         self.debugLandmarks = landmarks
         self.debugFaceObservation = faceObservation
     }
-    
+
     /// Get current landmarks for debug overlay
     func getCurrentLandmarksForDebug() -> (VNFaceLandmarks2D?, VNFaceObservation?) {
         return (debugLandmarks, debugFaceObservation)
     }
-    
+
     func processFrame(_ pixelBuffer: CVPixelBuffer) {
         guard isTracking, serviceState == .running else { return }
-        
+
         // Expert Analysis 제안: 내부 프레임 스로틀링
         let currentTime = CACurrentMediaTime()
         guard currentTime - lastProcessedTime >= frameInterval else { return }
         lastProcessedTime = currentTime
-        
+
         // O3 제안: 백그라운드 큐에서 Vision 처리
         visionQueue.async { [weak self] in
             guard let self = self else { return }
-            
+
             do {
                 // VNSequenceRequestHandler 재사용으로 메모리 효율성 향상
-                try self.sequenceRequestHandler.perform([self.faceDetectionRequest], 
+                try self.sequenceRequestHandler.perform([self.faceDetectionRequest],
                                                         on: pixelBuffer)
-                
+
                 // 성공 시 에러 카운터 리셋
                 DispatchQueue.main.async {
                     self.consecutiveErrors = 0
                 }
-                
+
             } catch {
                 print("Vision request failed: \(error)")
                 DispatchQueue.main.async {
@@ -192,14 +192,14 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             }
         }
     }
-    
+
     // MARK: - Private Methods (개선된 에러 처리)
     private func handleVisionRequestUpdate(request: VNRequest, error: Error?) {
         guard error == nil else {
             print("Vision request error: \(String(describing: error))")
             return
         }
-        
+
         guard let results = request.results as? [VNFaceObservation] else {
             DispatchQueue.main.async {
                 self.isEating = false
@@ -208,7 +208,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             }
             return
         }
-        
+
         // 단일 얼굴만 처리 (성능 최적화)
         guard let firstFace = results.first,
               let landmarks = firstFace.landmarks else {
@@ -218,20 +218,20 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             }
             return
         }
-        
+
         // Phase 2: OptimizedLipDetectionService 사용
         let detectionState = optimizedLipDetectionService.detect(from: landmarks, faceObservation: firstFace)
-        
+
         DispatchQueue.main.async {
             self.isEating = (detectionState == .eating)
             // Update debug landmarks for visualization
             self.updateDebugLandmarks(landmarks, faceObservation: firstFace)
         }
     }
-    
+
     private func handleVisionError(_ error: VisionServiceError) {
         consecutiveErrors += 1
-        
+
         if consecutiveErrors >= maxConsecutiveErrors {
             serviceState = .failed(error)
             isTracking = false

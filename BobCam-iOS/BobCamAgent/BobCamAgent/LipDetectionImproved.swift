@@ -18,7 +18,7 @@ struct LipDetectionConfiguration: Codable {
     let eatingPatternThreshold: Float
     let varianceThreshold: Float
     let emaAlpha: Float // EMA smoothing factor
-    
+
     static let `default` = LipDetectionConfiguration(
         historySize: 15,
         minMovementThreshold: 0.05,
@@ -36,12 +36,12 @@ enum LipDetectionState {
 
 // MARK: - Optimized Lip Detection Service
 class OptimizedLipDetectionService {
-    
+
     // MARK: - Dependencies
     private let configuration: LipDetectionConfiguration
     public let performanceMonitor: PerformanceMonitoring
     public let accuracyMonitor: AccuracyMonitoring
-    
+
     // MARK: - Properties
     private var lipDistanceHistory: CircularBuffer<Float>
     private var sensitivity: Float = 0.5
@@ -58,41 +58,41 @@ class OptimizedLipDetectionService {
         self.accuracyMonitor = accuracyMonitor
         self.lipDistanceHistory = CircularBuffer<Float>(capacity: configuration.historySize)
     }
-    
+
     // MARK: - Public Methods
     func detect(from landmarks: VNFaceLandmarks2D, faceObservation: VNFaceObservation, groundTruthBox: CGRect? = nil) -> LipDetectionState {
         performanceMonitor.startFrameProcessing()
-        
+
         guard let lipDistance = calculateSmoothedLipDistance(landmarks) else {
             performanceMonitor.endFrameProcessing()
             return .uncertain
         }
-        
+
         lipDistanceHistory.write(lipDistance)
-        
+
         let state = analyzeEatingPattern()
-        
+
         // --- 모니터링 ---
         // 정확도 계산 (예시: 랜드마크의 바운딩 박스를 사용)
         let predictedBox = faceObservation.boundingBox
         accuracyMonitor.calculateMetrics(predictedBox: predictedBox, groundTruthBox: groundTruthBox)
         performanceMonitor.endFrameProcessing()
         // ---------------
-        
+
         return state
     }
-    
+
     func updateSensitivity(_ newSensitivity: Float) {
         sensitivity = max(0.1, min(1.0, newSensitivity))
     }
-    
+
     func reset() {
         lipDistanceHistory.clear()
         lastSmoothedPoint = nil
     }
-    
+
     // MARK: - Private: Algorithm Logic
-    
+
     /// EMA를 적용하여 부드러워진 입술 중심점 간의 거리를 계산
     private func calculateSmoothedLipDistance(_ landmarks: VNFaceLandmarks2D) -> Float? {
         guard let outerLips = landmarks.outerLips,
@@ -101,20 +101,20 @@ class OptimizedLipDetectionService {
         else {
             return nil
         }
-        
+
         // EMA 적용
         let currentPoint = CGPoint(x: (topCenter.x + bottomCenter.x) / 2, y: (topCenter.y + bottomCenter.y) / 2)
         let smoothedPoint = applyEMA(to: currentPoint)
         self.lastSmoothedPoint = smoothedPoint
-        
+
         // 부드러워진 좌표 기반 거리 계산
         let dx = topCenter.x - bottomCenter.x
         let dy = topCenter.y - bottomCenter.y
         let distance = sqrt(pow(dx, 2) + pow(dy, 2))
-        
+
         return Float(distance)
     }
-    
+
     private func applyEMA(to point: CGPoint) -> CGPoint {
         guard let lastPoint = lastSmoothedPoint else {
             return point
@@ -129,31 +129,31 @@ class OptimizedLipDetectionService {
         guard lipDistanceHistory.isFull else {
             return .uncertain
         }
-        
+
         let history = lipDistanceHistory.allItems()
         let halfSize = configuration.historySize / 2
-        
+
         let recentAverage = history.suffix(halfSize).reduce(0, +) / Float(halfSize)
         let olderAverage = history.prefix(halfSize).reduce(0, +) / Float(halfSize)
         let changeRate = abs(recentAverage - olderAverage)
-        
+
         let adjustedThreshold = configuration.eatingPatternThreshold * sensitivity
-        
+
         return changeRate > adjustedThreshold ? .eating : .notEating
     }
-    
+
     // MARK: - Private: Helpers
-    
+
     /// 특�� 인덱스의 포인트들의 평균 위치를 계산
     private func getAveragePoint(from region: VNFaceLandmarkRegion2D, indices: [Int]) -> CGPoint? {
         let points = region.normalizedPoints
         guard !indices.contains(where: { $0 >= points.count }) else { return nil }
-        
+
         let sum = indices.reduce(CGPoint.zero) { result, index in
             let point = points[index]
             return CGPoint(x: result.x + point.x, y: result.y + point.y)
         }
-        
+
         return CGPoint(x: sum.x / CGFloat(indices.count), y: sum.y / CGFloat(indices.count))
     }
 }

@@ -31,7 +31,7 @@ struct CircularBuffer<T> {
     var isFull: Bool {
         count == capacity
     }
-    
+
     /// 가장 마지막에 추가된 아이템
     var lastItem: T? {
         guard !isEmpty else { return nil }
@@ -63,7 +63,7 @@ struct CircularBuffer<T> {
         }
         return result
     }
-    
+
     /// 버퍼를 비움
     mutating func clear() {
         array = [T?](repeating: nil, count: capacity)

@@ -251,18 +251,18 @@ import Foundation
 // MARK: - Debug Integration Helpers
 
 struct DebugIntegrationHelpers {
-    
+
     /// Initialize debug system with recommended settings
     static func setupDebugEnvironment() -> DebugSettings {
         let settings = DebugSettings()
-        
+
         #if DEBUG
         // Enable key debug features for development
         settings.isDebugModeEnabled = true
         settings.showPerformanceMetrics = true
         settings.showAccuracyMetrics = true
         settings.showAlgorithmParameters = true
-        
+
         // Conservative settings for performance
         settings.showLandmarksOverlay = false
         settings.showBufferVisualization = false
@@ -270,10 +270,10 @@ struct DebugIntegrationHelpers {
         // Production: all debug features disabled
         settings.disableAllFeatures()
         #endif
-        
+
         return settings
     }
-    
+
     /// Quick setup for accuracy testing
     static func setupAccuracyTesting(debugSettings: DebugSettings) {
         debugSettings.enableAllFeatures()
@@ -282,7 +282,7 @@ struct DebugIntegrationHelpers {
         debugSettings.landmarkPointSize = 3.0
         debugSettings.landmarkOpacity = 0.9
     }
-    
+
     /// Quick setup for performance testing
     static func setupPerformanceTesting(debugSettings: DebugSettings) {
         debugSettings.disableAllFeatures()
@@ -290,25 +290,25 @@ struct DebugIntegrationHelpers {
         debugSettings.showPerformanceMetrics = true
         debugSettings.updateInterval = 0.5 // Slower updates for performance testing
     }
-    
+
     /// Validate debug system configuration
     static func validateConfiguration(debugSettings: DebugSettings) -> [String] {
         var warnings: [String] = []
-        
+
         if debugSettings.isDebugModeEnabled {
             if debugSettings.updateInterval < 0.05 {
                 warnings.append("Update interval too frequent, may impact performance")
             }
-            
+
             if debugSettings.showLandmarksOverlay && debugSettings.landmarkPointSize > 5.0 {
                 warnings.append("Large landmark points may obscure camera view")
             }
-            
+
             if debugSettings.enableRealTimeUpdates && debugSettings.updateInterval < 0.1 {
                 warnings.append("Real-time updates with high frequency may cause UI lag")
             }
         }
-        
+
         return warnings
     }
 }
@@ -320,22 +320,22 @@ enum DebugConstants {
     static let targetFPS: Double = 15.0
     static let maxProcessingTime: TimeInterval = 0.1 // 100ms
     static let minAccuracyThreshold: Double = 0.7 // 70%
-    
+
     // UI configuration
     static let debugPanelWidth: CGFloat = 300
     static let debugPanelMaxHeight: CGFloat = 400
     static let quickToggleButtonSize: CGFloat = 20
-    
+
     // Visualization settings
     static let landmarkTrailDuration: TimeInterval = 2.0
     static let bufferHistorySize: Int = 60
     static let metricUpdateInterval: TimeInterval = 0.1
-    
+
     // Colors
     static let performanceGoodColor = Color.green
     static let performanceWarningColor = Color.orange
     static let performancePoorColor = Color.red
-    
+
     // Export settings
     static let maxExportDataSize: Int = 1024 * 1024 // 1MB
     static let exportDateFormat = "yyyy-MM-dd_HH-mm-ss"
@@ -344,7 +344,7 @@ enum DebugConstants {
 // MARK: - Debug Metrics Calculator
 
 struct DebugMetricsCalculator {
-    
+
     /// Calculate performance score (0-100)
     static func calculatePerformanceScore(
         fps: Double,
@@ -354,10 +354,10 @@ struct DebugMetricsCalculator {
         let fpsScore = min(fps / DebugConstants.targetFPS, 1.0) * 40 // 40 points max
         let timeScore = max(0, (1.0 - processingTime / DebugConstants.maxProcessingTime)) * 40 // 40 points max
         let memoryScore = max(0, (1.0 - memoryUsage / 100.0)) * 20 // 20 points max, assuming 100MB baseline
-        
+
         return (fpsScore + timeScore + memoryScore) * 100 / 100
     }
-    
+
     /// Calculate accuracy confidence level
     static func calculateAccuracyConfidence(
         iou: Double,
@@ -367,7 +367,7 @@ struct DebugMetricsCalculator {
         let iouScore = iou * 60 // 60 points max
         let jitterScore = max(0, (1.0 - jitter * 20)) * 30 // 30 points max, penalize jitter
         let failureScore = max(0, (1.0 - Double(trackingFailures) / 10.0)) * 10 // 10 points max
-        
+
         return min(100, iouScore + jitterScore + failureScore)
     }
 }
@@ -376,29 +376,29 @@ struct DebugMetricsCalculator {
 
 #if DEBUG
 struct DebugUsageExamples {
-    
+
     // Example 1: Basic debug setup
     static func basicDebugSetup() -> some View {
         let debugSettings = DebugIntegrationHelpers.setupDebugEnvironment()
-        
+
         return DebugEnabledContentView()
             .environmentObject(debugSettings)
     }
-    
+
     // Example 2: Accuracy testing setup
     static func accuracyTestingSetup() -> some View {
         let debugSettings = DebugSettings()
         DebugIntegrationHelpers.setupAccuracyTesting(debugSettings: debugSettings)
-        
+
         return DebugEnabledContentView()
             .environmentObject(debugSettings)
     }
-    
+
     // Example 3: Performance testing setup
     static func performanceTestingSetup() -> some View {
         let debugSettings = DebugSettings()
         DebugIntegrationHelpers.setupPerformanceTesting(debugSettings: debugSettings)
-        
+
         return DebugEnabledContentView()
             .environmentObject(debugSettings)
     }

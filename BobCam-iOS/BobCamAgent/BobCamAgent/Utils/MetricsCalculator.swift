@@ -10,7 +10,7 @@ import CoreGraphics
 
 /// 정확도 및 성능 지표 계산을 위한 유틸리티
 struct MetricsCalculator {
-    
+
     private var previousBox: CGRect?
 
     /// **Intersection over Union (IoU) 계산**
@@ -22,17 +22,17 @@ struct MetricsCalculator {
     static func calculateIoU(boxA: CGRect, boxB: CGRect) -> Double {
         let intersection = boxA.intersection(boxB)
         let union = boxA.union(boxB)
-        
+
         guard !intersection.isNull, !union.isNull, union.width * union.height > 0 else {
             return 0.0
         }
-        
+
         let intersectionArea = intersection.width * intersection.height
         let unionArea = union.width * union.height
-        
+
         return Double(intersectionArea / unionArea)
     }
-    
+
     /// **Jitter (떨림) 지수 계산**
     /// - 이전 프레임과의 위치 변화량을 기반으로 떨림 정도를 측정
     /// - Parameters:
@@ -43,16 +43,16 @@ struct MetricsCalculator {
             self.previousBox = currentBox
             return 0.0 // 첫 프레임은 Jitter 없음
         }
-        
+
         let dx = currentBox.midX - prevBox.midX
         let dy = currentBox.midY - prevBox.midY
-        
+
         let distance = sqrt(dx * dx + dy * dy)
-        
+
         self.previousBox = currentBox
         return Double(distance)
     }
-    
+
     /// **추적 실패 조건 정의**
     /// - N 프레임 연속으로 탐지에 실패했는지 여부 확인
     /// - Parameters:

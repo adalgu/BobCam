@@ -5,29 +5,29 @@ import PhotosUI
 struct VideoPickerView: UIViewControllerRepresentable {
     let configuration: PHPickerConfiguration
     let onCompletion: ([PHPickerResult]) -> Void
-    
+
     func makeUIViewController(context: Context) -> PHPickerViewController {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = context.coordinator
         return picker
     }
-    
+
     func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
         // No updates needed
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(onCompletion: onCompletion)
     }
-    
+
     // MARK: - Coordinator
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
         private let onCompletion: ([PHPickerResult]) -> Void
-        
+
         init(onCompletion: @escaping ([PHPickerResult]) -> Void) {
             self.onCompletion = onCompletion
         }
-        
+
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true) {
                 self.onCompletion(results)
@@ -40,7 +40,7 @@ struct VideoPickerView: UIViewControllerRepresentable {
 struct VideoSelectionButton: View {
     @ObservedObject var selectionService: VideoSelectionService
     @State private var showingConfirmationAlert = false
-    
+
     var body: some View {
         VStack(spacing: 8) {
             Button(action: {
@@ -53,7 +53,7 @@ struct VideoSelectionButton: View {
                 HStack {
                     Image(systemName: videoButtonIcon)
                         .font(.system(size: 14, weight: .medium))
-                    
+
                     Text(videoButtonText)
                         .font(.system(size: 14, weight: .medium))
                 }
@@ -74,7 +74,7 @@ struct VideoSelectionButton: View {
             } message: {
                 Text("새로운 비디오를 선택하거나 기본 비디오로 되돌릴 수 있습니다.")
             }
-            
+
             // 상태 표시
             if case .importing = selectionService.selectionState {
                 HStack(spacing: 4) {
@@ -99,11 +99,11 @@ struct VideoSelectionButton: View {
             )
         }
     }
-    
+
     private var videoButtonIcon: String {
         selectionService.hasSelectedVideo ? "video.fill" : "video.badge.plus"
     }
-    
+
     private var videoButtonText: String {
         selectionService.hasSelectedVideo ? "비디오 변경" : "비디오 선택"
     }
@@ -113,20 +113,20 @@ struct VideoSelectionButton: View {
 struct VideoPreviewCard: View {
     @ObservedObject var selectionService: VideoSelectionService
     @ObservedObject var videoService: VideoService
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: "video")
                     .font(.headline)
                     .foregroundColor(.blue)
-                
+
                 Text("선택된 비디오")
                     .font(.headline)
                     .foregroundColor(.primary)
-                
+
                 Spacer()
-                
+
                 if selectionService.hasSelectedVideo {
                     Button("제거") {
                         selectionService.clearSelectedVideo()
@@ -135,24 +135,24 @@ struct VideoPreviewCard: View {
                     .foregroundColor(.red)
                 }
             }
-            
+
             if let videoURL = selectionService.selectedVideoURL {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(videoFileName(from: videoURL))
                         .font(.body)
                         .foregroundColor(.primary)
                         .lineLimit(1)
-                    
+
                     Text(selectionService.hasSelectedVideo ? "사용자 선택 비디오" : "기본 비디오")
                         .font(.caption)
                         .foregroundColor(.secondary)
-                    
+
                     // 비디오 상태 표시
                     HStack {
                         Circle()
                             .fill(videoStatusColor)
                             .frame(width: 8, height: 8)
-                        
+
                         Text(videoStatusText)
                             .font(.caption)
                             .foregroundColor(.secondary)
@@ -168,7 +168,7 @@ struct VideoPreviewCard: View {
         .background(Color.secondary.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-    
+
     private func videoFileName(from url: URL) -> String {
         if selectionService.hasSelectedVideo {
             return url.lastPathComponent
@@ -176,7 +176,7 @@ struct VideoPreviewCard: View {
             return "sample_video.mp4"
         }
     }
-    
+
     private var videoStatusColor: Color {
         switch videoService.playbackState {
         case .ready, .playing, .paused:
@@ -189,7 +189,7 @@ struct VideoPreviewCard: View {
             return .gray
         }
     }
-    
+
     private var videoStatusText: String {
         switch videoService.playbackState {
         case .ready:

@@ -8,13 +8,13 @@ struct ContentView: View {
     @StateObject private var videoService = VideoService()
     @StateObject private var videoSelectionService: VideoSelectionService
     @State private var showingSettings = false
-    
+
     init() {
         let videoService = VideoService()
         _videoService = StateObject(wrappedValue: videoService)
         _videoSelectionService = StateObject(wrappedValue: VideoSelectionService(videoService: videoService))
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -25,7 +25,7 @@ struct ContentView: View {
                         cameraService.startSession()
                         cameraService.delegate = visionService
                     }
-                
+
                 // 비디오 플레이어 (우측 60%)
                 VideoPlayerView(
                     videoService: videoService,

@@ -37,13 +37,13 @@ struct DebugContentView: View {
     @StateObject private var videoSelectionService: VideoSelectionService
     @StateObject private var debugSettings = DebugIntegrationHelpers.setupDebugEnvironment()
     @State private var showingSettings = false
-    
+
     init() {
         let videoService = VideoService()
         _videoService = StateObject(wrappedValue: videoService)
         _videoSelectionService = StateObject(wrappedValue: VideoSelectionService(videoService: videoService))
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -67,7 +67,7 @@ struct DebugContentView: View {
                     cameraService.delegate = visionService
                     visionService.startTracking()
                 }
-                
+
                 // Video player (right 60%)
                 VideoPlayerView(
                     videoService: videoService,
@@ -133,7 +133,7 @@ struct DebugContentView: View {
             for warning in warnings {
                 print("⚠️ Debug Configuration Warning: \(warning)")
             }
-            
+
             // Update debug settings with current configuration
             debugSettings.updateConfiguration(visionService.configuration)
         }
@@ -144,7 +144,7 @@ struct DebugContentView: View {
 
 /// Factory for creating appropriate ContentView based on build configuration
 struct ContentViewFactory {
-    
+
     /// Returns debug-enabled ContentView for DEBUG builds, standard ContentView for RELEASE
     @ViewBuilder
     static func createContentView() -> some View {
@@ -154,13 +154,13 @@ struct ContentViewFactory {
         ContentView()
         #endif
     }
-    
+
     /// Force debug mode (useful for testing debug features in release builds)
     @ViewBuilder
     static func createDebugContentView() -> some View {
         DebugContentView()
     }
-    
+
     /// Force production mode (useful for performance testing in debug builds)
     @ViewBuilder
     static func createProductionContentView() -> some View {
@@ -171,12 +171,12 @@ struct ContentViewFactory {
 // MARK: - Debug Feature Toggle Extension
 
 extension ContentView {
-    
+
     /// Add debug overlay to existing ContentView
     func withDebugOverlay(enabled: Bool = true) -> some View {
         ZStack {
             self
-            
+
             if enabled {
                 DebugOverlayView(
                     visionService: VisionService(), // This would need proper injection
@@ -196,14 +196,14 @@ struct ContentView_Debug_Previews: PreviewProvider {
             // Standard debug view
             DebugContentView()
                 .previewDisplayName("Debug Mode")
-            
+
             // Debug view with landmarks enabled
             DebugContentView()
                 .onAppear {
                     // This would need proper state injection in real implementation
                 }
                 .previewDisplayName("Debug + Landmarks")
-            
+
             // Production view for comparison
             ContentView()
                 .previewDisplayName("Production Mode")
