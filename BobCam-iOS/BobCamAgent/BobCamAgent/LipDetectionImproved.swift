@@ -147,7 +147,7 @@ class OptimizedLipDetectionService {
 
     // MARK: - Private: Helpers
 
-    /// 특�� 인덱스의 포인트들의 평균 위치를 계산
+    /// 특정 인덱스의 포인트들의 평균 위치를 계산
     private func getAveragePoint(from region: VNFaceLandmarkRegion2D, indices: [Int]) -> CGPoint? {
         let points = region.normalizedPoints
         guard !indices.contains(where: { $0 >= points.count }) else { return nil }
