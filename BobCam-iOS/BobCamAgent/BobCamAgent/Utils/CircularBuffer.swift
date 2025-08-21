@@ -14,22 +14,22 @@ struct CircularBuffer<T> {
     private(set) var count = 0
 
     init(capacity: Int) {
-        array = Array<T?>(repeating: nil, count: capacity)
+        array = [T?](repeating: nil, count: capacity)
     }
 
     /// 버퍼의 용량
     var capacity: Int {
-        return array.count
+        array.count
     }
 
     /// 버퍼가 비어있는지 여부
     var isEmpty: Bool {
-        return count == 0
+        count == 0
     }
 
     /// 버퍼가 가득 찼는지 여부
     var isFull: Bool {
-        return count == capacity
+        count == capacity
     }
     
     /// 가장 마지막에 추가된 아이템
@@ -55,9 +55,9 @@ struct CircularBuffer<T> {
     func allItems() -> [T] {
         var result = [T]()
         result.reserveCapacity(count)
-        for i in 0..<count {
-            let index = (head + i) % capacity
-            if let element = array[index] {
+        for index in 0..<count {
+            let bufferIndex = (head + index) % capacity
+            if let element = array[bufferIndex] {
                 result.append(element)
             }
         }
@@ -66,7 +66,7 @@ struct CircularBuffer<T> {
     
     /// 버퍼를 비움
     mutating func clear() {
-        array = Array<T?>(repeating: nil, count: capacity)
+        array = [T?](repeating: nil, count: capacity)
         head = 0
         count = 0
     }
