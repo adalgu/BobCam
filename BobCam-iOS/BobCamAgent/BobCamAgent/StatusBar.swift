@@ -61,7 +61,7 @@ struct EatingStatusIndicator: View {
                         .fill(isEating ? .green : .red)
                         .scaleEffect(isEating ? 1.5 : 1.0)
                         .opacity(isEating ? 0.3 : 0.0)
-                        .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true), 
+                        .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true),
                                  value: isEating)
                 )
             

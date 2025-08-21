@@ -34,7 +34,7 @@ struct MetricsCalculator {
     }
     
     /// **Jitter (떨림) 지수 계산**
-    /// - 이전 프레임과의 위��� 변화량을 기반으로 떨림 정도를 측정
+    /// - 이전 프레임과의 위치 변화량을 기반으로 떨림 정도를 측정
     /// - Parameters:
     ///   - currentBox: 현재 프레임의 바운딩 박스
     /// - Returns: 이전 프레임과의 중심점 거리 (Jitter 값)
@@ -47,7 +47,7 @@ struct MetricsCalculator {
         let dx = currentBox.midX - prevBox.midX
         let dy = currentBox.midY - prevBox.midY
         
-        let distance = sqrt(dx*dx + dy*dy)
+        let distance = sqrt(dx * dx + dy * dy)
         
         self.previousBox = currentBox
         return Double(distance)
@@ -60,7 +60,11 @@ struct MetricsCalculator {
     ///   - failureCounter: 연속 실패 횟수를 관리하는 외부 변수 (inout)
     ///   - threshold: 실패로 간주할 연속 실패 횟수
     /// - Returns: 추적 실패 여부 (Bool)
-    static func isTrackingFailed(detectionSuccess: Bool, failureCounter: inout Int, threshold: Int) -> Bool {
+    static func isTrackingFailed(
+        detectionSuccess: Bool,
+        failureCounter: inout Int,
+        threshold: Int
+    ) -> Bool {
         if detectionSuccess {
             failureCounter = 0
             return false
