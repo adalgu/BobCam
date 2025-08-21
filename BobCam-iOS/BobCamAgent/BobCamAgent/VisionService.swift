@@ -7,7 +7,6 @@ import Vision
 
 // MARK: - 개선된 Configuration 및 에러 처리
 
-
 enum VisionServiceState: Equatable {
     case idle
     case running
