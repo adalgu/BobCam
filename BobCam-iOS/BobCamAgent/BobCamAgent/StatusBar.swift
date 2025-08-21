@@ -68,7 +68,6 @@ struct EatingStatusIndicator: View {
             // 상태 텍스트
             Text(isEating ? "식사 중" : "대기 중")
                 .font(.caption)
-                
                 .foregroundColor(isEating ? .green : .secondary)
         }
         .accessibilityLabel(isEating ? "아이가 식사 중입니다" : "식사 감지 대기 중입니다")
@@ -140,80 +139,3 @@ struct OverrideButton: View {
             VStack(spacing: 4) {
                 Image(systemName: isActive ? "hand.raised.fill" : "hand.raised")
                     .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(isActive ? .white : .blue)
-                
-                Text("수동")
-                    .font(.caption2)
-                    
-                    .foregroundColor(isActive ? .white : .blue)
-            }
-            .frame(width: 50, height: 50)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isActive ? .blue : .clear)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(isActive ? .clear : .blue, lineWidth: 2)
-                    )
-            )
-        }
-        .scaleEffect(isActive ? 1.1 : 1.0)
-        .accessibilityLabel("수동 제어")
-        .accessibilityHint(isActive ? "수동 제어가 활성화됨. 탭하여 비활성화" : "탭하여 수동 제어 활성화")
-    }
-}
-
-// MARK: - Settings Button
-struct SettingsButton: View {
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "gearshape.fill")
-                .font(.system(size: 18, weight: .medium))
-                .foregroundColor(.secondary)
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(.ultraThinMaterial))
-        }
-        .accessibilityLabel("설정")
-        .accessibilityHint("앱 설정을 엽니다")
-    }
-}
-
-
-
-// MARK: - Preview
-struct StatusBar_Previews: PreviewProvider {
-    static var previews: some View {
-        let videoService = VideoService()
-        VStack {
-            Spacer()
-            
-            StatusBar(
-                isEating: true,
-                visionService: VisionService(),
-                videoService: videoService,
-                videoSelectionService: VideoSelectionService(videoService: videoService),
-                sensitivity: .constant(0.5)
-            )
-            .padding()
-        }
-        .background(Color.black)
-        .previewDisplayName("Status Bar - Eating")
-        
-        VStack {
-            Spacer()
-            
-            StatusBar(
-                isEating: false,
-                visionService: VisionService(),
-                videoService: videoService,
-                videoSelectionService: VideoSelectionService(videoService: videoService),
-                sensitivity: .constant(0.7)
-            )
-            .padding()
-        }
-        .background(Color.black)
-        .previewDisplayName("Status Bar - Waiting")
-    }
-}
