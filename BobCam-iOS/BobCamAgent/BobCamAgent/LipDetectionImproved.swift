@@ -12,7 +12,7 @@ import Foundation
 import Vision
 
 // MARK: - Configuration and State (VisionService와 호환)
-struct LipDetectionConfiguration {
+struct LipDetectionConfiguration: Codable {
     let historySize: Int
     let minMovementThreshold: Float
     let eatingPatternThreshold: Float
@@ -60,7 +60,7 @@ class OptimizedLipDetectionService {
     }
     
     // MARK: - Public Methods
-    func detect(from landmarks: VNFaceLandmarks2D, groundTruthBox: CGRect? = nil) -> LipDetectionState {
+    func detect(from landmarks: VNFaceLandmarks2D, faceObservation: VNFaceObservation, groundTruthBox: CGRect? = nil) -> LipDetectionState {
         performanceMonitor.startFrameProcessing()
         
         guard let lipDistance = calculateSmoothedLipDistance(landmarks) else {
@@ -74,10 +74,8 @@ class OptimizedLipDetectionService {
         
         // --- 모니터링 ---
         // 정확도 계산 (예시: 랜드마크의 바운딩 박스를 사용)
-        if let outerLips = landmarks.outerLips {
-            let predictedBox = outerLips.boundingBox
-            accuracyMonitor.calculateMetrics(predictedBox: predictedBox, groundTruthBox: groundTruthBox)
-        }
+        let predictedBox = faceObservation.boundingBox
+        accuracyMonitor.calculateMetrics(predictedBox: predictedBox, groundTruthBox: groundTruthBox)
         performanceMonitor.endFrameProcessing()
         // ---------------
         
@@ -147,7 +145,7 @@ class OptimizedLipDetectionService {
     // MARK: - Private: Helpers
     
     /// 특�� 인덱스의 포인트들의 평균 위치를 계산
-    private func getAveragePoint(from region: VNFaceRegion2D, indices: [Int]) -> CGPoint? {
+    private func getAveragePoint(from region: VNFaceLandmarkRegion2D, indices: [Int]) -> CGPoint? {
         let points = region.normalizedPoints
         guard !indices.contains(where: { $0 >= points.count }) else { return nil }
         

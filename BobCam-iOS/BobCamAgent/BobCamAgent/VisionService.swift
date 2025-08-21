@@ -6,27 +6,28 @@ import UIKit
 import CoreGraphics
 
 // MARK: - 개선된 Configuration 및 에러 처리
-struct LipDetectionConfiguration {
-    let historySize: Int
-    let minMovementThreshold: Float
-    let eatingPatternThreshold: Float
-    let varianceThreshold: Float
-    let emaAlpha: Float
-    
-    static let `default` = LipDetectionConfiguration(
-        historySize: 10,
-        minMovementThreshold: 0.05,
-        eatingPatternThreshold: 0.15,
-        varianceThreshold: 0.001,
-        emaAlpha: 0.3
-    )
-}
 
-enum VisionServiceState {
+
+enum VisionServiceState: Equatable {
     case idle
     case running
     case paused
     case failed(Error)
+
+    static func == (lhs: VisionServiceState, rhs: VisionServiceState) -> Bool {
+        switch (lhs, rhs) {
+        case (.idle, .idle):
+            return true
+        case (.running, .running):
+            return true
+        case (.paused, .paused):
+            return true
+        case (.failed, .failed):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 enum VisionServiceError: LocalizedError {
@@ -79,7 +80,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
-    private let configuration: LipDetectionConfiguration
+    let configuration: LipDetectionConfiguration
     
     // O3 제안: VNSequenceRequestHandler 재사용으로 성능 최적화
     private lazy var sequenceRequestHandler = VNSequenceRequestHandler()
@@ -220,7 +221,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         }
         
         // Phase 2: OptimizedLipDetectionService 사용
-        let detectionState = optimizedLipDetectionService.detect(from: landmarks)
+        let detectionState = optimizedLipDetectionService.detect(from: landmarks, faceObservation: firstFace)
         
         DispatchQueue.main.async {
             self.isEating = (detectionState == .eating)
@@ -267,5 +268,11 @@ extension VisionService: AccuracyMonitorDelegate {
 extension VisionService: CameraServiceDelegate {
     func didReceiveFrame(_ pixelBuffer: CVPixelBuffer) {
         processFrame(pixelBuffer)
+    }
+
+    func didEncounterCameraError(_ error: CameraServiceError) {
+        print("CameraService encountered an error: \(error.localizedDescription)")
+        // Optionally, update the service state to failed
+        // self.serviceState = .failed(error)
     }
 }

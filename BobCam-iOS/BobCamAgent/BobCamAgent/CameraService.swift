@@ -39,7 +39,7 @@ class CameraService: NSObject, ObservableObject {
     @Published var permissionStatus: AVAuthorizationStatus = .notDetermined
     
     // MARK: - Private Properties
-    private let captureSession = AVCaptureSession()
+    let captureSession = AVCaptureSession()
     private let videoDataOutput = AVCaptureVideoDataOutput()
     private let sessionQueue = DispatchQueue(label: "com.bobcam.camera", qos: .userInitiated)
     

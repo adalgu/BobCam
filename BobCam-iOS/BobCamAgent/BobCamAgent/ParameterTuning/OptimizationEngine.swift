@@ -80,7 +80,7 @@ class BayesianOptimizationEngine {
     
     private func optimizeAcquisitionFunction(gpModel: GaussianProcessModel, searchSpace: ParameterSearchSpace) -> ParameterCombination {
         var bestParameter: ParameterCombination?
-        var bestAcquisitionValue = Double.negativeInfinity
+        var bestAcquisitionValue = -Double.infinity
         
         // Sample candidate parameters
         for _ in 0..<1000 {
@@ -703,8 +703,8 @@ class AdvancedOptimizationEngine: ParameterTuningEngine {
         let report = statisticalValidator.performStatisticalTests(results: results)
         
         print("\n📊 STATISTICAL VALIDATION REPORT")
-        print("="*50)
+        print(String(repeating: "=", count: 50))
         print(report.summary)
-        print("="*50)
+        print(String(repeating: "=", count: 50))
     }
 }

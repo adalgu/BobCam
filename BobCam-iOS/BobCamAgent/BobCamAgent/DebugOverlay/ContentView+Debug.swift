@@ -78,6 +78,9 @@ struct DebugContentView: View {
             .overlay(alignment: .bottom) {
                 StatusBar(
                     isEating: visionService.isEating,
+                    visionService: visionService,
+                    videoService: videoService,
+                    videoSelectionService: videoSelectionService,
                     sensitivity: $visionService.sensitivity
                 )
                 .padding()

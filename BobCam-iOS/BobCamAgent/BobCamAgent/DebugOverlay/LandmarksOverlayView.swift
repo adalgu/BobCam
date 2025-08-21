@@ -180,7 +180,7 @@ class LandmarksOverlayUIView: UIView {
     
     private func drawLipRegion(
         context: CGContext,
-        region: VNFaceRegion2D,
+        region: VNFaceLandmarkRegion2D,
         faceRect: CGRect,
         color: UIColor,
         label: String,
@@ -385,7 +385,7 @@ class LandmarksOverlayUIView: UIView {
     
     private func drawFeatureRegion(
         context: CGContext,
-        region: VNFaceRegion2D,
+        region: VNFaceLandmarkRegion2D,
         faceRect: CGRect,
         color: UIColor,
         settings: DebugSettings
@@ -428,7 +428,7 @@ class LandmarksOverlayUIView: UIView {
     
     private func drawTrailLipRegion(
         context: CGContext,
-        region: VNFaceRegion2D,
+        region: VNFaceLandmarkRegion2D,
         rect: CGRect,
         alpha: CGFloat,
         isLatest: Bool
@@ -505,7 +505,7 @@ class LandmarksOverlayUIView: UIView {
         return convertPoint(center, faceRect: faceRect)
     }
     
-    private func getAveragePoint(from region: VNFaceRegion2D, indices: [Int]) -> CGPoint? {
+    private func getAveragePoint(from region: VNFaceLandmarkRegion2D, indices: [Int]) -> CGPoint? {
         let points = region.normalizedPoints
         guard !indices.contains(where: { $0 >= points.count }) else { return nil }
         
@@ -526,13 +526,3 @@ struct LandmarkFrame {
     let timestamp: CFTimeInterval
 }
 
-// MARK: - VisionService Extension for Landmark Updates
-extension VisionService {
-    
-    /// Get current landmarks for debug overlay (called from VisionService)
-    func getCurrentLandmarksForDebug() -> (VNFaceLandmarks2D?, VNFaceObservation?) {
-        // This would need to be implemented to expose current landmarks
-        // For now, return nil - actual implementation would store landmarks during processing
-        return (nil, nil)
-    }
-}

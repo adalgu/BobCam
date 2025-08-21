@@ -3,6 +3,9 @@ import SwiftUI
 // MARK: - Status Bar UI Component
 struct StatusBar: View {
     let isEating: Bool
+    @ObservedObject var visionService: VisionService
+    @ObservedObject var videoService: VideoService
+    @ObservedObject var videoSelectionService: VideoSelectionService
     @Binding var sensitivity: Float
     @State private var showSettings = false
     @State private var manualOverride = false
@@ -33,7 +36,12 @@ struct StatusBar: View {
                 .shadow(radius: 8)
         )
         .sheet(isPresented: $showSettings) {
-            SettingsView()
+            SettingsView(
+                videoSelectionService: videoSelectionService,
+                videoService: videoService,
+                visionService: visionService,
+                isPresented: $showSettings
+            )
         }
     }
 }
@@ -60,7 +68,7 @@ struct EatingStatusIndicator: View {
             // 상태 텍스트
             Text(isEating ? "식사 중" : "대기 중")
                 .font(.caption)
-                .fontWeight(.medium)
+                
                 .foregroundColor(isEating ? .green : .secondary)
         }
         .accessibilityLabel(isEating ? "아이가 식사 중입니다" : "식사 감지 대기 중입니다")
@@ -136,7 +144,7 @@ struct OverrideButton: View {
                 
                 Text("수동")
                     .font(.caption2)
-                    .fontWeight(.medium)
+                    
                     .foregroundColor(isActive ? .white : .blue)
             }
             .frame(width: 50, height: 50)
@@ -172,49 +180,20 @@ struct SettingsButton: View {
     }
 }
 
-// MARK: - Settings View (Placeholder)
-struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Image(systemName: "gearshape.2.fill")
-                    .font(.system(size: 64))
-                    .foregroundColor(.blue)
-                
-                Text("설정")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Text("설정 옵션이 곧 추가됩니다")
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("완료") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-}
+
 
 // MARK: - Preview
 struct StatusBar_Previews: PreviewProvider {
     static var previews: some View {
+        let videoService = VideoService()
         VStack {
             Spacer()
             
             StatusBar(
                 isEating: true,
+                visionService: VisionService(),
+                videoService: videoService,
+                videoSelectionService: VideoSelectionService(videoService: videoService),
                 sensitivity: .constant(0.5)
             )
             .padding()
@@ -227,6 +206,9 @@ struct StatusBar_Previews: PreviewProvider {
             
             StatusBar(
                 isEating: false,
+                visionService: VisionService(),
+                videoService: videoService,
+                videoSelectionService: VideoSelectionService(videoService: videoService),
                 sensitivity: .constant(0.7)
             )
             .padding()
