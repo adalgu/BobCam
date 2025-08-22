@@ -234,7 +234,7 @@ class TuningIntegrationManager: ObservableObject {
     }
 
     private func evaluateConfigurationOnDatasets(_ configuration: LipDetectionConfiguration, datasets: [GroundTruthDataset]) async -> Double {
-        let service = OptimizedLipDetectionService(configuration: configuration)
+        let service = VisionService(configuration: configuration)
         let accuracyCalculator = GroundTruthAccuracyCalculator()
 
         var allPredictions: [LipDetectionState] = []
@@ -278,7 +278,7 @@ class TuningIntegrationManager: ObservableObject {
     }
 
     private func evaluateConfigurationComprehensively(_ configuration: LipDetectionConfiguration) async -> ComprehensiveAccuracyMetrics {
-        let service = OptimizedLipDetectionService(configuration: configuration)
+        let service = VisionService(configuration: configuration)
         let accuracyCalculator = GroundTruthAccuracyCalculator()
 
         // Prepare comprehensive test data
