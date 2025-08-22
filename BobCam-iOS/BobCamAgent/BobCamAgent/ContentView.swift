@@ -26,6 +26,11 @@ struct ContentView: View {
                     .onAppear {
                         cameraService.startSession()
                         cameraService.delegate = visionService
+                        visionService.startTracking()
+                    }
+                    .onDisappear {
+                        visionService.stopTracking()
+                        cameraService.stopSession()
                     }
 
                 // 비디오 플레이어 (하단 60%)

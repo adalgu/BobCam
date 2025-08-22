@@ -168,7 +168,9 @@ class CameraService: NSObject, ObservableObject {
             let cameraInput = try AVCaptureDeviceInput(device: frontCamera)
             if captureSession.canAddInput(cameraInput) {
                 captureSession.addInput(cameraInput)
-                self.captureDevice = frontCamera
+                DispatchQueue.main.async {
+                    self.captureDevice = frontCamera
+                }
             }
         } catch {
             captureSession.commitConfiguration()
