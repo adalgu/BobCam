@@ -77,7 +77,11 @@ struct DebugOverlayView: View {
                         // Performance metrics
                         if debugSettings.showPerformanceMetrics {
                             PerformanceMetricsView(
-                                jitter: visionService.jitter
+                                jitter: visionService.jitter,
+                                processingTimeMs: visionService.processingTimeMs,
+                                fps: visionService.fps,
+                                memoryMB: visionService.memoryMB,
+                                peakMemoryMB: visionService.peakMemoryMB
                             )
                         }
 
@@ -165,6 +169,10 @@ enum DebugToggle: CaseIterable {
 // MARK: - Performance Metrics View
 struct PerformanceMetricsView: View {
     let jitter: Double
+    let processingTimeMs: Double
+    let fps: Double
+    let memoryMB: Double
+    let peakMemoryMB: Double
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -183,6 +191,15 @@ struct PerformanceMetricsView: View {
                     Text("Jitter: \(String(format: "%.4f", jitter))")
                         .foregroundColor(jitterColor(jitter))
                         .font(.caption2)
+                    Text("Proc: \(String(format: "%.1f ms", processingTimeMs))")
+                        .foregroundColor(procColor(processingTimeMs))
+                        .font(.caption2)
+                    Text("FPS: \(String(format: "%.1f", fps))")
+                        .foregroundColor(fpsColor(fps))
+                        .font(.caption2)
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                        .foregroundColor(.cyan)
+                        .font(.caption2)
                 }
 
                 Spacer()
@@ -196,6 +213,18 @@ struct PerformanceMetricsView: View {
     private func jitterColor(_ jitter: Double) -> Color {
         if jitter <= 0.01 { return .green }
         if jitter <= 0.05 { return .orange }
+        return .red
+    }
+
+    private func procColor(_ ms: Double) -> Color {
+        if ms <= 50 { return .green }
+        if ms <= 100 { return .orange }
+        return .red
+    }
+
+    private func fpsColor(_ value: Double) -> Color {
+        if value >= 15 { return .green }
+        if value >= 12 { return .orange }
         return .red
     }
 }
