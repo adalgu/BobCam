@@ -27,8 +27,11 @@ struct LandmarksOverlayView: UIViewRepresentable {
         uiView.cameraFrame = cameraFrame
         uiView.debugSettings = debugSettings
 
-        // Update landmarks when vision service processes new frame
+        // Pull latest landmarks from VisionService for overlay
         if debugSettings.showLandmarksOverlay {
+            let (landmarks, faceObs) = visionService.getCurrentLandmarksForDebug()
+            uiView.updateLandmarks(landmarks, faceObservation: faceObs)
+        } else {
             uiView.setNeedsDisplay()
         }
     }
