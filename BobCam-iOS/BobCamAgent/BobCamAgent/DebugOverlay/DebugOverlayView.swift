@@ -77,14 +77,14 @@ struct DebugOverlayView: View {
                         // Performance metrics
                         if debugSettings.showPerformanceMetrics {
                             PerformanceMetricsView(
-                                performanceMetrics: visionService.currentPerformance
+                                jitter: visionService.jitter
                             )
                         }
 
                         // Accuracy metrics
                         if debugSettings.showAccuracyMetrics {
                             AccuracyMetricsView(
-                                accuracyMetrics: visionService.currentAccuracy
+                                jitter: visionService.jitter
                             )
                         }
 
@@ -164,7 +164,7 @@ enum DebugToggle: CaseIterable {
 
 // MARK: - Performance Metrics View
 struct PerformanceMetricsView: View {
-    let performanceMetrics: PerformanceMetrics?
+    let jitter: Double
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -178,32 +178,14 @@ struct PerformanceMetricsView: View {
                 Spacer()
             }
 
-            if let metrics = performanceMetrics {
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("FPS: \(String(format: "%.1f", metrics.framesPerSecond))")
-                            .foregroundColor(fpsColor(metrics.framesPerSecond))
-                            .font(.caption2)
-
-                        Text("Processing: \(String(format: "%.1f ms", metrics.processingTime))")
-                            .foregroundColor(processingTimeColor(metrics.processingTime))
-                            .font(.caption2)
-                    }
-
-                    Spacer()
-
-                    // FPS gauge
-                    CircularProgressView(
-                        progress: min(metrics.framesPerSecond / 15.0, 1.0),
-                        lineWidth: 3,
-                        size: 30,
-                        color: fpsColor(metrics.framesPerSecond)
-                    )
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Jitter: \(String(format: "%.4f", jitter))")
+                        .foregroundColor(jitterColor(jitter))
+                        .font(.caption2)
                 }
-            } else {
-                Text("No data")
-                    .foregroundColor(.gray)
-                    .font(.caption2)
+
+                Spacer()
             }
         }
         .padding(8)
@@ -211,22 +193,16 @@ struct PerformanceMetricsView: View {
         .cornerRadius(8)
     }
 
-    private func fpsColor(_ fps: Double) -> Color {
-        if fps >= 12 { return .green }
-        if fps >= 8 { return .orange }
+    private func jitterColor(_ jitter: Double) -> Color {
+        if jitter <= 0.01 { return .green }
+        if jitter <= 0.05 { return .orange }
         return .red
-    }
-
-    private func processingTimeColor(_ time: TimeInterval) -> Color {
-        if time <= 50 { return .green }  // Good: ≤50ms
-        if time <= 100 { return .orange } // Fair: ≤100ms
-        return .red  // Poor: >100ms
     }
 }
 
 // MARK: - Accuracy Metrics View
 struct AccuracyMetricsView: View {
-    let accuracyMetrics: AccuracyMetrics?
+    let jitter: Double
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -240,46 +216,15 @@ struct AccuracyMetricsView: View {
                 Spacer()
             }
 
-            if let metrics = accuracyMetrics {
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack {
-                        Text("IoU: \(String(format: "%.3f", metrics.intersectionOverUnion))")
-                            .foregroundColor(iouColor(metrics.intersectionOverUnion))
-                            .font(.caption2)
-
-                        Spacer()
-
-                        CircularProgressView(
-                            progress: metrics.intersectionOverUnion,
-                            lineWidth: 3,
-                            size: 25,
-                            color: iouColor(metrics.intersectionOverUnion)
-                        )
-                    }
-
-                    Text("Jitter: \(String(format: "%.4f", metrics.jitter))")
-                        .foregroundColor(jitterColor(metrics.jitter))
-                        .font(.caption2)
-
-                    Text("Failures: \(metrics.trackingFailures)")
-                        .foregroundColor(metrics.trackingFailures > 0 ? .red : .green)
-                        .font(.caption2)
-                }
-            } else {
-                Text("No data")
-                    .foregroundColor(.gray)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Jitter: \(String(format: "%.4f", jitter))")
+                    .foregroundColor(jitterColor(jitter))
                     .font(.caption2)
             }
         }
         .padding(8)
         .background(Color.black.opacity(0.3))
         .cornerRadius(8)
-    }
-
-    private func iouColor(_ iou: Double) -> Color {
-        if iou >= 0.7 { return .green }
-        if iou >= 0.5 { return .orange }
-        return .red
     }
 
     private func jitterColor(_ jitter: Double) -> Color {
