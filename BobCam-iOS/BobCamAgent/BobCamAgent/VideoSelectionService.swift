@@ -3,6 +3,7 @@ import SwiftUI
 import PhotosUI
 import AVFoundation
 import Combine
+import UniformTypeIdentifiers
 
 // MARK: - Video Selection Service
 @MainActor
@@ -79,9 +80,41 @@ class VideoSelectionService: ObservableObject {
 
         selectionState = .importing
 
-        result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
-            Task { @MainActor in
-                await self?.processSelectedVideo(url: url, error: error)
+        result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] tempURL, error in
+            guard let self = self else { return }
+
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.selectionState = .failed(VideoSelectionError.accessDenied)
+                }
+                print("Video selection error: \(error)")
+                return
+            }
+
+            guard let tempURL = tempURL else {
+                DispatchQueue.main.async {
+                    self.selectionState = .failed(VideoSelectionError.importFailed)
+                }
+                return
+            }
+
+            do {
+                // Copy to app sandbox synchronously BEFORE this completion handler returns
+                let destinationURL = try self.copyVideoToDocumentsSync(from: tempURL)
+
+                DispatchQueue.main.async {
+                    // Load into player and persist path
+                    self.videoService.loadVideo(from: destinationURL)
+                    self.selectedVideoURL = destinationURL
+                    self.hasSelectedVideo = true
+                    self.selectionState = .idle
+                    self.isShowingVideoPicker = false
+                    UserDefaults.standard.set(destinationURL.path, forKey: Constants.userDefaultsKey)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.selectionState = .failed(error)
+                }
             }
         }
     }
@@ -183,6 +216,28 @@ class VideoSelectionService: ObservableObject {
         return destinationURL
     }
 
+    private func copyVideoToDocumentsSync(from sourceURL: URL) throws -> URL {
+        let documentsPath = getDocumentsDirectory()
+        let videoDirectory = documentsPath.appendingPathComponent(Constants.documentsSubdirectory)
+
+        // Ensure directory exists
+        try FileManager.default.createDirectory(at: videoDirectory, withIntermediateDirectories: true)
+
+        // Clear previous stored videos
+        cleanupStoredVideos()
+
+        // Build destination filename
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let ext = sourceURL.pathExtension.isEmpty ? "mp4" : sourceURL.pathExtension
+        let fileName = "selected_video_\(timestamp).\(ext)"
+        let destinationURL = videoDirectory.appendingPathComponent(fileName)
+
+        // Copy synchronously
+        try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
+
+        return destinationURL
+    }
+
     private func loadVideoInService(url: URL) async {
         await MainActor.run {
             videoService.loadVideo(from: url)
@@ -197,14 +252,18 @@ class VideoSelectionService: ObservableObject {
             self.isShowingVideoPicker = false
 
             // UserDefaults에 저장
-            UserDefaults.standard.set(url.absoluteString, forKey: Constants.userDefaultsKey)
+            UserDefaults.standard.set(url.path, forKey: Constants.userDefaultsKey)
         }
     }
 
     private func loadPersistedVideoURL() {
-        guard let urlString = UserDefaults.standard.string(forKey: Constants.userDefaultsKey),
-              let url = URL(string: urlString),
-              FileManager.default.fileExists(atPath: url.path) else {
+        guard let path = UserDefaults.standard.string(forKey: Constants.userDefaultsKey) else {
+            loadDefaultVideo()
+            return
+        }
+
+        let url = URL(fileURLWithPath: path)
+        guard FileManager.default.fileExists(atPath: url.path) else {
             loadDefaultVideo()
             return
         }
@@ -215,11 +274,11 @@ class VideoSelectionService: ObservableObject {
     }
 
     private func loadDefaultVideo() {
-        guard let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4"),
-              let videoURL = URL(string: "file://\(bundlePath)") else {
+        guard let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4") else {
             selectionState = .failed(VideoSelectionError.importFailed)
             return
         }
+        let videoURL = URL(fileURLWithPath: bundlePath)
 
         selectedVideoURL = videoURL
         hasSelectedVideo = false
