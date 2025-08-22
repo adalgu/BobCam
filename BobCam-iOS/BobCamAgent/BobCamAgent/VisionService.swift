@@ -5,6 +5,29 @@ import Foundation
 import UIKit
 import Vision
 
+// MARK: - Configuration and State
+struct LipDetectionConfiguration: Codable {
+    let historySize: Int
+    let minMovementThreshold: Float
+    let eatingPatternThreshold: Float
+    let varianceThreshold: Float
+    let emaAlpha: Float // EMA smoothing factor
+
+    static let `default` = LipDetectionConfiguration(
+        historySize: 15,
+        minMovementThreshold: 0.05,
+        eatingPatternThreshold: 0.15,
+        varianceThreshold: 0.001,
+        emaAlpha: 0.3
+    )
+}
+
+enum LipDetectionState {
+    case eating
+    case notEating
+    case uncertain
+}
+
 // MARK: - 개선된 Configuration 및 에러 처리
 
 enum VisionServiceState: Equatable {
