@@ -1,9 +1,9 @@
 Command line invocation:
-    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild clean build -project BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj -scheme BobCamAgent -destination id=73A3F520-468E-49AF-8A6B-EC1BAB1651D6
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace BobCam-iOS/BobCamAgent.xcworkspace -scheme BobCamAgent -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.6" clean build
 
---- xcodebuild: WARNING: Using the first of multiple matching destinations:
-{ platform:iOS Simulator, arch:arm64, id:73A3F520-468E-49AF-8A6B-EC1BAB1651D6, OS:18.0, name:iPhone 13 Pro }
-{ platform:iOS Simulator, arch:x86_64, id:73A3F520-468E-49AF-8A6B-EC1BAB1651D6, OS:18.0, name:iPhone 13 Pro }
+Build settings from command line:
+    SDKROOT = iphonesimulator18.5
+
 ComputePackagePrebuildTargetDependencyGraph
 
 CreateBuildRequest
@@ -14,9 +14,6 @@ CreateBuildOperation
 
 ** CLEAN SUCCEEDED **
 
---- xcodebuild: WARNING: Using the first of multiple matching destinations:
-{ platform:iOS Simulator, arch:arm64, id:73A3F520-468E-49AF-8A6B-EC1BAB1651D6, OS:18.0, name:iPhone 13 Pro }
-{ platform:iOS Simulator, arch:x86_64, id:73A3F520-468E-49AF-8A6B-EC1BAB1651D6, OS:18.0, name:iPhone 13 Pro }
 ComputePackagePrebuildTargetDependencyGraph
 
 Prepare packages
@@ -29,115 +26,215 @@ CreateBuildOperation
 
 ComputeTargetDependencyGraph
 note: Building targets in dependency order
-note: Target dependency graph (1 target)
-    Target 'BobCamAgent' in project 'BobCamAgent' (no dependencies)
+note: Target dependency graph (3 targets)
+    Target 'BobCamAgent' in project 'BobCamAgent'
+        ➜ Implicit dependency on target 'Pods-BobCamAgent' in project 'Pods' via file 'Pods_BobCamAgent.framework' in build phase 'Link Binary'
+    Target 'Pods-BobCamAgent' in project 'Pods'
+        ➜ Explicit dependency on target 'SwiftLint' in project 'Pods'
+    Target 'SwiftLint' in project 'Pods' (no dependencies)
 
 GatherProvisioningInputs
 
 CreateBuildDescription
 
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
 ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
 
 ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
 
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -V
+
 ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
 
-Build description signature: 974c031b573079e4c6f8085dbabef3af
-Build description path: /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/XCBuildData/974c031b573079e4c6f8085dbabef3af.xcbuilddata
-ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj
-    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+Build description signature: 17978bd7bed7e7e2882bab0093be7314
+Build description path: /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/XCBuildData/17978bd7bed7e7e2882bab0093be7314.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
 
-CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj
-    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products
+CreateBuildDirectory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products
 
-CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj
-    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex
+CreateBuildDirectory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex
 
-CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj
-    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator
+CreateBuildDirectory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator
 
-CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj
-    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+CreateBuildDirectory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent-7bcf04dd287a8a6fc515f927e120d9d2-VFS-iphonesimulator/all-product-headers.yaml
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent-7bcf04dd287a8a6fc515f927e120d9d2-VFS-iphonesimulator/all-product-headers.yaml
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphonesimulator/all-product-headers.yaml
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.hmap
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphonesimulator/all-product-headers.yaml
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap
+CreateBuildDirectory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/SwiftLint
+    cd /Users/macmini/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/SwiftLint
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent.hmap
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/Entitlements-Simulated.plist (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/Entitlements-Simulated.plist
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyMetadataFileList (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyMetadataFileList
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyStaticMetadataFileList (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyStaticMetadataFileList
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-all-target-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-all-target-headers.hmap
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp
+-target arm64-apple-ios15.0-simulator '-std=gnu11' -fobjc-arc -fmodules -gmodules '-fmodules-cache-path=/Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex' '-fmodule-name=Pods_BobCamAgent' -fpascal-strings -O0 -fno-common '-DPOD_CONFIGURATION_DEBUG=1' '-DDEBUG=1' '-DCOCOAPODS=1' '-DOBJC_OLD_DISPATCH_PROTOTYPES=0' -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -g '-fobjc-abi-version=2' -fobjc-legacy-dispatch -iquote /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap -ivfsoverlay /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphonesimulator/all-product-headers.yaml -iquote /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/include -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources-normal/arm64 -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/arm64 -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources -F/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent.LinkFileList (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent.LinkFileList
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+-target arm64-apple-ios15.0-simulator '-std=gnu11' -fmodules -gmodules '-fmodules-cache-path=/Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex' '-fmodule-name=Pods_BobCamAgent' -fpascal-strings -O0 -fno-common '-DPOD_CONFIGURATION_DEBUG=1' '-DDEBUG=1' '-DCOCOAPODS=1' -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -g -iquote /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap -ivfsoverlay /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphonesimulator/all-product-headers.yaml -iquote /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/include -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources-normal/arm64 -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/arm64 -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources -F/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt
+CpHeader /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Headers/Pods-BobCamAgent-umbrella.h /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-umbrella.h (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-umbrella.h /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Headers
 
-WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt
+Copy /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/module.modulemap /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent.modulemap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent.modulemap /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/module.modulemap
 
-MkDir /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    /bin/mkdir -p /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh
 
-ProcessProductPackaging "" /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/Entitlements-Simulated.plist (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/Entitlements-Simulated.plist
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.hmap
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/06370d143c39a48674d8ee34c4952290.sb (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/06370d143c39a48674d8ee34c4952290.sb
+
+MkDir /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Headers (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    /bin/mkdir -p /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Headers
+
+MkDir /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    /bin/mkdir -p /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework
+
+MkDir /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    /bin/mkdir -p /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/BobCamAgent.app
+
+ProcessInfoPlistFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Info.plist /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    builtin-infoPlistUtility /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist -producttype com.apple.product-type.framework -expandbuildsettings -format binary -platform iphonesimulator -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Info.plist
+
+Copy /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Modules/module.modulemap /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/module.modulemap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/module.modulemap /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Modules
+
+ProcessProductPackaging "" /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
     Entitlements:
     
@@ -145,304 +242,194 @@ ProcessProductPackaging "" /Users/gunn.kim/Library/Developer/Xcode/DerivedData/B
     "application-identifier" = "DF494HR686.com.bobcam.ios.app";
 }
     
-    builtin-productPackagingUtility -entitlements -format xml -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent
 
-ProcessProductPackagingDER /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent.der (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    /usr/bin/derq query -f xml -i /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent.der --raw
+ProcessProductPackagingDER /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent.der (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    /usr/bin/derq query -f xml -i /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent.der --raw
 
-ProcessInfoPlistFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Info.plist /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-infoPlistUtility /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Info.plist
-
-Ld /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app/__preview.dylib normal (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -install_name @rpath/BobCamAgent.debug.dylib -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_dependency_info.dat -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent.app-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.app/__preview.dylib
+PhaseScriptExecution [CP]\ Check\ Pods\ Manifest.lock /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    /usr/bin/sandbox-exec -D SCRIPT_OUTPUT_FILE_0\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/Pods-BobCamAgent-checkManifestLockResult.txt -D SCRIPT_INPUT_FILE_0\=/Users/macmini/study/BobCam/BobCam-iOS/Podfile.lock -D SCRIPT_INPUT_FILE_1\=/Users/macmini/study/BobCam/BobCam-iOS/Pods/Manifest.lock -D SCRIPT_INPUT_FILE_2\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh -D SCRIPT_INPUT_ANCESTOR_0\=/ -D SCRIPT_INPUT_ANCESTOR_1\=/Users -D SCRIPT_INPUT_ANCESTOR_2\=/Users/macmini -D SCRIPT_INPUT_ANCESTOR_3\=/Users/macmini/Library -D SCRIPT_INPUT_ANCESTOR_4\=/Users/macmini/Library/Developer -D SCRIPT_INPUT_ANCESTOR_5\=/Users/macmini/Library/Developer/Xcode -D SCRIPT_INPUT_ANCESTOR_6\=/Users/macmini/Library/Developer/Xcode/DerivedData -D SCRIPT_INPUT_ANCESTOR_7\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes -D SCRIPT_INPUT_ANCESTOR_8\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build -D SCRIPT_INPUT_ANCESTOR_9\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex -D SCRIPT_INPUT_ANCESTOR_10\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build -D SCRIPT_INPUT_ANCESTOR_11\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator -D SCRIPT_INPUT_ANCESTOR_12\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build -D SCRIPT_INPUT_ANCESTOR_13\=/Users/macmini/study -D SCRIPT_INPUT_ANCESTOR_14\=/Users/macmini/study/BobCam -D SCRIPT_INPUT_ANCESTOR_15\=/Users/macmini/study/BobCam/BobCam-iOS -D SCRIPT_INPUT_ANCESTOR_16\=/Users/macmini/study/BobCam/BobCam-iOS/Pods -D SCRIPT_OUTPUT_ANCESTOR_0\=/ -D SCRIPT_OUTPUT_ANCESTOR_1\=/Users -D SCRIPT_OUTPUT_ANCESTOR_2\=/Users/macmini -D SCRIPT_OUTPUT_ANCESTOR_3\=/Users/macmini/Library -D SCRIPT_OUTPUT_ANCESTOR_4\=/Users/macmini/Library/Developer -D SCRIPT_OUTPUT_ANCESTOR_5\=/Users/macmini/Library/Developer/Xcode -D SCRIPT_OUTPUT_ANCESTOR_6\=/Users/macmini/Library/Developer/Xcode/DerivedData -D SCRIPT_OUTPUT_ANCESTOR_7\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes -D SCRIPT_OUTPUT_ANCESTOR_8\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build -D SCRIPT_OUTPUT_ANCESTOR_9\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex -D SCRIPT_OUTPUT_ANCESTOR_10\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build -D SCRIPT_OUTPUT_ANCESTOR_11\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator -D SCRIPT_OUTPUT_ANCESTOR_12\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build -D SCRIPT_OUTPUT_ANCESTOR_13\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -D SRCROOT\=/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -D PROJECT_DIR\=/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -D OBJROOT\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex -D SYMROOT\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products -D DSTROOT\=/tmp/BobCamAgent.dst -D SHARED_PRECOMPS_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/PrecompiledHeaders -D CACHE_ROOT\=/var/folders/m3/j7b0h30d7412rbfrmrz8rqqc0000gn/C/com.apple.DeveloperTools/16.4-16F6/Xcode -D CONFIGURATION_BUILD_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator -D CONFIGURATION_TEMP_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator -D LOCROOT\=/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -D LOCSYMROOT\=/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -D INDEX_PRECOMPS_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/PrecompiledHeaders -D INDEX_DATA_STORE_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/DataStore -D TEMP_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build -D TARGET_TEMP_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build -D DERIVED_FILE_DIR\=/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -f /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/06370d143c39a48674d8ee34c4952290.sb /bin/sh -c /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh
 
 SwiftDriver BobCamAgent normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BobCamAgent -Onone -enforce-exclusivity\=checked @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios15.0-simulator -g -module-cache-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Index.noindex/DataStore -swift-version 5 -I /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -F /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -working-directory /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -experimental-emit-module-separately -disable-cmo
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BobCamAgent -Onone -enforce-exclusivity\=checked @/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios15.0-simulator -g -module-cache-path /Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/DataStore -swift-version 5 -I /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator -F /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64 -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -Xcc -iquote -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -emit-objc-header -emit-objc-header-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -working-directory /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -experimental-emit-module-separately -disable-cmo
 
-SwiftCompile normal arm64 Compiling\ CircularBuffer.swift,\ MetricsCalculator.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+ScanDependencies /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-dummy.m normal arm64 objective-c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
     
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    Using response file: /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp
     
+    builtin-ScanDependencies -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -ivfsstatcache /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wno-implicit-atomic-properties -Werror\=deprecated-objc-isa-usage -Wno-objc-interface-ivars -Werror\=objc-root-class -Wno-arc-repeated-use-of-weak -Wimplicit-retain-self -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wdeprecated-implementations -Wno-implicit-fallthrough -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/DataStore @/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp -MMD -MT dependencies -MF /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.d --serialize-diagnostics /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.dia -c /Users/macmini/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-dummy.m -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o -index-unit-output-path /Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o
 
-SwiftCompile normal arm64 Compiling\ AccuracyMonitor.swift,\ PerformanceMonitor.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/AccuracyMonitor.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/AccuracyMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+ScanDependencies /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
     
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    Using response file: /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
     
+    builtin-ScanDependencies -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/DataStore @/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.d --serialize-diagnostics /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.dia -c /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o -index-unit-output-path /Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o
 
-SwiftCompile normal arm64 Compiling\ BobCamApp.swift,\ ContentView.swift,\ CameraService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+CompileC /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
     
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    Using response file: /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
     
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/DataStore @/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.d --serialize-diagnostics /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.dia -c /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o -index-unit-output-path /Pods.build/Debug-iphonesimulator/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o
 
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+SwiftCompile normal arm64 Compiling\ BobCamApp.swift,\ ContentView.swift,\ CameraService.swift,\ CameraView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
 
-SwiftCompile normal arm64 Compiling\ DebugIntegrationGuide.swift,\ DebugOverlayView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
 
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
 
-SwiftCompile normal arm64 Compiling\ VideoSelectionService.swift,\ LipDetectionImproved.swift,\ OnboardingView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/LipDetectionImproved.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift:84:17: warning: no 'async' operations occur within 'await' expression
-                await self?.processSelectedVideo(url: url, error: error)
-                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
 
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/LipDetectionImproved.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 Compiling\ SettingsView.swift,\ StatusBar.swift,\ VideoPickerView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/SettingsView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/StatusBar.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoPickerView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/SettingsView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/StatusBar.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoPickerView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 Compiling\ OptimizationRunner.swift,\ ParameterTuningFramework.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
 Failed frontend command:
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/LipDetectionImproved.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/SettingsView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/StatusBar.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoPickerView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/AccuracyMonitor.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift -primary-file /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift -primary-file /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift -emit-dependencies-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/OptimizationRunner.d -emit-const-values-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/OptimizationRunner.swiftconstvalues -emit-reference-dependencies-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/OptimizationRunner.swiftdeps -serialize-diagnostics-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/OptimizationRunner.dia -emit-dependencies-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ParameterTuningFramework.d -emit-const-values-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ParameterTuningFramework.swiftconstvalues -emit-reference-dependencies-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ParameterTuningFramework.swiftdeps -serialize-diagnostics-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ParameterTuningFramework.dia -emit-localized-strings -emit-localized-strings-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64 -target arm64-apple-ios15.0-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -I /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -F /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -no-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -module-cache-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift -enable-anonymous-context-mangled-names -file-compilation-dir /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -Xcc -ivfsstatcache -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -module-name BobCamAgent -frontend-parseable-output -disable-clang-spi -target-sdk-version 18.5 -target-sdk-name iphonesimulator18.5 -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/OptimizationRunner.o -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ParameterTuningFramework.o -index-unit-output-path /BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/OptimizationRunner.o -index-unit-output-path /BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ParameterTuningFramework.o -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Index.noindex/DataStore -index-system-modules
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:81:11: warning: 'catch' block is unreachable because no errors are thrown in 'do' block
-        } catch {
-          ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:201:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 500_000_000) // 0.5 second delay for demo
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:205:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 500_000_000)
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:209:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 500_000_000)
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:220:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:224:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 1_000_000_000)
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:248:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 1_000_000_000)
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:252:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 1_000_000_000)
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:262:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 800_000_000)
-              ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift:266:15: error: call can throw, but it is not marked with 'try' and the error is not handled
-        await Task.sleep(nanoseconds: 800_000_000)
-              ^
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:217:69: error: missing argument for parameter 'faceObservation' in call
-                let detectionResult = service.detect(from: landmarks, groundTruthBox: groundTruth.lipBoundingBox)
-                                                                    ^
-                                                                    , faceObservation: <#VNFaceObservation#>
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/LipDetectionImproved.swift:63:10: note: 'detect(from:faceObservation:groundTruthBox:)' declared here
-    func detect(from landmarks: VNFaceLandmarks2D, faceObservation: VNFaceObservation, groundTruthBox: CGRect? = nil) -> LipDetectionState {
-         ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:234:50: error: value of type 'VNFaceLandmarkRegion2D' has no member 'boundingBox'
-                    let predictedBox = outerLips.boundingBox
-                                       ~~~~~~~~~ ^~~~~~~~~~~
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:327:25: error: referencing operator function '*' on 'DurationProtocol' requires that 'AttributedString' conform to 'DurationProtocol'
-        print("\n" + "="*50)
-                        ^
-Swift.DurationProtocol:2:17: note: where 'Self' = 'AttributedString'
-public protocol DurationProtocol : AdditiveArithmetic, Comparable, Sendable {
-                ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:329:18: error: binary operator '*' cannot be applied to operands of type 'String' and 'Int'
-        print("="*50)
-              ~~~^~~
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:329:18: note: overloads for '*' exist with these partially matching parameter lists: (Int, Int), (Subscribers.Demand, Int)
-        print("="*50)
-                 ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:352:18: error: binary operator '*' cannot be applied to operands of type 'String' and 'Int'
-        print("="*50)
-              ~~~^~~
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:352:18: note: overloads for '*' exist with these partially matching parameter lists: (Int, Int), (Subscribers.Demand, Int)
-        print("="*50)
-                 ^
-
-SwiftCompile normal arm64 Compiling\ ParameterTuningUI.swift,\ TuningIntegration.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 Compiling\ CameraView.swift,\ VisionService.swift,\ VideoService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 Compiling\ DebugSettings.swift,\ LandmarksOverlayView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift:254:13: warning: initialization of immutable value 'points' was never used; consider replacing with assignment to '_' or removing it
-        let points = outerLips.normalizedPoints
-        ~~~~^~~~~~
-        _
-
-SwiftCompile normal arm64 Compiling\ GroundTruthManager.swift,\ OptimizationEngine.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:120:13: warning: capture of 'self' with non-sendable type 'GroundTruthManager' in a '@Sendable' closure
-            self.frameCache[dataset.id] = frames
-            ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:77:7: note: class 'GroundTruthManager' does not conform to the 'Sendable' protocol
-class GroundTruthManager: ObservableObject {
-      ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:120:43: warning: capture of 'frames' with non-sendable type '[(CVPixelBuffer, TimeInterval)]' (aka 'Array<(CVBuffer, Double)>') in a '@Sendable' closure
-            self.frameCache[dataset.id] = frames
-                                          ^
-Swift.Array:1:23: note: generic struct 'Array' does not conform to the 'Sendable' protocol
-@frozen public struct Array<Element> : _DestructorSafeContainer {
-                      ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:119:9: warning: no 'async' operations occur within 'await' expression
-        await cacheQueue.async {
-        ^
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:373:13: warning: initialization of variable 'temporalAccuracySum' was never used; consider replacing with assignment to '_' or removing it
-        var temporalAccuracySum = 0.0
-        ~~~~^~~~~~~~~~~~~~~~~~~
-        _
-
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift:467:13: warning: initialization of immutable value 'sorted' was never used; consider replacing with assignment to '_' or removing it
-        let sorted = data.sorted()
-        ~~~~^~~~~~
-        _
-/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift:626:42: warning: reference to captured var 'iteration' in concurrently-executing code; this is an error in the Swift 6 language mode
-                currentProgress = Double(iteration) / Double(configuration.maxIterations)
-                                         ^
-
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c -primary-file /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift -primary-file /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift -primary-file /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift -primary-file /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/SettingsView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/StatusBar.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoPickerView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/AccuracyMonitor.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift -supplementary-output-file-map /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/supplementaryOutputs-1 -emit-localized-strings -emit-localized-strings-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64 -target arm64-apple-ios15.0-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -I /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator -F /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator -no-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -module-cache-path /Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/macmini/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift -enable-anonymous-context-mangled-names -file-compilation-dir /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent -Xcc -ivfsstatcache -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -module-name BobCamAgent -frontend-parseable-output -disable-clang-spi -target-sdk-version 18.5 -target-sdk-name iphonesimulator18.5 -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamApp.o -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ContentView.o -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/CameraService.o -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/CameraView.o -index-unit-output-path /BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamApp.o -index-unit-output-path /BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/ContentView.o -index-unit-output-path /BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/CameraService.o -index-unit-output-path /BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/CameraView.o -index-store-path /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Index.noindex/DataStore -index-system-modules
 SwiftEmitModule normal arm64 Emitting\ module\ for\ BobCamAgent (in target 'BobCamAgent' from project 'BobCamAgent')
-
 EmitSwiftModule normal arm64 (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
 
-SwiftCompile normal arm64 Compiling\ ContentView+Debug.swift,\ DebugCameraView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 Compiling\ ParameterTuningFramework.swift,\ ParameterTuningUI.swift,\ TuningIntegration.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
 
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
 
-SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
     
 
-SwiftDriverJobDiscovery normal arm64 Compiling AccuracyMonitor.swift, PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Compiling CircularBuffer.swift, MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 Compiling\ DebugOverlayView.swift,\ DebugSettings.swift,\ LandmarksOverlayView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Compiling BobCamApp.swift, ContentView.swift, CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Emitting module for BobCamAgent (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriver\ Compilation\ Requirements BobCamAgent normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BobCamAgent -Onone -enforce-exclusivity\=checked @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -target arm64-apple-ios15.0-simulator -g -module-cache-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Index.noindex/DataStore -swift-version 5 -I /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -F /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache -output-file-map /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-all-target-headers.hmap -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -working-directory /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -experimental-emit-module-separately -disable-cmo
+SwiftCompile normal arm64 Compiling\ ContentView+Debug.swift,\ DebugCameraView.swift,\ DebugIntegrationGuide.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftMergeGeneratedHeaders /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/BobCamAgent-Swift.h /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-swiftHeaderTool -arch arm64 /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/DerivedSources/BobCamAgent-Swift.h
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftdoc (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftdoc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+SwiftCompile normal arm64 Compiling\ GroundTruthManager.swift,\ OptimizationEngine.swift,\ OptimizationRunner.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift (in target 'BobCamAgent' from project 'BobCamAgent')
 
-Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.abi.json (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.abi.json /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/arm64-apple-ios-simulator.abi.json
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftsourceinfo (in target 'BobCamAgent' from project 'BobCamAgent')
-    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftsourceinfo /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-cbgctokfzcmyhdhkpkvrlbtzqnck/Build/Products/Debug-iphonesimulator/BobCamAgent.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Compiling DebugSettings.swift, LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Compiling CameraView.swift, VisionService.swift, VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 Compiling\ VisionService.swift,\ VideoService.swift,\ VideoSelectionService.swift,\ OnboardingView.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
 
-SwiftDriverJobDiscovery normal arm64 Compiling VideoSelectionService.swift, LipDetectionImproved.swift, OnboardingView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Compiling GroundTruthManager.swift, OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-SwiftDriverJobDiscovery normal arm64 Compiling ContentView+Debug.swift, DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
-** BUILD FAILED **
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
 
+SwiftCompile normal arm64 Compiling\ PerformanceMonitor.swift,\ CircularBuffer.swift,\ MetricsCalculator.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
 
-The following build commands failed:
-	SwiftCompile normal arm64 Compiling\ OptimizationRunner.swift,\ ParameterTuningFramework.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-	SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-	SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
-	Building project BobCamAgent with scheme BobCamAgent
-(4 failures)
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
+
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
+
+SwiftCompile normal arm64 /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:33: error: cannot find ')' to match opening '(' in string interpolation
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                                ^
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift:200:26: error: unterminated string literal
+                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                         ^
+
+PrecompileModule /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_availability_internal-7XO6AQUX5WWVXL1DZI7LM07MH.scan
+    cd /Users/macmini/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-hhlvadiezesdgidyipjntraahhes/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_availability_internal-7XO6AQUX5WWVXL1DZI7LM07MH.scan
+

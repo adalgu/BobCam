@@ -197,7 +197,7 @@ struct PerformanceMetricsView: View {
                     Text("FPS: \(String(format: "%.1f", fps))")
                         .foregroundColor(fpsColor(fps))
                         .font(.caption2)
-                    Text("Mem: \(String(format: \"%.1f MB (peak %.1f)\", memoryMB, peakMemoryMB))")
+                    Text("Mem: \(String(format: "%.1f MB (peak %.1f)", memoryMB, peakMemoryMB))")
                         .foregroundColor(.cyan)
                         .font(.caption2)
                 }
