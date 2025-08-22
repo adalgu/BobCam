@@ -40,6 +40,7 @@
 		A10001421B00000000000001 /* BobCamAgentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001431B00000000000001 /* BobCamAgentUITests.swift */; };
 		A10001441B00000000000001 /* BobCamAgentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001451B00000000000001 /* BobCamAgentUITestsLaunchTests.swift */; };
 		A10001B11B00000000000001 /* BobCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001011B00000000000001 /* BobCamApp.swift */; };
+		A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB00011B00000000000001 /* FeedbackBannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		A10001511B00000000000001 /* BobCamAgentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BobCamAgentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10001521B00000000000001 /* BobCamAgentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BobCamAgentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10001B21B00000000000001 /* BobCamAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BobCamAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1FB00011B00000000000001 /* FeedbackBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackBannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 				A1000110D1B00000000000001 /* VideoSelectionService.swift */,
 				A10001111B00000000000001 /* OnboardingView.swift */,
 				A10001131B00000000000001 /* SettingsView.swift */,
+				A1FB00011B00000000000001 /* FeedbackBannerView.swift */,
 				A10001151B00000000000001 /* StatusBar.swift */,
 				A10001171B00000000000001 /* VideoPickerView.swift */,
 				A1000115B1B00000000000001 /* Monitoring */,
@@ -477,6 +480,7 @@
 				A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */,
 				A10001101B00000000000001 /* OnboardingView.swift in Sources */,
 				A10001121B00000000000001 /* SettingsView.swift in Sources */,
+				A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */,
 				A10001141B00000000000001 /* StatusBar.swift in Sources */,
 				A10001161B00000000000001 /* VideoPickerView.swift in Sources */,
 				A10001181B00000000000001 /* AccuracyMonitor.swift in Sources */,
