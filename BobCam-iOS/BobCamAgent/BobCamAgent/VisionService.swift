@@ -90,6 +90,10 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
 
     // MARK: - Performance Monitoring
     @Published var jitter: Double = 0.0
+    @Published var processingTimeMs: Double = 0.0
+    @Published var fps: Double = 0.0
+    @Published var memoryMB: Double = 0.0
+    @Published var peakMemoryMB: Double = 0.0
 
     // MARK: - Debug Support
     @Published var debugLandmarks: VNFaceLandmarks2D?
@@ -101,13 +105,19 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     private var lipDistanceHistory: CircularBuffer<Float>
     private var lastSmoothedPoint: CGPoint?
     private var metricsCalculator = MetricsCalculator()
+    private var isProcessing = false
+    private var lastFrameCompletedTime: CFTimeInterval = 0
+    private var previousFaceBoundingBox: CGRect?
+    private let roiMargin: CGFloat = 0.2
 
     // O3 제안: VNSequenceRequestHandler 재사용으로 성능 최적화
     private lazy var sequenceRequestHandler = VNSequenceRequestHandler()
 
     // 프레임 스로틀링을 위한 내부 제어 (Expert Analysis 제안)
     private var lastProcessedTime: CFTimeInterval = 0
-    private let frameInterval: CFTimeInterval = 1.0 / 15.0  // 15fps
+    private var frameInterval: CFTimeInterval = 1.0 / 15.0  // 15fps (dynamic)
+    private let minInterval: CFTimeInterval = 1.0 / 20.0    // 20 fps upper bound
+    private let maxInterval: CFTimeInterval = 1.0 / 10.0    // 10 fps lower bound
 
     private lazy var faceDetectionRequest: VNDetectFaceLandmarksRequest = {
         let request = VNDetectFaceLandmarksRequest { [weak self] request, error in
@@ -185,31 +195,69 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     func processFrame(_ pixelBuffer: CVPixelBuffer) {
         guard isTracking, serviceState == .running else { return }
 
-        // Expert Analysis 제안: 내부 프레임 스로틀링
-        let currentTime = CACurrentMediaTime()
-        guard currentTime - lastProcessedTime >= frameInterval else { return }
-        lastProcessedTime = currentTime
+        // Internal frame throttling (~15fps target, dynamically tuned)
+        let now = CACurrentMediaTime()
+        guard now - lastProcessedTime >= frameInterval else { return }
+        lastProcessedTime = now
 
-        // Memory profiling
-        reportMemoryUsage()
+        // Frame dropping: if a previous frame is still processing, drop this one
+        guard !isProcessing else { return }
+        isProcessing = true
 
-        // O3 제안: 백그라운드 큐에서 Vision 처리
+        // Configure ROI based on the last known face bounding box (expanded with margin)
+        if let lastBox = previousFaceBoundingBox {
+            faceDetectionRequest.regionOfInterest = expandedROI(from: lastBox, margin: roiMargin)
+        } else {
+            faceDetectionRequest.regionOfInterest = CGRect(x: 0, y: 0, width: 1, height: 1)
+        }
+
         visionQueue.async { [weak self] in
             guard let self = self else { return }
+            let start = CACurrentMediaTime()
+            var procMs: Double = 0.0
+            defer { self.isProcessing = false }
 
             do {
-                // VNSequenceRequestHandler 재사용으로 메모리 효율성 향상
-                try self.sequenceRequestHandler.perform([self.faceDetectionRequest],
-                                                        on: pixelBuffer)
+                try self.sequenceRequestHandler.perform([self.faceDetectionRequest], on: pixelBuffer)
+                let end = CACurrentMediaTime()
+                procMs = (end - start) * 1000.0
 
-                // 성공 시 에러 카운터 리셋
+                // Memory profiling
+                let mem = self.reportMemoryUsage() ?? self.memoryMB
+
+                // Effective FPS measured between completed frames
+                let fpsVal: Double = self.lastFrameCompletedTime > 0 ? 1.0 / (end - self.lastFrameCompletedTime) : 0.0
+                self.lastFrameCompletedTime = end
+
+                // Dynamic frame interval tuning (bounds: 10–20 FPS)
+                if procMs > 100.0 {
+                    self.frameInterval = min(self.frameInterval + 0.010, self.maxInterval) // +10ms
+                } else if procMs < 50.0 {
+                    self.frameInterval = max(self.frameInterval - 0.005, self.minInterval) // -5ms
+                }
+
+                // Structured performance log
+                let ts = Date().timeIntervalSince1970
+                let roi = self.faceDetectionRequest.regionOfInterest
+                print(String(format: "[PERF] ts=%.3f memMB=%.2f procMs=%.1f fps=%.1f frameInterval=%.3f roi=%.2f,%.2f,%.2f,%.2f",
+                              ts, mem, procMs, fpsVal, self.frameInterval,
+                              roi.origin.x, roi.origin.y, roi.size.width, roi.size.height))
+
+                // Publish metrics on main thread
                 DispatchQueue.main.async {
                     self.consecutiveErrors = 0
+                    self.processingTimeMs = procMs
+                    self.fps = fpsVal
+                    self.memoryMB = mem
+                    if mem > self.peakMemoryMB { self.peakMemoryMB = mem }
                 }
 
             } catch {
+                let end = CACurrentMediaTime()
+                procMs = (end - start) * 1000.0
                 print("Vision request failed: \(error)")
                 DispatchQueue.main.async {
+                    self.processingTimeMs = procMs
                     self.handleVisionError(VisionServiceError.visionRequestFailed(error))
                 }
             }
@@ -249,6 +297,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         let state = analyzeEatingPattern()
         let currentJitter = metricsCalculator.calculateJitter(currentBox: firstFace.boundingBox)
         // --- End Core Logic ---
+        self.previousFaceBoundingBox = firstFace.boundingBox
 
         DispatchQueue.main.async {
             self.isEating = (state == .eating)
@@ -340,7 +389,17 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         return CGPoint(x: sum.x / CGFloat(indices.count), y: sum.y / CGFloat(indices.count))
     }
 
-    private func reportMemoryUsage() {
+    private func expandedROI(from rect: CGRect, margin: CGFloat) -> CGRect {
+        let x = max(0.0, rect.origin.x - rect.size.width * margin)
+        let y = max(0.0, rect.origin.y - rect.size.height * margin)
+        let w = min(1.0, rect.size.width * (1.0 + 2.0 * margin))
+        let h = min(1.0, rect.size.height * (1.0 + 2.0 * margin))
+        let clamped = CGRect(x: x, y: y, width: w, height: h)
+            .intersection(CGRect(x: 0, y: 0, width: 1, height: 1))
+        return clamped
+    }
+
+    private func reportMemoryUsage() -> Double? {
         var taskInfo = mach_task_basic_info()
         var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
         let kerr: kern_return_t = withUnsafeMutablePointer(to: &taskInfo) {
@@ -351,10 +410,11 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
 
         if kerr == KERN_SUCCESS {
             let usedMegabytes = Double(taskInfo.resident_size) / 1024 / 1024
-            print(String(format: "Memory used: %.2f MB", usedMegabytes))
+            return usedMegabytes
         } else {
             print("Error with task_info(): " +
                   (String(cString: mach_error_string(kerr), encoding: .ascii) ?? "unknown error"))
+            return nil
         }
     }
 }
