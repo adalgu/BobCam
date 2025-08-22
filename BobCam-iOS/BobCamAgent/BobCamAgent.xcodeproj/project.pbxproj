@@ -17,7 +17,6 @@
 		A10001101B00000000000001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001111B00000000000001 /* OnboardingView.swift */; };
 		A1000110A1B00000000000001 /* VideoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000110B1B00000000000001 /* VideoService.swift */; };
 		A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000110D1B00000000000001 /* VideoSelectionService.swift */; };
-		A1000110E1B00000000000001 /* LipDetectionImproved.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000110F1B00000000000001 /* LipDetectionImproved.swift */; };
 		A1000111A1B00000000000001 /* PerformanceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000111B1B00000000000001 /* PerformanceMonitor.swift */; };
 		A1000111C1B00000000000001 /* CircularBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000111D1B00000000000001 /* CircularBuffer.swift */; };
 		A1000111E1B00000000000001 /* MetricsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000111F1B00000000000001 /* MetricsCalculator.swift */; };
@@ -77,7 +76,6 @@
 		A10001091B00000000000001 /* VisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionService.swift; sourceTree = "<group>"; };
 		A1000110B1B00000000000001 /* VideoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoService.swift; sourceTree = "<group>"; };
 		A1000110D1B00000000000001 /* VideoSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSelectionService.swift; sourceTree = "<group>"; };
-		A1000110F1B00000000000001 /* LipDetectionImproved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LipDetectionImproved.swift; sourceTree = "<group>"; };
 		A10001111B00000000000001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A1000111B1B00000000000001 /* PerformanceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitor.swift; sourceTree = "<group>"; };
 		A1000111D1B00000000000001 /* CircularBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularBuffer.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 				A10001091B00000000000001 /* VisionService.swift */,
 				A1000110B1B00000000000001 /* VideoService.swift */,
 				A1000110D1B00000000000001 /* VideoSelectionService.swift */,
-				A1000110F1B00000000000001 /* LipDetectionImproved.swift */,
 				A10001111B00000000000001 /* OnboardingView.swift */,
 				A10001131B00000000000001 /* SettingsView.swift */,
 				A10001151B00000000000001 /* StatusBar.swift */,
@@ -478,7 +475,6 @@
 				A10001081B00000000000001 /* VisionService.swift in Sources */,
 				A1000110A1B00000000000001 /* VideoService.swift in Sources */,
 				A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */,
-				A1000110E1B00000000000001 /* LipDetectionImproved.swift in Sources */,
 				A10001101B00000000000001 /* OnboardingView.swift in Sources */,
 				A10001121B00000000000001 /* SettingsView.swift in Sources */,
 				A10001141B00000000000001 /* StatusBar.swift in Sources */,
