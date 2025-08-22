@@ -46,8 +46,8 @@ struct DebugContentView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            HStack(spacing: 0) {
-                // Enhanced camera feed with debug capabilities (left 40%)
+            VStack(spacing: 0) {
+                // Enhanced camera feed with debug capabilities (top 40%)
                 ZStack {
                     if debugSettings.showLandmarksOverlay {
                         // Use debug-enabled camera view
@@ -61,19 +61,22 @@ struct DebugContentView: View {
                         CameraView(cameraService: cameraService)
                     }
                 }
-                .frame(width: geometry.size.width * 0.4)
+                .frame(height: geometry.size.height * 0.4)
+                .frame(maxWidth: .infinity)
+                .clipped()
                 .onAppear {
                     cameraService.startSession()
                     cameraService.delegate = visionService
                     visionService.startTracking()
                 }
 
-                // Video player (right 60%)
+                // Video player (bottom 60%)
                 VideoPlayerView(
                     videoService: videoService,
                     videoSelectionService: videoSelectionService
                 )
-                .frame(width: geometry.size.width * 0.6)
+                .frame(maxWidth: .infinity)
+                .frame(height: geometry.size.height * 0.6)
             }
             .overlay(alignment: .bottom) {
                 StatusBar(

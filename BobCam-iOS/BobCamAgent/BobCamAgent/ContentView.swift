@@ -17,21 +17,24 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            HStack(spacing: 0) {
-                // 카메라 피드 (좌측 40%)
+            VStack(spacing: 0) {
+                // 카메라 피드 (상단 40%)
                 CameraView(cameraService: cameraService)
-                    .frame(width: geometry.size.width * 0.4)
+                    .frame(height: geometry.size.height * 0.4)
+                    .frame(maxWidth: .infinity)
+                    .clipped()
                     .onAppear {
                         cameraService.startSession()
                         cameraService.delegate = visionService
                     }
 
-                // 비디오 플레이어 (우측 60%)
+                // 비디오 플레이어 (하단 60%)
                 VideoPlayerView(
                     videoService: videoService,
                     videoSelectionService: videoSelectionService
                 )
-                .frame(width: geometry.size.width * 0.6)
+                .frame(maxWidth: .infinity)
+                .frame(height: geometry.size.height * 0.6)
             }
             .overlay(alignment: .bottom) {
                 StatusBar(
