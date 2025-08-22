@@ -63,15 +63,10 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     // MARK: - Published Properties
     @Published var isEating: Bool = false
     @Published var serviceState: VisionServiceState = .idle
-    @Published var sensitivity: Float = 0.5 {
-        didSet {
-            optimizedLipDetectionService.updateSensitivity(sensitivity)
-        }
-    }
+    @Published var sensitivity: Float = 0.5
 
     // MARK: - Performance Monitoring
-    @Published var currentAccuracy: AccuracyMetrics?
-    @Published var currentPerformance: PerformanceMetrics?
+    @Published var jitter: Double = 0.0
 
     // MARK: - Debug Support
     @Published var debugLandmarks: VNFaceLandmarks2D?
@@ -80,6 +75,9 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
     let configuration: LipDetectionConfiguration
+    private var lipDistanceHistory: CircularBuffer<Float>
+    private var lastSmoothedPoint: CGPoint?
+    private var metricsCalculator = MetricsCalculator()
 
     // O3 제안: VNSequenceRequestHandler 재사용으로 성능 최적화
     private lazy var sequenceRequestHandler = VNSequenceRequestHandler()
@@ -101,8 +99,6 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         return request
     }()
 
-    // Phase 2: 새로운 OptimizedLipDetectionService 사용
-    private let optimizedLipDetectionService: OptimizedLipDetectionService
     private var isTracking = false
     private var consecutiveErrors = 0
     private let maxConsecutiveErrors = 3
@@ -110,22 +106,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     // MARK: - Initialization
     init(configuration: LipDetectionConfiguration = .default) {
         self.configuration = configuration
-        self.optimizedLipDetectionService = OptimizedLipDetectionService(configuration: configuration)
-
-        // 모니터링 델리게이트 설정
-        setupMonitoringDelegates()
-    }
-
-    private func setupMonitoringDelegates() {
-        // Performance 모니터링 설정
-        if let performanceService = optimizedLipDetectionService.performanceMonitor as? PerformanceMonitorService {
-            performanceService.delegate = self
-        }
-
-        // Accuracy 모니터링 설정
-        if let accuracyService = optimizedLipDetectionService.accuracyMonitor as? AccuracyMonitorService {
-            accuracyService.delegate = self
-        }
+        self.lipDistanceHistory = CircularBuffer<Float>(capacity: configuration.historySize)
     }
 
     // MARK: - Public Methods
@@ -138,7 +119,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     func stopTracking() {
         serviceState = .paused
         isTracking = false
-        optimizedLipDetectionService.reset()
+        resetAlgorithmState()
     }
 
     func reset() {
@@ -146,7 +127,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         isTracking = false
         isEating = false
         consecutiveErrors = 0
-        optimizedLipDetectionService.reset()
+        resetAlgorithmState()
     }
 
     // MARK: - Debug Methods
@@ -203,13 +184,11 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         guard let results = request.results as? [VNFaceObservation] else {
             DispatchQueue.main.async {
                 self.isEating = false
-                // Clear debug landmarks when no face detected
                 self.updateDebugLandmarks(nil, faceObservation: nil)
             }
             return
         }
 
-        // 단일 얼굴만 처리 (성능 최적화)
         guard let firstFace = results.first,
               let landmarks = firstFace.landmarks else {
             DispatchQueue.main.async {
@@ -219,12 +198,19 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             return
         }
 
-        // Phase 2: OptimizedLipDetectionService 사용
-        let detectionState = optimizedLipDetectionService.detect(from: landmarks, faceObservation: firstFace)
+        // --- Core Logic Integration ---
+        guard let lipDistance = calculateSmoothedLipDistance(landmarks) else {
+            return
+        }
+
+        lipDistanceHistory.write(lipDistance)
+        let state = analyzeEatingPattern()
+        let currentJitter = metricsCalculator.calculateJitter(currentBox: firstFace.boundingBox)
+        // --- End Core Logic ---
 
         DispatchQueue.main.async {
-            self.isEating = (detectionState == .eating)
-            // Update debug landmarks for visualization
+            self.isEating = (state == .eating)
+            self.jitter = currentJitter
             self.updateDebugLandmarks(landmarks, faceObservation: firstFace)
         }
     }
@@ -244,22 +230,72 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             }
         }
     }
-}
 
-// MARK: - Performance Monitoring Delegates
-extension VisionService: PerformanceMonitorDelegate {
-    func didUpdatePerformance(metrics: PerformanceMetrics) {
-        DispatchQueue.main.async {
-            self.currentPerformance = metrics
-        }
+    // MARK: - Algorithm Logic
+    private func resetAlgorithmState() {
+        lipDistanceHistory.clear()
+        lastSmoothedPoint = nil
     }
-}
 
-extension VisionService: AccuracyMonitorDelegate {
-    func didUpdateAccuracy(metrics: AccuracyMetrics) {
-        DispatchQueue.main.async {
-            self.currentAccuracy = metrics
+    private func calculateSmoothedLipDistance(_ landmarks: VNFaceLandmarks2D) -> Float? {
+        guard let outerLips = landmarks.outerLips,
+              let topCenter = getAveragePoint(from: outerLips, indices: [9, 10, 11]),
+              let bottomCenter = getAveragePoint(from: outerLips, indices: [0, 1, 2])
+        else {
+            return nil
         }
+
+        let currentPoint = CGPoint(
+            x: (topCenter.x + bottomCenter.x) / 2,
+            y: (topCenter.y + bottomCenter.y) / 2
+        )
+        let smoothedPoint = applyEMA(to: currentPoint)
+        self.lastSmoothedPoint = smoothedPoint
+
+        let deltaX = topCenter.x - bottomCenter.x
+        let deltaY = topCenter.y - bottomCenter.y
+        let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
+
+        return Float(distance)
+    }
+
+    private func applyEMA(to point: CGPoint) -> CGPoint {
+        guard let lastPoint = lastSmoothedPoint else {
+            return point
+        }
+        let alpha = CGFloat(configuration.emaAlpha)
+        let smoothedX = alpha * point.x + (1 - alpha) * lastPoint.x
+        let smoothedY = alpha * point.y + (1 - alpha) * lastPoint.y
+        return CGPoint(x: smoothedX, y: smoothedY)
+    }
+
+    private func analyzeEatingPattern() -> LipDetectionState {
+        guard lipDistanceHistory.isFull else {
+            return .uncertain
+        }
+
+        let history = lipDistanceHistory.allItems()
+        let halfSize = configuration.historySize / 2
+
+        let recentAverage = history.suffix(halfSize).reduce(0, +) / Float(halfSize)
+        let olderAverage = history.prefix(halfSize).reduce(0, +) / Float(halfSize)
+        let changeRate = abs(recentAverage - olderAverage)
+
+        let adjustedThreshold = configuration.eatingPatternThreshold * sensitivity
+
+        return changeRate > adjustedThreshold ? .eating : .notEating
+    }
+
+    private func getAveragePoint(from region: VNFaceLandmarkRegion2D, indices: [Int]) -> CGPoint? {
+        let points = region.normalizedPoints
+        guard !indices.contains(where: { $0 >= points.count }) else { return nil }
+
+        let sum = indices.reduce(CGPoint.zero) { result, index in
+            let point = points[index]
+            return CGPoint(x: result.x + point.x, y: result.y + point.y)
+        }
+
+        return CGPoint(x: sum.x / CGFloat(indices.count), y: sum.y / CGFloat(indices.count))
     }
 }
 
