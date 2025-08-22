@@ -190,6 +190,9 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         guard currentTime - lastProcessedTime >= frameInterval else { return }
         lastProcessedTime = currentTime
 
+        // Memory profiling
+        reportMemoryUsage()
+
         // O3 제안: 백그라운드 큐에서 Vision 처리
         visionQueue.async { [weak self] in
             guard let self = self else { return }
@@ -335,6 +338,24 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         }
 
         return CGPoint(x: sum.x / CGFloat(indices.count), y: sum.y / CGFloat(indices.count))
+    }
+
+    private func reportMemoryUsage() {
+        var taskInfo = mach_task_basic_info()
+        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size) / 4
+        let kerr: kern_return_t = withUnsafeMutablePointer(to: &taskInfo) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+                task_info(mach_task_self_, task_flavor_t(MACH_TASK_BASIC_INFO), $0, &count)
+            }
+        }
+
+        if kerr == KERN_SUCCESS {
+            let usedMegabytes = Double(taskInfo.resident_size) / 1024 / 1024
+            print(String(format: "Memory used: %.2f MB", usedMegabytes))
+        } else {
+            print("Error with task_info(): " +
+                  (String(cString: mach_error_string(kerr), encoding: .ascii) ?? "unknown error"))
+        }
     }
 }
 
