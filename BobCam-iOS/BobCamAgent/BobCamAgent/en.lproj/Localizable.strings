@@ -1,0 +1,4 @@
+/* English localizations for feedback banner */
+"eating_positive" = "Great! You're eating well.";
+"eating_prompt" = "Please eat a bit more.";
+"analyzing" = "Analyzing…";

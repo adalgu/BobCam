@@ -15,27 +15,27 @@ struct DebugCameraView: UIViewRepresentable {
     let cameraService: CameraService
     @ObservedObject var visionService: VisionService
     @ObservedObject var debugSettings: DebugSettings
-    
+
     func makeUIView(context: Context) -> DebugCameraUIView {
         let view = DebugCameraUIView()
         view.backgroundColor = .black
         view.visionService = visionService
         view.debugSettings = debugSettings
-        
+
         // Set up camera preview layer
         let previewLayer = AVCaptureVideoPreviewLayer(session: cameraService.captureSession)
         previewLayer.videoGravity = .resizeAspectFill
         previewLayer.frame = view.bounds
-        
+
         // Front camera mirroring
         if let connection = previewLayer.connection,
            connection.isVideoMirroringSupported {
             connection.isVideoMirrored = true
         }
-        
+
         view.previewLayer = previewLayer
         view.layer.addSublayer(previewLayer)
-        
+
         // Set up landmarks overlay
         let landmarksOverlay = LandmarksOverlayUIView()
         landmarksOverlay.debugSettings = debugSettings
@@ -43,26 +43,26 @@ struct DebugCameraView: UIViewRepresentable {
         landmarksOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(landmarksOverlay)
         view.landmarksOverlay = landmarksOverlay
-        
+
         return view
     }
-    
+
     func updateUIView(_ uiView: DebugCameraUIView, context: Context) {
         uiView.visionService = visionService
         uiView.debugSettings = debugSettings
-        
+
         // Update preview layer frame
         if let previewLayer = uiView.previewLayer {
             DispatchQueue.main.async {
                 previewLayer.frame = uiView.bounds
             }
         }
-        
+
         // Update landmarks overlay
         if let landmarksOverlay = uiView.landmarksOverlay {
             landmarksOverlay.cameraFrame = uiView.bounds
             landmarksOverlay.debugSettings = debugSettings
-            
+
             if debugSettings.showLandmarksOverlay {
                 landmarksOverlay.setNeedsDisplay()
             }
@@ -72,92 +72,90 @@ struct DebugCameraView: UIViewRepresentable {
 
 /// Custom UIView that manages camera preview and debug overlays
 class DebugCameraUIView: UIView {
-    
+
     // MARK: - Properties
     var visionService: VisionService? {
         didSet {
             setupVisionServiceObservers()
         }
     }
-    
+
     var debugSettings: DebugSettings? {
         didSet {
             updateDebugVisualization()
         }
     }
-    
+
     var previewLayer: AVCaptureVideoPreviewLayer?
     var landmarksOverlay: LandmarksOverlayUIView?
-    
+
     // MARK: - Vision Observers
     private var cancellables = Set<AnyCancellable>()
-    
+
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
     }
-    
+
     private func setupView() {
         backgroundColor = .black
         clipsToBounds = true
     }
-    
+
     private func setupVisionServiceObservers() {
         cancellables.removeAll()
-        
+
         guard let visionService = visionService else { return }
-        
+
         // Observe when new landmarks are available
         // Note: This would require VisionService to expose landmarks
         // For now, we'll set up the structure
-        
+
         visionService.$isEating
             .sink { [weak self] _ in
                 self?.updateLandmarksDisplay()
             }
             .store(in: &cancellables)
     }
-    
+
     private func updateLandmarksDisplay() {
         guard let debugSettings = debugSettings,
               debugSettings.showLandmarksOverlay else { return }
-        
+
         // Get current landmarks from vision service
         if let visionService = visionService {
             let (landmarks, faceObservation) = visionService.getCurrentLandmarksForDebug()
             landmarksOverlay?.updateLandmarks(landmarks, faceObservation: faceObservation)
         }
     }
-    
+
     private func updateDebugVisualization() {
         guard let debugSettings = debugSettings else { return }
-        
+
         landmarksOverlay?.isHidden = !debugSettings.showLandmarksOverlay
-        
+
         if debugSettings.showLandmarksOverlay {
             landmarksOverlay?.setNeedsDisplay()
         }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         // Update preview layer frame
         previewLayer?.frame = bounds
-        
+
         // Update landmarks overlay frame
         landmarksOverlay?.frame = bounds
         landmarksOverlay?.cameraFrame = bounds
     }
 }
-
-
 
 // MARK: - Import required for objc_setAssociatedObject
 import ObjectiveC
@@ -171,13 +169,13 @@ struct DebugEnabledContentView: View {
     @StateObject private var videoSelectionService: VideoSelectionService
     @StateObject private var debugSettings = DebugSettings()
     @State private var showingSettings = false
-    
+
     init() {
         let videoService = VideoService()
         _videoService = StateObject(wrappedValue: videoService)
         _videoSelectionService = StateObject(wrappedValue: VideoSelectionService(videoService: videoService))
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
@@ -194,7 +192,7 @@ struct DebugEnabledContentView: View {
                         cameraService.delegate = visionService
                     }
                 }
-                
+
                 // Video player (right 60%)
                 VideoPlayerView(
                     videoService: videoService,
@@ -261,40 +259,40 @@ struct DebugEnabledSettingsView: View {
     @ObservedObject var visionService: VisionService
     @ObservedObject var debugSettings: DebugSettings
     @Binding var isPresented: Bool
-    
+
     var body: some View {
         NavigationView {
             Form {
                 // Original settings sections would go here
                 Section("Debug Settings") {
                     Toggle("Debug Mode", isOn: $debugSettings.isDebugModeEnabled)
-                    
+
                     if debugSettings.isDebugModeEnabled {
                         Toggle("Performance Metrics", isOn: $debugSettings.showPerformanceMetrics)
                         Toggle("Accuracy Metrics", isOn: $debugSettings.showAccuracyMetrics)
                         Toggle("Algorithm Parameters", isOn: $debugSettings.showAlgorithmParameters)
                         Toggle("Buffer Visualization", isOn: $debugSettings.showBufferVisualization)
                         Toggle("Landmarks Overlay", isOn: $debugSettings.showLandmarksOverlay)
-                        
+
                         if debugSettings.showLandmarksOverlay {
                             VStack(alignment: .leading) {
                                 Text("Landmark Point Size: \(String(format: "%.1f", debugSettings.landmarkPointSize))")
                                     .font(.caption)
                                 Slider(value: $debugSettings.landmarkPointSize, in: 1.0...10.0)
-                                
+
                                 Text("Landmark Opacity: \(String(format: "%.1f", debugSettings.landmarkOpacity))")
                                     .font(.caption)
                                 Slider(value: $debugSettings.landmarkOpacity, in: 0.1...1.0)
-                                
+
                                 Toggle("Show Labels", isOn: $debugSettings.showLandmarkLabels)
                             }
                         }
-                        
+
                         Button("Reset Debug Settings") {
                             debugSettings.resetToDefaults()
                         }
                         .foregroundColor(.red)
-                        
+
                         Button("Export Debug Data") {
                             // Export functionality would go here
                             let report = debugSettings.generateDebugReport()

@@ -1,6 +1,7 @@
 import SwiftUI
 import Vision
 import AVFoundation
+import Combine
 
 struct ContentView: View {
     @StateObject private var cameraService = CameraService()
@@ -8,30 +9,85 @@ struct ContentView: View {
     @StateObject private var videoService = VideoService()
     @StateObject private var videoSelectionService: VideoSelectionService
     @State private var showingSettings = false
-    
+    @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
+    @State private var feedbackState: FeedbackBannerView.FeedbackState = .neutral
+
     init() {
         let videoService = VideoService()
         _videoService = StateObject(wrappedValue: videoService)
         _videoSelectionService = StateObject(wrappedValue: VideoSelectionService(videoService: videoService))
     }
-    
+
+    // Debounced publisher to stabilize feedback banner updates
+    private var debouncedEatingPublisher: AnyPublisher<Bool, Never> {
+        visionService.$isEating
+            .removeDuplicates()
+            .debounce(for: .seconds(1.5), scheduler: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+
+    // Localized message derived from current feedback state
+    private var localizedMessage: String {
+        switch feedbackState {
+        case .eating:
+            return NSLocalizedString("eating_positive",
+                                     tableName: nil,
+                                     bundle: .main,
+                                     value: "좋아요 잘 먹고 있어요.",
+                                     comment: "Positive feedback when eating detected")
+        case .notEating:
+            return NSLocalizedString("eating_prompt",
+                                     tableName: nil,
+                                     bundle: .main,
+                                     value: "밥 더 먹어요.",
+                                     comment: "Prompt when not eating detected")
+        case .neutral:
+            return NSLocalizedString("analyzing",
+                                     tableName: nil,
+                                     bundle: .main,
+                                     value: "분석 중…",
+                                     comment: "Neutral analyzing state")
+        }
+    }
+
     var body: some View {
         GeometryReader { geometry in
-            HStack(spacing: 0) {
-                // 카메라 피드 (좌측 40%)
-                CameraView(cameraService: cameraService)
-                    .frame(width: geometry.size.width * 0.4)
-                    .onAppear {
-                        cameraService.startSession()
-                        cameraService.delegate = visionService
+            VStack(spacing: 0) {
+                // 카메라 피드 (상단 40%) + 피드백 배너를 카메라 영역 하단에 배치
+                ZStack(alignment: .bottom) {
+                    CameraView(cameraService: cameraService)
+                        .onAppear {
+                            cameraService.startSession()
+                            cameraService.delegate = visionService
+                            visionService.startTracking()
+                        }
+                        .onDisappear {
+                            visionService.stopTracking()
+                            cameraService.stopSession()
+                        }
+
+                    if showFeedbackBanner {
+                        FeedbackBannerView(
+                            state: feedbackState,
+                            text: localizedMessage
+                        )
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 8)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .zIndex(1)
+                        .animation(.easeInOut(duration: 0.25), value: feedbackState)
                     }
-                
-                // 비디오 플레이어 (우측 60%)
+                }
+                .frame(height: geometry.size.height * 0.4)
+                .frame(maxWidth: .infinity)
+                .clipped()
+                // 비디오 플레이어 (하단 60%)
                 VideoPlayerView(
                     videoService: videoService,
                     videoSelectionService: videoSelectionService
                 )
-                .frame(width: geometry.size.width * 0.6)
+                .frame(maxWidth: .infinity)
+                .frame(height: geometry.size.height * 0.6)
             }
             .overlay(alignment: .bottom) {
                 StatusBar(
@@ -66,6 +122,9 @@ struct ContentView: View {
             } else {
                 videoService.pauseVideo()
             }
+        }
+        .onReceive(debouncedEatingPublisher) { isEating in
+            feedbackState = isEating ? .eating : .notEating
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView(

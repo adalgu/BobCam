@@ -28,19 +28,19 @@ protocol AccuracyMonitoring {
 
 class AccuracyMonitorService: AccuracyMonitoring {
     weak var delegate: AccuracyMonitorDelegate?
-    
+
     // Phase 2: MetricsCalculator를 사용한 완전한 구현
     private var metricsCalculator = MetricsCalculator()
     private var trackingFailureCounter = 0
-    
+
     func calculateMetrics(predictedBox: CGRect, groundTruthBox: CGRect?) {
         // IoU 계산 (groundTruthBox가 있을 경우)
-        let iou = groundTruthBox != nil ? 
+        let iou = groundTruthBox != nil ?
             MetricsCalculator.calculateIoU(boxA: predictedBox, boxB: groundTruthBox!) : 0.0
-        
+
         // Jitter 계산 (이전 프레임 정보 필요)
         let jitter = metricsCalculator.calculateJitter(currentBox: predictedBox)
-        
+
         // 추적 실패 카운트 (탐지 성공 여부 기반)
         let detectionSuccess = !predictedBox.isNull && predictedBox.width > 0 && predictedBox.height > 0
         let isTrackingFailed = MetricsCalculator.isTrackingFailed(
@@ -48,15 +48,15 @@ class AccuracyMonitorService: AccuracyMonitoring {
             failureCounter: &trackingFailureCounter,
             threshold: 5  // 5프레임 연속 실패 시 추적 실패로 판단
         )
-        
+
         let trackingFailures = isTrackingFailed ? trackingFailureCounter : 0
-        
+
         let metrics = AccuracyMetrics(
             intersectionOverUnion: iou,
             jitter: jitter,
             trackingFailures: trackingFailures
         )
-        
+
         delegate?.didUpdateAccuracy(metrics: metrics)
     }
 }

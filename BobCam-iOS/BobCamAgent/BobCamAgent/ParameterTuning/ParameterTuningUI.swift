@@ -14,38 +14,38 @@ import Combine
 // MARK: - Main Parameter Tuning View
 
 struct ParameterTuningView: View {
-    
+
     @StateObject private var tuningEngine = ParameterTuningEngine()
     @StateObject private var groundTruthManager = GroundTruthManager()
     @State private var showingResults = false
     @State private var selectedDataset: GroundTruthDataset?
     @State private var showingABTest = false
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                
+
                 // Header
                 VStack {
                     Text("Parameter Optimization")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                    
+
                     Text("Systematic tuning for 70% accuracy target")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
                 .padding()
-                
+
                 // Dataset Selection
                 DatasetSelectionView(
                     groundTruthManager: groundTruthManager,
                     selectedDataset: $selectedDataset
                 )
-                
+
                 // Optimization Progress
                 OptimizationProgressView(tuningEngine: tuningEngine)
-                
+
                 // Control Buttons
                 VStack(spacing: 12) {
                     Button(action: startOptimization) {
@@ -60,7 +60,7 @@ struct ParameterTuningView: View {
                         .cornerRadius(10)
                     }
                     .disabled(selectedDataset == nil && !tuningEngine.isRunning)
-                    
+
                     HStack(spacing: 12) {
                         Button("A/B Test") {
                             showingABTest = true
@@ -70,7 +70,7 @@ struct ParameterTuningView: View {
                         .background(Color.orange)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                        
+
                         Button("View Results") {
                             showingResults = true
                         }
@@ -83,12 +83,12 @@ struct ParameterTuningView: View {
                     }
                 }
                 .padding(.horizontal)
-                
+
                 // Best Result Summary
                 if let bestResult = tuningEngine.bestResult {
                     BestResultSummaryView(result: bestResult)
                 }
-                
+
                 Spacer()
             }
             .navigationTitle("Parameter Tuning")
@@ -104,20 +104,20 @@ struct ParameterTuningView: View {
             await groundTruthManager.loadDefaultDatasets()
         }
     }
-    
+
     private func startOptimization() {
         if tuningEngine.isRunning {
             // TODO: Implement stop functionality
         } else {
             guard let dataset = selectedDataset else { return }
-            
+
             Task {
                 let frames = await groundTruthManager.extractFramesFromDataset(dataset)
                 let groundTruthFrames = groundTruthManager.generateGroundTruthFrames(from: dataset)
-                
+
                 tuningEngine.loadTestVideoFrames(frames)
                 tuningEngine.loadGroundTruthData(groundTruthFrames)
-                
+
                 await tuningEngine.startParameterTuning()
             }
         }
@@ -127,16 +127,16 @@ struct ParameterTuningView: View {
 // MARK: - Dataset Selection View
 
 struct DatasetSelectionView: View {
-    
+
     @ObservedObject var groundTruthManager: GroundTruthManager
     @Binding var selectedDataset: GroundTruthDataset?
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Select Test Dataset")
                 .font(.headline)
                 .padding(.horizontal)
-            
+
             if groundTruthManager.isLoading {
                 HStack {
                     ProgressView()
@@ -168,18 +168,18 @@ struct DatasetSelectionView: View {
 // MARK: - Dataset Card View
 
 struct DatasetCardView: View {
-    
+
     let dataset: GroundTruthDataset
     let isSelected: Bool
     let onTap: () -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(dataset.id.replacingOccurrences(of: "_", with: " "))
                 .font(.caption)
                 .fontWeight(.medium)
                 .lineLimit(2)
-            
+
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Label("\(dataset.eatingEvents.count) events", systemImage: "fork.knife")
@@ -189,15 +189,15 @@ struct DatasetCardView: View {
                 .font(.caption2)
                 .foregroundColor(.secondary)
             }
-            
+
             HStack {
                 Text("Quality: \(String(format: "%.0f", dataset.metadata.annotatorConfidence * 100))%")
                     .font(.caption2)
                     .fontWeight(.medium)
                     .foregroundColor(qualityColor)
-                
+
                 Spacer()
-                
+
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.blue)
@@ -216,7 +216,7 @@ struct DatasetCardView: View {
             onTap()
         }
     }
-    
+
     private var qualityColor: Color {
         if dataset.metadata.annotatorConfidence >= 0.8 {
             return .green
@@ -231,9 +231,9 @@ struct DatasetCardView: View {
 // MARK: - Optimization Progress View
 
 struct OptimizationProgressView: View {
-    
+
     @ObservedObject var tuningEngine: ParameterTuningEngine
-    
+
     var body: some View {
         VStack(spacing: 12) {
             HStack {
@@ -245,12 +245,12 @@ struct OptimizationProgressView: View {
                     .fontWeight(.bold)
             }
             .padding(.horizontal)
-            
+
             ProgressView(value: tuningEngine.currentProgress)
                 .progressViewStyle(LinearProgressViewStyle(tint: .blue))
                 .scaleEffect(y: 2.0)
                 .padding(.horizontal)
-            
+
             HStack {
                 VStack {
                     Text("\(tuningEngine.results.count)")
@@ -260,9 +260,9 @@ struct OptimizationProgressView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                
+
                 Spacer()
-                
+
                 VStack {
                     Text(tuningEngine.bestResult?.metrics.isTargetAchieved == true ? "✅" : "❌")
                         .font(.title2)
@@ -270,9 +270,9 @@ struct OptimizationProgressView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                
+
                 Spacer()
-                
+
                 VStack {
                     Text(bestAccuracyText)
                         .font(.title2)
@@ -289,7 +289,7 @@ struct OptimizationProgressView: View {
         .cornerRadius(12)
         .padding(.horizontal)
     }
-    
+
     private var bestAccuracyText: String {
         guard let best = tuningEngine.bestResult else { return "--%" }
         return String(format: "%.1f%%", best.metrics.overallAccuracy * 100)
@@ -299,9 +299,9 @@ struct OptimizationProgressView: View {
 // MARK: - Best Result Summary View
 
 struct BestResultSummaryView: View {
-    
+
     let result: ValidationResult
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -311,7 +311,7 @@ struct BestResultSummaryView: View {
                 Image(systemName: result.passed70Percent ? "checkmark.seal.fill" : "exclamationmark.triangle.fill")
                     .foregroundColor(result.passed70Percent ? .green : .orange)
             }
-            
+
             VStack(alignment: .leading, spacing: 6) {
                 MetricRow(label: "Overall Accuracy", value: result.metrics.overallAccuracy, isPercentage: true)
                 MetricRow(label: "Precision", value: result.metrics.precision, isPercentage: true)
@@ -319,7 +319,7 @@ struct BestResultSummaryView: View {
                 MetricRow(label: "F1-Score", value: result.metrics.f1Score, isPercentage: true)
                 MetricRow(label: "IoU Average", value: result.metrics.iouAverage, isPercentage: true)
             }
-            
+
             Text("Parameter ID: \(result.parameterId)")
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -334,11 +334,11 @@ struct BestResultSummaryView: View {
 // MARK: - Metric Row View
 
 struct MetricRow: View {
-    
+
     let label: String
     let value: Double
     let isPercentage: Bool
-    
+
     var body: some View {
         HStack {
             Text(label)
@@ -350,7 +350,7 @@ struct MetricRow: View {
                 .foregroundColor(value >= 0.7 ? .green : (value >= 0.5 ? .orange : .red))
         }
     }
-    
+
     private var formattedValue: String {
         if isPercentage {
             return String(format: "%.1f%%", value * 100)
@@ -363,11 +363,11 @@ struct MetricRow: View {
 // MARK: - Results Detail View
 
 struct ResultsDetailView: View {
-    
+
     let results: [ValidationResult]
     let bestResult: ValidationResult?
     @Environment(\.presentationMode) var presentationMode
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -382,7 +382,7 @@ struct ResultsDetailView: View {
                                 ResultRowView(result: best, isBest: true)
                             }
                         }
-                        
+
                         Section("All Results") {
                             ForEach(results.indices, id: \.self) { index in
                                 ResultRowView(result: results[index], isBest: false)
@@ -403,36 +403,36 @@ struct ResultsDetailView: View {
 // MARK: - Result Row View
 
 struct ResultRowView: View {
-    
+
     let result: ValidationResult
     let isBest: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(result.parameterId.components(separatedBy: "_").joined(separator: ", "))
                     .font(.caption)
                     .lineLimit(1)
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 4) {
                     Text(String(format: "%.1f%%", result.metrics.overallAccuracy * 100))
                         .font(.headline)
                         .fontWeight(.bold)
-                    
+
                     if result.passed70Percent {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
                     }
-                    
+
                     if isBest {
                         Image(systemName: "crown.fill")
                             .foregroundColor(.yellow)
                     }
                 }
             }
-            
+
             HStack {
                 Text("P: \(String(format: "%.2f", result.metrics.precision))")
                     .font(.caption2)
@@ -453,15 +453,15 @@ struct ResultRowView: View {
 // MARK: - A/B Testing View
 
 struct ABTestingView: View {
-    
+
     @State private var configA = LipDetectionConfiguration.default
     @State private var configB = LipDetectionConfiguration.default
     @State private var abResult: ABTestResult?
     @State private var isRunning = false
     @Environment(\.presentationMode) var presentationMode
-    
+
     private let abTesting = ABTestingFramework()
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -469,12 +469,12 @@ struct ABTestingView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding()
-                
+
                 HStack(spacing: 20) {
                     ConfigurationEditor(title: "Configuration A", config: $configA)
                     ConfigurationEditor(title: "Configuration B", config: $configB)
                 }
-                
+
                 Button("Run A/B Test") {
                     runABTest()
                 }
@@ -484,11 +484,11 @@ struct ABTestingView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .disabled(isRunning)
-                
+
                 if let result = abResult {
                     ABTestResultView(result: result)
                 }
-                
+
                 Spacer()
             }
             .padding()
@@ -499,21 +499,21 @@ struct ABTestingView: View {
             )
         }
     }
-    
+
     private func runABTest() {
         isRunning = true
-        
+
         Task {
             // TODO: Load actual test data
             let testFrames: [(CVPixelBuffer, TimeInterval)] = []
             let groundTruth: [GroundTruthFrame] = []
-            
+
             let result = await abTesting.compareConfigurations(
                 configA, configB,
                 testFrames: testFrames,
                 groundTruth: groundTruth
             )
-            
+
             await MainActor.run {
                 abResult = result
                 isRunning = false
@@ -525,15 +525,15 @@ struct ABTestingView: View {
 // MARK: - Configuration Editor View
 
 struct ConfigurationEditor: View {
-    
+
     let title: String
     @Binding var config: LipDetectionConfiguration
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .font(.headline)
-            
+
             ParameterSlider(
                 title: "History Size",
                 value: .constant(Double(config.historySize)),
@@ -548,7 +548,7 @@ struct ConfigurationEditor: View {
                     emaAlpha: config.emaAlpha
                 )
             }
-            
+
             ParameterSlider(
                 title: "Eating Threshold",
                 value: .constant(Double(config.eatingPatternThreshold)),
@@ -563,7 +563,7 @@ struct ConfigurationEditor: View {
                     emaAlpha: config.emaAlpha
                 )
             }
-            
+
             ParameterSlider(
                 title: "EMA Alpha",
                 value: .constant(Double(config.emaAlpha)),
@@ -588,13 +588,13 @@ struct ConfigurationEditor: View {
 // MARK: - Parameter Slider View
 
 struct ParameterSlider: View {
-    
+
     let title: String
     @Binding var value: Double
     let range: ClosedRange<Double>
     let step: Double
     let onChange: (Double) -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -605,7 +605,7 @@ struct ParameterSlider: View {
                     .font(.caption)
                     .fontWeight(.medium)
             }
-            
+
             Slider(value: $value, in: range, step: step) { _ in
                 onChange(value)
             }
@@ -616,14 +616,14 @@ struct ParameterSlider: View {
 // MARK: - A/B Test Result View
 
 struct ABTestResultView: View {
-    
+
     let result: ABTestResult
-    
+
     var body: some View {
         VStack(spacing: 16) {
             Text("A/B Test Results")
                 .font(.headline)
-            
+
             HStack(spacing: 20) {
                 VStack {
                     Text("Configuration A")
@@ -633,7 +633,7 @@ struct ABTestResultView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(result.winner == .A ? .green : .secondary)
-                    
+
                     if result.winner == .A {
                         Text("WINNER")
                             .font(.caption)
@@ -641,13 +641,13 @@ struct ABTestResultView: View {
                             .foregroundColor(.green)
                     }
                 }
-                
+
                 VStack {
                     Text("vs")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
-                
+
                 VStack {
                     Text("Configuration B")
                         .font(.subheadline)
@@ -656,7 +656,7 @@ struct ABTestResultView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(result.winner == .B ? .green : .secondary)
-                    
+
                     if result.winner == .B {
                         Text("WINNER")
                             .font(.caption)
@@ -665,7 +665,7 @@ struct ABTestResultView: View {
                     }
                 }
             }
-            
+
             Text("Significance Level: \(String(format: "%.3f", result.significanceLevel))")
                 .font(.caption)
                 .foregroundColor(.secondary)

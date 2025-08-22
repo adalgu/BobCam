@@ -6,7 +6,7 @@ struct SettingsView: View {
     @ObservedObject var videoService: VideoService
     @ObservedObject var visionService: VisionService
     @Binding var isPresented: Bool
-    
+
     // Local state for settings
     @State private var isDebugModeEnabled = false
     @State private var showPerformanceMetrics = false
@@ -14,7 +14,8 @@ struct SettingsView: View {
     @State private var showingResetConfirmation = false
     @State private var showingPrivacyPolicy = false
     @State private var selectedSensitivity: Double = 0.5
-    
+    @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -24,7 +25,7 @@ struct SettingsView: View {
                         selectionService: videoSelectionService,
                         videoService: videoService
                     )
-                    
+
                     // Algorithm Parameter Controls
                     AlgorithmSettingsSection(
                         visionService: visionService,
@@ -33,14 +34,15 @@ struct SettingsView: View {
                         showPerformanceMetrics: $showPerformanceMetrics,
                         showAccuracyDisplay: $showAccuracyDisplay
                     )
-                    
+
                     // User Experience Settings
                     UserExperienceSection(
                         showingResetConfirmation: $showingResetConfirmation,
                         showPerformanceMetrics: $showPerformanceMetrics,
-                        showAccuracyDisplay: $showAccuracyDisplay
+                        showAccuracyDisplay: $showAccuracyDisplay,
+                        showFeedbackBanner: $showFeedbackBanner
                     )
-                    
+
                     // Privacy and App Information
                     PrivacyAndAppInfoSection(
                         showingPrivacyPolicy: $showingPrivacyPolicy
@@ -74,7 +76,7 @@ struct SettingsView: View {
             Text("This will reset all settings to their default values. This action cannot be undone.")
         }
     }
-    
+
     private func resetToDefaults() {
         visionService.sensitivity = 0.5
         selectedSensitivity = 0.5
@@ -89,23 +91,23 @@ struct SettingsView: View {
 struct VideoSettingsSection: View {
     @ObservedObject var selectionService: VideoSelectionService
     @ObservedObject var videoService: VideoService
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             SectionHeader(title: "비디오 설정", icon: "video")
-            
+
             // 비디오 선택 카드
             VideoPreviewCard(
                 selectionService: selectionService,
                 videoService: videoService
             )
-            
+
             // 비디오 선택 버튼
             HStack {
                 VideoSelectionButton(selectionService: selectionService)
                 Spacer()
             }
-            
+
             // 비디오 설정 안내
             InfoBox(
                 title: "비디오 선택 안내",
@@ -123,25 +125,25 @@ struct AlgorithmSettingsSection: View {
     @Binding var isDebugModeEnabled: Bool
     @Binding var showPerformanceMetrics: Bool
     @Binding var showAccuracyDisplay: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             SectionHeader(title: "Algorithm Settings", icon: "brain.head.profile")
-            
+
             // Sensitivity Control
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
                     Text("Detection Sensitivity")
                         .font(.subheadline)
-                    
+
                     Spacer()
-                    
+
                     Text(String(format: "%.1f", selectedSensitivity))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .accessibilityLabel("Current sensitivity: \(String(format: "%.1f", selectedSensitivity))")
                 }
-                
+
                 Slider(
                     value: $selectedSensitivity,
                     in: 0.1...2.0,
@@ -161,32 +163,33 @@ struct AlgorithmSettingsSection: View {
                     visionService.sensitivity = Float(newValue)
                 }
                 .accessibilityValue("Sensitivity \(String(format: "%.1f", selectedSensitivity))")
-                
-                Text("Higher sensitivity detects subtle movements, lower sensitivity requires more pronounced eating motions.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 4)
+
+                        Text("Higher sensitivity detects subtle movements, lower sensitivity requires more pronounced eating motions.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 4)
+                            .lineLimit(2)
             }
             .padding()
             .background(Color.secondary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            
+
             // Current Detection Status
             VStack(alignment: .leading, spacing: 8) {
                 Text("Current Status")
                     .font(.subheadline)
-                
+
                 HStack {
                     Circle()
                         .fill(visionService.isEating ? .green : .red)
                         .frame(width: 12, height: 12)
-                    
+
                     Text(visionService.isEating ? "Eating Detected" : "Not Eating")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                    
+
                     Spacer()
-                    
+
                     Text(visionService.serviceState.displayString)
                         .font(.caption)
                         .padding(.horizontal, 8)
@@ -199,26 +202,26 @@ struct AlgorithmSettingsSection: View {
             .padding()
             .background(Color.secondary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            
+
             // Debug Mode Toggle
             VStack(alignment: .leading, spacing: 8) {
                 Toggle("Debug Mode", isOn: $isDebugModeEnabled)
                     .font(.subheadline)
-                
+
                 if isDebugModeEnabled {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Debug features enabled:")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        
+
                         Text("• Real-time algorithm monitoring")
                             .font(.caption2)
                             .foregroundColor(.secondary)
-                        
+
                         Text("• Performance metrics display")
                             .font(.caption2)
                             .foregroundColor(.secondary)
-                        
+
                         Text("• Detailed logging")
                             .font(.caption2)
                             .foregroundColor(.secondary)
@@ -238,30 +241,40 @@ struct UserExperienceSection: View {
     @Binding var showingResetConfirmation: Bool
     @Binding var showPerformanceMetrics: Bool
     @Binding var showAccuracyDisplay: Bool
-    
+    @Binding var showFeedbackBanner: Bool
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             SectionHeader(title: "User Experience", icon: "person.crop.circle")
-            
+
             VStack(spacing: 12) {
+                // Feedback banner toggle
+                ToggleRow(
+                    title: "Feedback Banner",
+                    description: "Show guidance message at the top",
+                    isOn: $showFeedbackBanner
+                )
+
+                Divider()
+
                 // Performance monitoring toggle
                 ToggleRow(
-                    title: "Performance Monitoring", 
+                    title: "Performance Monitoring",
                     description: "Display real-time performance metrics",
                     isOn: $showPerformanceMetrics
                 )
-                
+
                 Divider()
-                
+
                 // Accuracy display toggle
                 ToggleRow(
                     title: "Accuracy Display",
                     description: "Show algorithm accuracy information",
                     isOn: $showAccuracyDisplay
                 )
-                
+
                 Divider()
-                
+
                 // Reset to defaults button
                 Button(action: {
                     showingResetConfirmation = true
@@ -286,11 +299,11 @@ struct UserExperienceSection: View {
 // MARK: - Privacy and App Information Section
 struct PrivacyAndAppInfoSection: View {
     @Binding var showingPrivacyPolicy: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             SectionHeader(title: "Privacy & Information", icon: "shield.checkered")
-            
+
             // App Information
             VStack(spacing: 12) {
                 InfoRow(title: "Version", value: appVersion)
@@ -301,7 +314,7 @@ struct PrivacyAndAppInfoSection: View {
             .padding()
             .background(Color.secondary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            
+
             // Privacy Information
             VStack(spacing: 12) {
                 Button(action: {
@@ -319,9 +332,9 @@ struct PrivacyAndAppInfoSection: View {
                     }
                 }
                 .accessibilityLabel("View privacy policy")
-                
+
                 Divider()
-                
+
                 HStack {
                     Image(systemName: "checkmark.shield")
                         .foregroundColor(.green)
@@ -334,14 +347,14 @@ struct PrivacyAndAppInfoSection: View {
             .padding()
             .background(Color.secondary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            
+
             // Data Processing Information
             InfoBox(
                 title: "Local Processing Only",
                 message: "All video processing occurs locally on your device. No data is transmitted to external servers, ensuring complete privacy and security for your family.",
                 icon: "shield.checkered"
             )
-            
+
             // Parental Controls Information
             InfoBox(
                 title: "Parental Controls",
@@ -350,11 +363,11 @@ struct PrivacyAndAppInfoSection: View {
             )
         }
     }
-    
+
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     }
-    
+
     private var appBuild: String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
     }
@@ -365,13 +378,13 @@ struct PrivacyAndAppInfoSection: View {
 struct SectionHeader: View {
     let title: String
     let icon: String
-    
+
     var body: some View {
         HStack {
             Image(systemName: icon)
                 .font(.title2)
                 .foregroundColor(.blue)
-            
+
             Text(title)
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -384,25 +397,25 @@ struct InfoBox: View {
     let title: String
     let message: String
     let icon: String
-    
+
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: icon)
                 .font(.title3)
                 .foregroundColor(.blue)
                 .frame(width: 20)
-            
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.subheadline)
                     .foregroundColor(.primary)
-                
+
                 Text(message)
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            
+
             Spacer()
         }
         .padding()
@@ -414,15 +427,15 @@ struct InfoBox: View {
 struct InfoRow: View {
     let title: String
     let value: String
-    
+
     var body: some View {
         HStack {
             Text(title)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-            
+
             Spacer()
-            
+
             Text(value)
                 .font(.subheadline)
                 .foregroundColor(.primary)
@@ -436,12 +449,12 @@ struct ToggleRow: View {
     let title: String
     let description: String
     @Binding var isOn: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Toggle(title, isOn: $isOn)
                 .font(.subheadline)
-            
+
             Text(description)
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -456,7 +469,7 @@ struct ToggleRow: View {
 // MARK: - Privacy Policy View
 struct PrivacyPolicyView: View {
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -465,43 +478,43 @@ struct PrivacyPolicyView: View {
                         Text("Privacy Policy")
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                        
+
                         Text("Last Updated: \(formattedDate)")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
-                    
+
                     VStack(alignment: .leading, spacing: 16) {
                         PolicySection(
                             title: "Data Collection",
                             content: "BobCam does not collect, store, or transmit any personal data. All video processing occurs locally on your device using Apple's Vision Framework."
                         )
-                        
+
                         PolicySection(
                             title: "Camera Usage",
                             content: "The app accesses your device's front-facing camera solely for real-time lip movement detection. Camera data is processed in real-time and never saved to device storage or transmitted externally."
                         )
-                        
+
                         PolicySection(
                             title: "Video Content",
                             content: "Videos selected from your photo library are temporarily accessed for playback only. No video content is modified, copied, or transmitted outside of your device."
                         )
-                        
+
                         PolicySection(
                             title: "Child Safety",
                             content: "BobCam is designed with child safety as a priority. The app operates entirely offline, requires no user accounts, and processes all data locally to ensure maximum privacy protection for families."
                         )
-                        
+
                         PolicySection(
                             title: "Third-Party Services",
                             content: "BobCam does not integrate with any third-party analytics, advertising, or data collection services. The app is completely self-contained."
                         )
-                        
+
                         PolicySection(
                             title: "Data Security",
                             content: "Since no data is collected or transmitted, there are no data security risks associated with external storage or transmission. All processing occurs within iOS's secure app sandbox."
                         )
-                        
+
                         PolicySection(
                             title: "Contact Information",
                             content: "For privacy-related questions or concerns, please contact us at privacy@bobcam.app"
@@ -520,7 +533,7 @@ struct PrivacyPolicyView: View {
             }
         }
     }
-    
+
     private var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -531,13 +544,13 @@ struct PrivacyPolicyView: View {
 struct PolicySection: View {
     let title: String
     let content: String
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.headline)
                 .fontWeight(.semibold)
-            
+
             Text(content)
                 .font(.body)
                 .foregroundColor(.secondary)
@@ -562,7 +575,7 @@ extension VisionServiceState {
             return "Error"
         }
     }
-    
+
     var color: Color {
         switch self {
         case .idle:

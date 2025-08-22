@@ -1,3 +1,4 @@
+project 'BobCamAgent/BobCamAgent.xcodeproj'
 # Podfile for BobCam iOS Project
 
 # Minimum iOS version

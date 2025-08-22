@@ -1,0 +1,4 @@
+/* Korean localizations for feedback banner */
+"eating_positive" = "좋아요 잘 먹고 있어요.";
+"eating_prompt" = "밥 더 먹어요.";
+"analyzing" = "분석 중…";

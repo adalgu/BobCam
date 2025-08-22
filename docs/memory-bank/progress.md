@@ -1,5 +1,12 @@
 # Progress: 밥잘먹어YO (Bob-Cam)
 
+## Recent Minor Update (iOS UI)
+- Main screen layout changed from side-by-side (HStack) to stacked top/bottom (VStack).
+- Camera: top 40% height; Video player: bottom 60% height.
+- StatusBar (bottom overlay) and Settings button (topTrailing) preserved.
+- Debug overlay unchanged; remains layered via `.overlay { ... }` in debug mode.
+- Build succeeded on iPhone 16 Pro (iOS 18.6).
+
 ## 1. What Works
 
 *   **Application Stability**: The application (`main_stable.py`) is stable and robust.

@@ -5,19 +5,19 @@ import AVFoundation
 class PermissionManager: ObservableObject {
     @Published var cameraPermissionStatus: AVAuthorizationStatus = .notDetermined
     @Published var hasCompletedOnboarding = false
-    
+
     init() {
         checkInitialPermissions()
     }
-    
+
     func checkInitialPermissions() {
         cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
         hasCompletedOnboarding = cameraPermissionStatus == .authorized
     }
-    
+
     func requestCameraPermission() async {
         let granted = await AVCaptureDevice.requestAccess(for: .video)
-        
+
         await MainActor.run {
             self.cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
             self.hasCompletedOnboarding = granted
@@ -29,7 +29,7 @@ class PermissionManager: ObservableObject {
 struct OnboardingView: View {
     @StateObject private var permissionManager = PermissionManager()
     @State private var currentStep = 0
-    
+
     private let onboardingSteps = [
         OnboardingStep(
             icon: "video.fill",
@@ -50,7 +50,7 @@ struct OnboardingView: View {
             buttonText: "시작하기"
         )
     ]
-    
+
     var body: some View {
         if permissionManager.hasCompletedOnboarding {
             // 메인 앱으로 이동
@@ -60,7 +60,7 @@ struct OnboardingView: View {
             onboardingContent
         }
     }
-    
+
     private var onboardingContent: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -70,13 +70,13 @@ struct OnboardingView: View {
                         .font(.system(size: 80, weight: .light))
                         .foregroundColor(.blue)
                         .animation(.spring(response: 0.5, dampingFraction: 0.8), value: currentStep)
-                    
+
                     VStack(spacing: 16) {
                         Text(onboardingSteps[currentStep].title)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
-                        
+
                         Text(onboardingSteps[currentStep].description)
                             .font(.body)
                             .foregroundColor(.secondary)
@@ -86,7 +86,7 @@ struct OnboardingView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.horizontal, 32)
-                
+
                 // 하단 버튼 및 네비게이션 영역
                 VStack(spacing: 24) {
                     // 페이지 인디케이터
@@ -98,7 +98,7 @@ struct OnboardingView: View {
                                 .animation(.spring(response: 0.3), value: currentStep)
                         }
                     }
-                    
+
                     // 메인 액션 버튼
                     Button(action: handleMainAction) {
                         Text(onboardingSteps[currentStep].buttonText)
@@ -113,14 +113,14 @@ struct OnboardingView: View {
                             )
                     }
                     .disabled(currentStep == 1 && permissionManager.cameraPermissionStatus == .denied)
-                    
+
                     // 권한 거부 시 설정 안내
                     if currentStep == 1 && permissionManager.cameraPermissionStatus == .denied {
                         VStack(spacing: 12) {
                             Text("카메라 권한이 거부되었습니다")
                                 .font(.callout)
                                 .foregroundColor(.red)
-                            
+
                             Button("설정에서 권한 허용") {
                                 openAppSettings()
                             }
@@ -143,7 +143,7 @@ struct OnboardingView: View {
             }
         }
     }
-    
+
     private func handleMainAction() {
         switch currentStep {
         case 0:
@@ -151,7 +151,7 @@ struct OnboardingView: View {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                 currentStep = 1
             }
-            
+
         case 1:
             // 두 번째 단계: 권한 요청
             if permissionManager.cameraPermissionStatus == .notDetermined {
@@ -161,18 +161,18 @@ struct OnboardingView: View {
             } else if permissionManager.cameraPermissionStatus == .denied {
                 openAppSettings()
             }
-            
+
         case 2:
             // 세 번째 단계: 완료
             withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                 permissionManager.hasCompletedOnboarding = true
             }
-            
+
         default:
             break
         }
     }
-    
+
     private func openAppSettings() {
         if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(settingsURL)
