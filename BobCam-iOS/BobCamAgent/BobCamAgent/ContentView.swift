@@ -53,21 +53,34 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                // 카메라 피드 (상단 40%)
-                CameraView(cameraService: cameraService)
-                    .frame(height: geometry.size.height * 0.4)
-                    .frame(maxWidth: .infinity)
-                    .clipped()
-                    .onAppear {
-                        cameraService.startSession()
-                        cameraService.delegate = visionService
-                        visionService.startTracking()
-                    }
-                    .onDisappear {
-                        visionService.stopTracking()
-                        cameraService.stopSession()
-                    }
+                // 카메라 피드 (상단 40%) + 피드백 배너를 카메라 영역 하단에 배치
+                ZStack(alignment: .bottom) {
+                    CameraView(cameraService: cameraService)
+                        .onAppear {
+                            cameraService.startSession()
+                            cameraService.delegate = visionService
+                            visionService.startTracking()
+                        }
+                        .onDisappear {
+                            visionService.stopTracking()
+                            cameraService.stopSession()
+                        }
 
+                    if showFeedbackBanner {
+                        FeedbackBannerView(
+                            state: feedbackState,
+                            text: localizedMessage
+                        )
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 8)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .zIndex(1)
+                        .animation(.easeInOut(duration: 0.25), value: feedbackState)
+                    }
+                }
+                .frame(height: geometry.size.height * 0.4)
+                .frame(maxWidth: .infinity)
+                .clipped()
                 // 비디오 플레이어 (하단 60%)
                 VideoPlayerView(
                     videoService: videoService,
@@ -85,15 +98,6 @@ struct ContentView: View {
                     sensitivity: $visionService.sensitivity
                 )
                 .padding()
-            }
-            .overlay(alignment: .top) {
-                if showFeedbackBanner {
-                    FeedbackBannerView(
-                        state: feedbackState,
-                        text: localizedMessage
-                    )
-                    .animation(.easeInOut(duration: 0.25), value: feedbackState)
-                }
             }
             .overlay(alignment: .topTrailing) {
                 // 설정 버튼
