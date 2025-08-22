@@ -14,6 +14,7 @@ struct SettingsView: View {
     @State private var showingResetConfirmation = false
     @State private var showingPrivacyPolicy = false
     @State private var selectedSensitivity: Double = 0.5
+    @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
 
     var body: some View {
         NavigationView {
@@ -38,7 +39,8 @@ struct SettingsView: View {
                     UserExperienceSection(
                         showingResetConfirmation: $showingResetConfirmation,
                         showPerformanceMetrics: $showPerformanceMetrics,
-                        showAccuracyDisplay: $showAccuracyDisplay
+                        showAccuracyDisplay: $showAccuracyDisplay,
+                        showFeedbackBanner: $showFeedbackBanner
                     )
 
                     // Privacy and App Information
@@ -239,12 +241,22 @@ struct UserExperienceSection: View {
     @Binding var showingResetConfirmation: Bool
     @Binding var showPerformanceMetrics: Bool
     @Binding var showAccuracyDisplay: Bool
+    @Binding var showFeedbackBanner: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             SectionHeader(title: "User Experience", icon: "person.crop.circle")
 
             VStack(spacing: 12) {
+                // Feedback banner toggle
+                ToggleRow(
+                    title: "Feedback Banner",
+                    description: "Show guidance message at the top",
+                    isOn: $showFeedbackBanner
+                )
+
+                Divider()
+
                 // Performance monitoring toggle
                 ToggleRow(
                     title: "Performance Monitoring",
