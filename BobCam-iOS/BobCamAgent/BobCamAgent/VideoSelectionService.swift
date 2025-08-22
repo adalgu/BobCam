@@ -100,7 +100,7 @@ class VideoSelectionService: ObservableObject {
 
             do {
                 // Copy to app sandbox synchronously BEFORE this completion handler returns
-                let destinationURL = try self.copyVideoToDocumentsSync(from: tempURL)
+                let destinationURL = try VideoSelectionService.copyVideoToDocumentsSync(from: tempURL)
 
                 DispatchQueue.main.async {
                     // Load into player and persist path
@@ -216,21 +216,25 @@ class VideoSelectionService: ObservableObject {
         return destinationURL
     }
 
-    private func copyVideoToDocumentsSync(from sourceURL: URL) throws -> URL {
-        let documentsPath = getDocumentsDirectory()
+    private static func copyVideoToDocumentsSync(from sourceURL: URL) throws -> URL {
+        // Compute documents and target folder without touching @MainActor state
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let videoDirectory = documentsPath.appendingPathComponent(Constants.documentsSubdirectory)
 
         // Ensure directory exists
         try FileManager.default.createDirectory(at: videoDirectory, withIntermediateDirectories: true)
 
-        // Clear previous stored videos
-        cleanupStoredVideos()
+        // Clear previous stored videos (best-effort)
+        if let files = try? FileManager.default.contentsOfDirectory(at: videoDirectory, includingPropertiesForKeys: nil) {
+            for file in files {
+                try? FileManager.default.removeItem(at: file)
+            }
+        }
 
         // Build destination filename
         let timestamp = Int(Date().timeIntervalSince1970)
         let ext = sourceURL.pathExtension.isEmpty ? "mp4" : sourceURL.pathExtension
-        let fileName = "selected_video_\(timestamp).\(ext)"
-        let destinationURL = videoDirectory.appendingPathComponent(fileName)
+        let destinationURL = videoDirectory.appendingPathComponent("selected_video_\(timestamp).\(ext)")
 
         // Copy synchronously
         try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
