@@ -27,10 +27,16 @@ struct DebugCameraView: UIViewRepresentable {
         previewLayer.videoGravity = .resizeAspectFill
         previewLayer.frame = view.bounds
 
-        // Front camera mirroring
+        // Front camera mirroring - Fix for automaticallyAdjustsVideoMirroring crash
         if let connection = previewLayer.connection,
            connection.isVideoMirroringSupported {
+            // CRITICAL FIX: Disable automatic mirroring adjustment before setting manual mirroring
+            if connection.automaticallyAdjustsVideoMirroring {
+                connection.automaticallyAdjustsVideoMirroring = false
+                print("ℹ️ [DebugCameraView] Disabled automaticallyAdjustsVideoMirroring to prevent crash")
+            }
             connection.isVideoMirrored = true
+            print("ℹ️ [DebugCameraView] Applied manual video mirroring")
         }
 
         view.previewLayer = previewLayer

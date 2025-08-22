@@ -1,0 +1,908 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace BobCam-iOS/BobCamAgent.xcworkspace -scheme BobCamAgent -configuration Debug -sdk iphoneos build
+
+Build settings from command line:
+    SDKROOT = iphoneos18.5
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'BobCamAgent' in project 'BobCamAgent'
+        ➜ Implicit dependency on target 'Pods-BobCamAgent' in project 'Pods' via file 'Pods_BobCamAgent.framework' in build phase 'Link Binary'
+    Target 'Pods-BobCamAgent' in project 'Pods'
+        ➜ Explicit dependency on target 'SwiftLint' in project 'Pods'
+    Target 'SwiftLint' in project 'Pods' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -V
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 9db5ad4f94ac3f49219a6f82880e5e3d
+Build description path: /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/XCBuildData/9db5ad4f94ac3f49219a6f82880e5e3d.xcbuilddata
+CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products
+
+CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache
+
+CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos
+
+CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos
+
+CreateBuildDirectory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/SwiftLint
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    builtin-create-build-directory /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/SwiftLint
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphoneos/all-product-headers.yaml
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphoneos/all-product-headers.yaml
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphoneos/all-product-headers.yaml
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphoneos/all-product-headers.yaml
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyMetadataFileList (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-all-target-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyStaticMetadataFileList (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp
+-target arm64-apple-ios15.0 '-std=gnu11' -fobjc-arc -fmodules -gmodules '-fmodules-cache-path=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex' '-fmodule-name=Pods_BobCamAgent' -fpascal-strings -O0 -fno-common '-DPOD_CONFIGURATION_DEBUG=1' '-DDEBUG=1' '-DCOCOAPODS=1' '-DOBJC_OLD_DISPATCH_PROTOTYPES=0' -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -g -iquote /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap -ivfsoverlay /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphoneos/all-product-headers.yaml -iquote /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/include -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources-normal/arm64 -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/arm64 -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+-target arm64-apple-ios15.0 '-std=gnu11' -fmodules -gmodules '-fmodules-cache-path=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex' '-fmodule-name=Pods_BobCamAgent' -fpascal-strings -O0 -fno-common '-DPOD_CONFIGURATION_DEBUG=1' '-DDEBUG=1' '-DCOCOAPODS=1' -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -g -iquote /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-generated-files.hmap -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-own-target-headers.hmap -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-all-non-framework-target-headers.hmap -ivfsoverlay /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-8699adb1dd336b26511df848a716bd42-VFS-iphoneos/all-product-headers.yaml -iquote /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Pods_BobCamAgent-project-headers.hmap -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/include -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources-normal/arm64 -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/arm64 -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent.LinkFileList (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent.LinkFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c
+
+CpHeader /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Headers/Pods-BobCamAgent-umbrella.h /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-umbrella.h (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-umbrella.h /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Headers
+
+Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/module.modulemap /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent.modulemap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent.modulemap /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/module.modulemap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/Entitlements.plist (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/Entitlements.plist
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-project-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-project-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-own-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-generated-files.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-generated-files.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt
+
+Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Modules/module.modulemap /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/module.modulemap (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/module.modulemap /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Modules
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/5ee47a092eb4bcec65895c39176f4d18.sb (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    write-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/5ee47a092eb4bcec65895c39176f4d18.sb
+
+MkDir /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Headers (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    /bin/mkdir -p /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Headers
+
+MkDir /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    /bin/mkdir -p /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework
+
+MkDir /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /bin/mkdir -p /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app
+
+ProcessInfoPlistFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Info.plist /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-infoPlistUtility /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist -producttype com.apple.product-type.framework -expandbuildsettings -format binary -platform iphoneos -requiredArchitecture arm64 -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Info.plist
+
+ProcessProductPackaging "" /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "DF494HR686.com.bobcam.ios.app";
+    "com.apple.developer.team-identifier" = DF494HR686;
+    "get-task-allow" = 1;
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent
+
+ProcessProductPackaging /Users/gunn.kim/Library/Developer/Xcode/UserData/Provisioning\ Profiles/6b32fc7f-1ec8-4dba-98f7-119db86d75f1.mobileprovision /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/embedded.mobileprovision (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-productPackagingUtility /Users/gunn.kim/Library/Developer/Xcode/UserData/Provisioning\ Profiles/6b32fc7f-1ec8-4dba-98f7-119db86d75f1.mobileprovision -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/embedded.mobileprovision
+
+ProcessProductPackagingDER /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent.der (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /usr/bin/derq query -f xml -i /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent.der --raw
+
+PhaseScriptExecution [CP]\ Check\ Pods\ Manifest.lock /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /usr/bin/sandbox-exec -D SCRIPT_OUTPUT_FILE_0\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/Pods-BobCamAgent-checkManifestLockResult.txt -D SCRIPT_INPUT_FILE_0\=/Users/gunn.kim/study/BobCam/BobCam-iOS/Podfile.lock -D SCRIPT_INPUT_FILE_1\=/Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Manifest.lock -D SCRIPT_INPUT_FILE_2\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh -D SCRIPT_INPUT_ANCESTOR_0\=/ -D SCRIPT_INPUT_ANCESTOR_1\=/Users -D SCRIPT_INPUT_ANCESTOR_2\=/Users/gunn.kim -D SCRIPT_INPUT_ANCESTOR_3\=/Users/gunn.kim/Library -D SCRIPT_INPUT_ANCESTOR_4\=/Users/gunn.kim/Library/Developer -D SCRIPT_INPUT_ANCESTOR_5\=/Users/gunn.kim/Library/Developer/Xcode -D SCRIPT_INPUT_ANCESTOR_6\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData -D SCRIPT_INPUT_ANCESTOR_7\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp -D SCRIPT_INPUT_ANCESTOR_8\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build -D SCRIPT_INPUT_ANCESTOR_9\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex -D SCRIPT_INPUT_ANCESTOR_10\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build -D SCRIPT_INPUT_ANCESTOR_11\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos -D SCRIPT_INPUT_ANCESTOR_12\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build -D SCRIPT_INPUT_ANCESTOR_13\=/Users/gunn.kim/study -D SCRIPT_INPUT_ANCESTOR_14\=/Users/gunn.kim/study/BobCam -D SCRIPT_INPUT_ANCESTOR_15\=/Users/gunn.kim/study/BobCam/BobCam-iOS -D SCRIPT_INPUT_ANCESTOR_16\=/Users/gunn.kim/study/BobCam/BobCam-iOS/Pods -D SCRIPT_OUTPUT_ANCESTOR_0\=/ -D SCRIPT_OUTPUT_ANCESTOR_1\=/Users -D SCRIPT_OUTPUT_ANCESTOR_2\=/Users/gunn.kim -D SCRIPT_OUTPUT_ANCESTOR_3\=/Users/gunn.kim/Library -D SCRIPT_OUTPUT_ANCESTOR_4\=/Users/gunn.kim/Library/Developer -D SCRIPT_OUTPUT_ANCESTOR_5\=/Users/gunn.kim/Library/Developer/Xcode -D SCRIPT_OUTPUT_ANCESTOR_6\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData -D SCRIPT_OUTPUT_ANCESTOR_7\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp -D SCRIPT_OUTPUT_ANCESTOR_8\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build -D SCRIPT_OUTPUT_ANCESTOR_9\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex -D SCRIPT_OUTPUT_ANCESTOR_10\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build -D SCRIPT_OUTPUT_ANCESTOR_11\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos -D SCRIPT_OUTPUT_ANCESTOR_12\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build -D SCRIPT_OUTPUT_ANCESTOR_13\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources -D SRCROOT\=/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -D PROJECT_DIR\=/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -D OBJROOT\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex -D SYMROOT\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products -D DSTROOT\=/tmp/BobCamAgent.dst -D SHARED_PRECOMPS_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/PrecompiledHeaders -D CACHE_ROOT\=/var/folders/f_/zhyycd_j1pxc_j4vkz7gf34w0000gn/C/com.apple.DeveloperTools/16.4-16F6/Xcode -D CONFIGURATION_BUILD_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -D CONFIGURATION_TEMP_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos -D LOCROOT\=/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -D LOCSYMROOT\=/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -D INDEX_PRECOMPS_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/PrecompiledHeaders -D INDEX_DATA_STORE_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore -D TEMP_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build -D TARGET_TEMP_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build -D DERIVED_FILE_DIR\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources -f /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/5ee47a092eb4bcec65895c39176f4d18.sb /bin/sh -c /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Script-15EAECB89F70FD456E8DD2B0.sh
+
+SwiftDriver BobCamAgent normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BobCamAgent -Onone -enforce-exclusivity\=checked @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -target arm64-apple-ios15.0 -g -module-cache-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore -swift-version 5 -I /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -F /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -output-file-map /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphoneos/all-product-headers.yaml -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/include -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -emit-objc-header -emit-objc-header-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -working-directory /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -experimental-emit-module-separately -disable-cmo
+
+ScanDependencies /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    
+    Using response file: /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+    
+    builtin-ScanDependencies -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.d --serialize-diagnostics /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.dia -c /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o -index-unit-output-path /Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o
+
+ScanDependencies /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-dummy.m normal arm64 objective-c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    
+    Using response file: /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp
+    
+    builtin-ScanDependencies -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -ivfsstatcache /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wno-implicit-atomic-properties -Werror\=deprecated-objc-isa-usage -Wno-objc-interface-ivars -Werror\=objc-root-class -Wno-arc-repeated-use-of-weak -Wimplicit-retain-self -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wdeprecated-implementations -Wno-implicit-fallthrough -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp -MMD -MT dependencies -MF /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.d --serialize-diagnostics /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.dia -c /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-dummy.m -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o -index-unit-output-path /Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o
+
+SwiftCompile normal arm64 Compiling\ BobCamApp.swift,\ ContentView.swift,\ CameraService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/BobCamApp.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ContentView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift:63:6: warning: previewLayout is ignored in a #Preview macro. Use the `traits` argument of the macro to provide the desired layout, e.g. `.sizeThatFitsLayout. (from macro 'Preview')
+    .previewLayout(.sizeThatFits)
+     ^
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 Compiling\ AccuracyMonitor.swift,\ PerformanceMonitor.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/AccuracyMonitor.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/AccuracyMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring/PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 Compiling\ VideoSelectionService.swift,\ OnboardingView.swift,\ SettingsView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/SettingsView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift:103:64: warning: call to main actor-isolated static method 'copyVideoToDocumentsSync(from:)' in a synchronous nonisolated context; this is an error in the Swift 6 language mode
+                let destinationURL = try VideoSelectionService.copyVideoToDocumentsSync(from: tempURL)
+                                                               ^
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoSelectionService.swift:219:25: note: calls to static method 'copyVideoToDocumentsSync(from:)' from outside of its actor context are implicitly asynchronous
+    private static func copyVideoToDocumentsSync(from sourceURL: URL) throws -> URL {
+                        ^
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/OnboardingView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/SettingsView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift:63:6: warning: previewLayout is ignored in a #Preview macro. Use the `traits` argument of the macro to provide the desired layout, e.g. `.sizeThatFitsLayout. (from macro 'Preview')
+    .previewLayout(.sizeThatFits)
+     ^
+
+SwiftCompile normal arm64 Compiling\ ContentView+Debug.swift,\ DebugCameraView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/ContentView+Debug.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift:63:6: warning: previewLayout is ignored in a #Preview macro. Use the `traits` argument of the macro to provide the desired layout, e.g. `.sizeThatFitsLayout. (from macro 'Preview')
+    .previewLayout(.sizeThatFits)
+     ^
+
+SwiftCompile normal arm64 Compiling\ FeedbackBannerView.swift,\ StatusBar.swift,\ VideoPickerView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/StatusBar.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoPickerView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift:63:6: warning: previewLayout is ignored in a #Preview macro. Use the `traits` argument of the macro to provide the desired layout, e.g. `.sizeThatFitsLayout. (from macro 'Preview')
+    .previewLayout(.sizeThatFits)
+     ^
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/StatusBar.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoPickerView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 Compiling\ CameraView.swift,\ VisionService.swift,\ VideoService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/CameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VisionService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ BobCamAgent (in target 'BobCamAgent' from project 'BobCamAgent')
+
+EmitSwiftModule normal arm64 (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift:63:6: warning: previewLayout is ignored in a #Preview macro. Use the `traits` argument of the macro to provide the desired layout, e.g. `.sizeThatFitsLayout. (from macro 'Preview')
+    .previewLayout(.sizeThatFits)
+     ^
+
+SwiftCompile normal arm64 Compiling\ DebugIntegrationGuide.swift,\ DebugOverlayView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugIntegrationGuide.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/FeedbackBannerView.swift:63:6: warning: previewLayout is ignored in a #Preview macro. Use the `traits` argument of the macro to provide the desired layout, e.g. `.sizeThatFitsLayout. (from macro 'Preview')
+    .previewLayout(.sizeThatFits)
+     ^
+
+SwiftCompile normal arm64 Compiling\ ParameterTuningUI.swift,\ TuningIntegration.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningUI.swift:115:55: warning: non-sendable result type '[(CVPixelBuffer, TimeInterval)]' (aka 'Array<(CVBuffer, Double)>') cannot be sent from nonisolated context in call to instance method 'extractFramesFromDataset'; this is an error in the Swift 6 language mode
+                let frames = await groundTruthManager.extractFramesFromDataset(dataset)
+                                                      ^
+Swift.Array:1:23: note: generic struct 'Array' does not conform to the 'Sendable' protocol
+@frozen public struct Array<Element> : _DestructorSafeContainer {
+                      ^
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/TuningIntegration.swift:527:28: warning: value 'config' was defined but never used; consider replacing with boolean test
+                    if let config = tuningManager.optimizedConfiguration {
+                       ~~~~^~~~~~~~~
+                                                                         != nil
+
+SwiftCompile normal arm64 Compiling\ GroundTruthManager.swift,\ OptimizationEngine.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:120:13: warning: capture of 'self' with non-sendable type 'GroundTruthManager' in a '@Sendable' closure
+            self.frameCache[dataset.id] = frames
+            ^
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:77:7: note: class 'GroundTruthManager' does not conform to the 'Sendable' protocol
+class GroundTruthManager: ObservableObject {
+      ^
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:120:43: warning: capture of 'frames' with non-sendable type '[(CVPixelBuffer, TimeInterval)]' (aka 'Array<(CVBuffer, Double)>') in a '@Sendable' closure
+            self.frameCache[dataset.id] = frames
+                                          ^
+Swift.Array:1:23: note: generic struct 'Array' does not conform to the 'Sendable' protocol
+@frozen public struct Array<Element> : _DestructorSafeContainer {
+                      ^
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:119:9: warning: no 'async' operations occur within 'await' expression
+        await cacheQueue.async {
+        ^
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/GroundTruthManager.swift:373:13: warning: initialization of variable 'temporalAccuracySum' was never used; consider replacing with assignment to '_' or removing it
+        var temporalAccuracySum = 0.0
+        ~~~~^~~~~~~~~~~~~~~~~~~
+        _
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift:467:13: warning: initialization of immutable value 'sorted' was never used; consider replacing with assignment to '_' or removing it
+        let sorted = data.sorted()
+        ~~~~^~~~~~
+        _
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationEngine.swift:626:42: warning: reference to captured var 'iteration' in concurrently-executing code; this is an error in the Swift 6 language mode
+                currentProgress = Double(iteration) / Double(configuration.maxIterations)
+                                         ^
+
+SwiftCompile normal arm64 Compiling\ OptimizationRunner.swift,\ ParameterTuningFramework.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/OptimizationRunner.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ParameterTuning/ParameterTuningFramework.swift:208:13: warning: variable 'jitterSum' was never mutated; consider changing to 'let' constant
+        var jitterSum = 0.0
+        ~~~ ^
+        let
+
+CompileC /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    
+    Using response file: /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+    
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.d --serialize-diagnostics /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.dia -c /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/DerivedSources/Pods_BobCamAgent_vers.c -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o -index-unit-output-path /Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_vers.o
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/TargetConditionals-7JS0NT113VIER2JNFZ1VGNW9H.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/TargetConditionals-7JS0NT113VIER2JNFZ1VGNW9H.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stddef-2FWVE8A654PAQ3XY022YWJ4WA.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stddef-2FWVE8A654PAQ3XY022YWJ4WA.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/ptrauth-B2EP4IH3LJ91J7HP7GZL3JLQY.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/ptrauth-B2EP4IH3LJ91J7HP7GZL3JLQY.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdarg-2H9H420QGLHUARN2PFDDXQBNX.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdarg-2H9H420QGLHUARN2PFDDXQBNX.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_availability_internal-C5TVNOVO9KKLL2RSRCU542EYJ.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_availability_internal-C5TVNOVO9KKLL2RSRCU542EYJ.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/ptrcheck-674WSL4IRKXAC7GFY11KK9TS7.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/ptrcheck-674WSL4IRKXAC7GFY11KK9TS7.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_availability-8Y77XDN84V8GDTAHYJMSZVMU6.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_availability-8Y77XDN84V8GDTAHYJMSZVMU6.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdbool-BUH3DMRKSFJM3WG80L44FECU5.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdbool-BUH3DMRKSFJM3WG80L44FECU5.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/AvailabilityMacros-2DR980KRIE82ROOXV3Y6Q7PF7.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/AvailabilityMacros-2DR980KRIE82ROOXV3Y6Q7PF7.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/DarwinFoundation-8YXZ45KFCGQCXHS1N7YO9UCCG.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/DarwinFoundation-8YXZ45KFCGQCXHS1N7YO9UCCG.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_iso646-692Y92M774EB244X8TNNEZZOK.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_iso646-692Y92M774EB244X8TNNEZZOK.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_math-42EKBSP4ZT567WHBNZIPBB94P.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_math-42EKBSP4ZT567WHBNZIPBB94P.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_errno-EQJ8L0SW1RX6UHL1YWOK9VBCV.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_errno-EQJ8L0SW1RX6UHL1YWOK9VBCV.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/runetype-9DFBHUHCYK8MFBHZ7IQWA1EHE.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/runetype-9DFBHUHCYK8MFBHZ7IQWA1EHE.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_sys_select-53EUP465SI2JQ2FPAANVDFUJC.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_sys_select-53EUP465SI2JQ2FPAANVDFUJC.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/alloca-E2Z19EV2V0OG75BE0B1P9LEHR.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/alloca-E2Z19EV2V0OG75BE0B1P9LEHR.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_complex-5LW6ILGZFLREVBBKTBAIDOKDC.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_complex-5LW6ILGZFLREVBBKTBAIDOKDC.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_time-7JX5U86BOK4O8QG5HCPLS58TK.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_time-7JX5U86BOK4O8QG5HCPLS58TK.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_assert-9Z8SH3WHYREMG5LYPP11KSUCU.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_assert-9Z8SH3WHYREMG5LYPP11KSUCU.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/uuid-CAE46OYKPP4XKUIIUDZ8QKFXT.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/uuid-CAE46OYKPP4XKUIIUDZ8QKFXT.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_useconds_t-2BX5F09V3ZFPU96GCQLJ13JCL.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_useconds_t-2BX5F09V3ZFPU96GCQLJ13JCL.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/netinet_in-D6I4JG81CYP932ZJNM964HCKX.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/netinet_in-D6I4JG81CYP932ZJNM964HCKX.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_setjmp-E7SGD0QHMCODA3HRAO39AHBQ3.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_setjmp-E7SGD0QHMCODA3HRAO39AHBQ3.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_types-8QZKEW70A77EYCH8XA1S0XTMK.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_types-8QZKEW70A77EYCH8XA1S0XTMK.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_locale-1D2FIIFEFE5G8TBCW45GOZTKG.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_locale-1D2FIIFEFE5G8TBCW45GOZTKG.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_stdio-CBF20K3HQAGO5EPNYB6NL0KIW.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_stdio-CBF20K3HQAGO5EPNYB6NL0KIW.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/xlocale-73MVO1TTMKRD04RN5RWVTIT0W.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/xlocale-73MVO1TTMKRD04RN5RWVTIT0W.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_time-9ZY2UTS01SSYRXXBYNKKWF4SS.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_time-9ZY2UTS01SSYRXXBYNKKWF4SS.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/nl_types-7JVJS3WRXMTRGJA0KNSAK2C5F.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/nl_types-7JVJS3WRXMTRGJA0KNSAK2C5F.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/gethostuuid-7Q5DDM4DKE5FHOJJWHWR6ZCX1.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/gethostuuid-7Q5DDM4DKE5FHOJJWHWR6ZCX1.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_stdint-IXXBZGSXAECAHC12HY0OF5JV.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_stdint-IXXBZGSXAECAHC12HY0OF5JV.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/mach-LQVO7DKA4TML1F7XRYMX5V1F.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/mach-LQVO7DKA4TML1F7XRYMX5V1F.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdint-C5U3VDKKL5VZ708QOON31YJHH.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdint-C5U3VDKKL5VZ708QOON31YJHH.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_signal-73BZZO5WDCLJU5SIYDHC3SVN9.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_signal-73BZZO5WDCLJU5SIYDHC3SVN9.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_resource-7LFEE73147QAS2EZPMZZ5H22L.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_resource-7LFEE73147QAS2EZPMZZ5H22L.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/pthread-EI0KYHJKTJHZLFSL9KUI17D51.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/pthread-EI0KYHJKTJHZLFSL9KUI17D51.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_wait-1U6CXRWUPVA7LR2SD992ETV68.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_wait-1U6CXRWUPVA7LR2SD992ETV68.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdatomic-1677W27KS3MVJFDZFIRAMSMWP.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdatomic-1677W27KS3MVJFDZFIRAMSMWP.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_stdlib-DCMRZM84U9WVAA765RC1WQ1TD.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_stdlib-DCMRZM84U9WVAA765RC1WQ1TD.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_tgmath-9SPOAZKFXT36V7PN527U2ZZE8.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_tgmath-9SPOAZKFXT36V7PN527U2ZZE8.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_select-DXXDJD8RJFL0T6TE5YIWETGM0.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/sys_select-DXXDJD8RJFL0T6TE5YIWETGM0.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_ctype-1DNS6XKH3MEU7T5VXYUZRAGJP.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_ctype-1DNS6XKH3MEU7T5VXYUZRAGJP.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_limits-3FN1OAHGI85D8LSTO6VQ7X5QV.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_limits-3FN1OAHGI85D8LSTO6VQ7X5QV.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/__wctype-EBUEZOGSH59V66USPPYKQVEFV.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/__wctype-EBUEZOGSH59V66USPPYKQVEFV.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_limits-8HM02S5602UVRLISIRSDL16BZ.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_limits-8HM02S5602UVRLISIRSDL16BZ.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_wctype-4HZDK9IUC6MH3S4LIB3OOXRAX.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_wctype-4HZDK9IUC6MH3S4LIB3OOXRAX.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_wchar-3MPJH0M4N7FU5MUVC9VMUE940.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_wchar-3MPJH0M4N7FU5MUVC9VMUE940.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/unistd-AQC3OYC9Z90ETHABLN7QFHWMS.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/unistd-AQC3OYC9Z90ETHABLN7QFHWMS.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_inttypes-6NVVXO0P2NXS8OIMGLLV9C1AK.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_inttypes-6NVVXO0P2NXS8OIMGLLV9C1AK.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_float-B5M2S359L10OAZPWM20FR3H2B.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_float-B5M2S359L10OAZPWM20FR3H2B.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_inttypes-BWCHHDL5MVM5UFONE6HLERDTZ.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_inttypes-BWCHHDL5MVM5UFONE6HLERDTZ.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_float-3I301HN09UUVQ4U0MQYQH4GCS.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_float-3I301HN09UUVQ4U0MQYQH4GCS.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_tgmath-EGPOA5B6U4C2JPOV4ZWP7DZR1.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_tgmath-EGPOA5B6U4C2JPOV4ZWP7DZR1.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_strings-9E31AT41J2W6EQQLCITSS7S2R.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_strings-9E31AT41J2W6EQQLCITSS7S2R.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_fenv-D39G57V3S7FQM8PY9E8E6XA31.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_fenv-D39G57V3S7FQM8PY9E8E6XA31.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_string-4ZEZ77EFUZVEGJ7WKGTCQYA7N.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/_string-4ZEZ77EFUZVEGJ7WKGTCQYA7N.scan
+
+SwiftCompile normal arm64 Compiling\ CircularBuffer.swift,\ MetricsCalculator.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/CircularBuffer.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Utils/MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Darwin-2G41NVKK6GG05IRXJ2D2TFL7W.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Darwin-2G41NVKK6GG05IRXJ2D2TFL7W.scan
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for BobCamAgent (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriver\ Compilation\ Requirements BobCamAgent normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BobCamAgent -Onone -enforce-exclusivity\=checked @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -target arm64-apple-ios15.0 -g -module-cache-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore -swift-version 5 -I /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -F /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -output-file-map /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphoneos/all-product-headers.yaml -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/include -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -emit-objc-header -emit-objc-header-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -working-directory /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -experimental-emit-module-separately -disable-cmo
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/ObjectiveC-BED506IU4IXW5SSID8V7WA922.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/ObjectiveC-BED506IU4IXW5SSID8V7WA922.scan
+
+SwiftMergeGeneratedHeaders /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/BobCamAgent-Swift.h /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-swiftHeaderTool -arch arm64 /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/BobCamAgent-Swift.h
+
+Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/arm64-apple-ios.swiftmodule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/arm64-apple-ios.swiftdoc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftdoc (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftdoc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/arm64-apple-ios.abi.json /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.abi.json (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.abi.json /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftsourceinfo (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftsourceinfo /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_object-EZEKS4656A43ANHBEIT31HDH7.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_object-EZEKS4656A43ANHBEIT31HDH7.scan
+
+SwiftCompile normal arm64 Compiling\ DebugSettings.swift,\ LandmarksOverlayView.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/DebugSettings.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+
+SwiftCompile normal arm64 /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/DebugOverlay/LandmarksOverlayView.swift:257:13: warning: initialization of immutable value 'points' was never used; consider replacing with assignment to '_' or removing it
+        let points = outerLips.normalizedPoints
+        ~~~~^~~~~~
+        _
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_workgroup-1HC0UUBLA2MZ30EVTQGF1OE0A.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/os_workgroup-1HC0UUBLA2MZ30EVTQGF1OE0A.scan
+
+SwiftDriverJobDiscovery normal arm64 Compiling CircularBuffer.swift, MetricsCalculator.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AccuracyMonitor.swift, PerformanceMonitor.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Dispatch-DAWD5R47K8DYKFNCKFDCTAPOO.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Dispatch-DAWD5R47K8DYKFNCKFDCTAPOO.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreFoundation-9VDE0IKYGSAVPRQE0N8J3B0Q.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreFoundation-9VDE0IKYGSAVPRQE0N8J3B0Q.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/XPC-2JPPPHXXDJUBREB7N1RP8MWU9.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/XPC-2JPPPHXXDJUBREB7N1RP8MWU9.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/CFNetwork-23DEV324L3WHISZPQ186ZVIE7.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/CFNetwork-23DEV324L3WHISZPQ186ZVIE7.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Security-71FP1CJK94OXAYXH7OWPQ92AB.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Security-71FP1CJK94OXAYXH7OWPQ92AB.scan
+
+PrecompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-2FL3YHSMMYD5962RMAGCB7IB4.scan
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-precompileModule /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-2FL3YHSMMYD5962RMAGCB7IB4.scan
+
+CompileC /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-dummy.m normal arm64 objective-c com.apple.compilers.llvm.clang.1_0.compiler (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    
+    Using response file: /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp
+    
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -ivfsstatcache /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wno-implicit-atomic-properties -Werror\=deprecated-objc-isa-usage -Wno-objc-interface-ivars -Werror\=objc-root-class -Wno-arc-repeated-use-of-weak -Wimplicit-retain-self -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wdeprecated-implementations -Wno-implicit-fallthrough -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/e6072d4f65d7061329687fe24e3d63a7-common-args.resp -MMD -MT dependencies -MF /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.d --serialize-diagnostics /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.dia -c /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-dummy.m -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o -index-unit-output-path /Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods-BobCamAgent-dummy.o
+
+Libtool /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Pods_BobCamAgent normal (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -static -arch_only arm64 -D -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -L/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -filelist /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent.LinkFileList -framework Foundation -dependency_info /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Pods-BobCamAgent.build/Objects-normal/arm64/Pods_BobCamAgent_libtool_dependency_info.dat -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework/Pods_BobCamAgent
+
+RegisterExecutionPolicyException /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    builtin-RegisterExecutionPolicyException /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework
+
+Touch /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/Pods
+    /usr/bin/touch -c /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework
+
+Ld /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/__preview.dylib normal (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0 -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -O0 -L/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -install_name @rpath/BobCamAgent.debug.dylib -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_dependency_info.dat -Xlinker -no_adhoc_codesign -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/__preview.dylib
+
+ProcessInfoPlistFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Info.plist /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-infoPlistUtility /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -requiredArchitecture arm64 -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Info.plist
+
+CopyStringsFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/ko.lproj/Localizable.strings /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ko.lproj/Localizable.strings (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/ko.lproj -- /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ko.lproj/Localizable.strings
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ko.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'BobCamAgent' from project 'BobCamAgent')
+
+CopyStringsFile /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/en.lproj/Localizable.strings /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/en.lproj/Localizable.strings (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/en.lproj -- /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/en.lproj/Localizable.strings
+/Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GroundTruthManager.swift, OptimizationEngine.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OptimizationRunner.swift, ParameterTuningFramework.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ContentView+Debug.swift, DebugCameraView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ParameterTuningUI.swift, TuningIntegration.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling CameraView.swift, VisionService.swift, VideoService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling BobCamApp.swift, ContentView.swift, CameraService.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling DebugIntegrationGuide.swift, DebugOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling DebugSettings.swift, LandmarksOverlayView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling FeedbackBannerView.swift, StatusBar.swift, VideoPickerView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriverJobDiscovery normal arm64 Compiling VideoSelectionService.swift, OnboardingView.swift, SettingsView.swift (in target 'BobCamAgent' from project 'BobCamAgent')
+
+SwiftDriver\ Compilation BobCamAgent normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BobCamAgent -Onone -enforce-exclusivity\=checked @/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -target arm64-apple-ios15.0 -g -module-cache-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Index.noindex/DataStore -swift-version 5 -I /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -F /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos18.5-22F76-7fa4eea80a99bbfdc046826b63ec4baf.sdkstatcache -output-file-map /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-generated-files.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-own-target-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent-f2c2d120aa31232de18b29f2e0ea714b-VFS-iphoneos/all-product-headers.yaml -Xcc -iquote -Xcc /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-project-headers.hmap -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/include -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources-normal/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources/arm64 -Xcc -I/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -emit-objc-header -emit-objc-header-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent-Swift.h -working-directory /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib normal (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0 -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -O0 -L/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -L/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -filelist /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.LinkFileList -install_name @rpath/BobCamAgent.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -framework Pods_BobCamAgent -Xlinker -no_adhoc_codesign -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-ExecutorLinkFileList-normal-arm64.txt (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    construct-stub-executor-link-file-list /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'BobCamAgent' from project 'BobCamAgent')
+
+Ld /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent normal (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk -O0 -L/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -F/Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -rdynamic -Xlinker -no_deduplicate -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent-ExecutorLinkFileList-normal-arm64.txt /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent
+
+CopySwiftLibs /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-swiftStdLibTool --copy --verbose --sign E49944925F946698B4A142A6CBA2442A820F3F74 --scan-executable /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib --scan-folder /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Frameworks --scan-folder /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/PlugIns --scan-folder /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/SystemExtensions --scan-folder /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Extensions --scan-folder /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/Pods_BobCamAgent.framework --platform iphoneos --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name BobCamAgent --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 15.0 --bundle-identifier com.bobcam.ios.app --output /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app --target-triple arm64-apple-ios15.0 --binary-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent --dependency-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent_dependency_info.dat --stringsdata-file /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftFileList --metadata-file-list /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList --static-metadata-file-list /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyStaticMetadataFileList --swift-const-vals-list /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/Objects-normal/arm64/BobCamAgent.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2025-08-22 12:58:23.979 appintentsmetadataprocessor[26717:9421840] Starting appintentsmetadataprocessor export
+2025-08-22 12:58:23.981 appintentsmetadataprocessor[26717:9421840] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+AppIntentsSSUTraining (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Info.plist --temp-dir-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/ssu --bundle-id com.bobcam.ios.app --product-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app --extracted-metadata-path /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/Metadata.appintents --metadata-file-list /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.DependencyMetadataFileList --archive-ssu-assets
+2025-08-22 12:58:23.999 appintentsnltrainingprocessor[26718:9421841] Parsing options for appintentsnltrainingprocessor
+2025-08-22 12:58:24.000 appintentsnltrainingprocessor[26718:9421841] No AppShortcuts found - Skipping.
+
+CodeSign /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Signing Identity:     "Apple Development: adalgu@gmail.com (9YSSHCTP98)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.bobcam.ios.app"
+                          (6b32fc7f-1ec8-4dba-98f7-119db86d75f1)
+    
+    /usr/bin/codesign --force --sign E49944925F946698B4A142A6CBA2442A820F3F74 --timestamp\=none --generate-entitlement-der /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/BobCamAgent.debug.dylib
+
+CodeSign /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/__preview.dylib (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Signing Identity:     "Apple Development: adalgu@gmail.com (9YSSHCTP98)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.bobcam.ios.app"
+                          (6b32fc7f-1ec8-4dba-98f7-119db86d75f1)
+    
+    /usr/bin/codesign --force --sign E49944925F946698B4A142A6CBA2442A820F3F74 --timestamp\=none --generate-entitlement-der /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app/__preview.dylib
+
+CodeSign /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Signing Identity:     "Apple Development: adalgu@gmail.com (9YSSHCTP98)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.bobcam.ios.app"
+                          (6b32fc7f-1ec8-4dba-98f7-119db86d75f1)
+    
+    /usr/bin/codesign --force --sign E49944925F946698B4A142A6CBA2442A820F3F74 --entitlements /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphoneos/BobCamAgent.build/BobCamAgent.app.xcent --timestamp\=none --generate-entitlement-der /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app
+
+RegisterExecutionPolicyException /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-RegisterExecutionPolicyException /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app
+
+Validate /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-validationUtility /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app -infoplist-subpath Info.plist
+
+Touch /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/gunn.kim/study/BobCam/BobCam-iOS/BobCamAgent
+    /usr/bin/touch -c /Users/gunn.kim/Library/Developer/Xcode/DerivedData/BobCamAgent-bmodmjzvasvqgwgtvfxtgovkmjlp/Build/Products/Debug-iphoneos/BobCamAgent.app
+
+** BUILD SUCCEEDED **
+

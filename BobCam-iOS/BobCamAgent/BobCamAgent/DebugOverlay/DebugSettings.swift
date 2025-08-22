@@ -7,6 +7,77 @@
 
 import Foundation
 import Combine
+import UIKit
+
+// MARK: - Supporting Types
+
+enum SystemHealthStatus {
+    case healthy
+    case warning
+    case critical
+    case failure
+    
+    var color: UIColor {
+        switch self {
+        case .healthy: return .systemGreen
+        case .warning: return .systemYellow  
+        case .critical: return .systemOrange
+        case .failure: return .systemRed
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .healthy: return "System Healthy"
+        case .warning: return "Performance Issues"
+        case .critical: return "Critical Issues"
+        case .failure: return "System Failure"
+        }
+    }
+}
+
+struct VisionSystemError {
+    let timestamp: Date
+    let type: ErrorType
+    let message: String
+    let severity: Severity
+    
+    enum ErrorType {
+        case memoryPressure
+        case frameProcessingFailure
+        case landmarkExtractionError
+        case threadSafetyViolation
+        case visionFrameworkError
+        case cameraConnectionError
+        
+        var icon: String {
+            switch self {
+            case .memoryPressure: return "memorychip.fill"
+            case .frameProcessingFailure: return "camera.fill"
+            case .landmarkExtractionError: return "face.dashed.fill"
+            case .threadSafetyViolation: return "exclamationmark.triangle.fill"
+            case .visionFrameworkError: return "eye.fill"
+            case .cameraConnectionError: return "video.slash.fill"
+            }
+        }
+    }
+    
+    enum Severity: Int, CaseIterable {
+        case info = 0
+        case warning = 1
+        case error = 2
+        case critical = 3
+        
+        var color: UIColor {
+            switch self {
+            case .info: return .systemBlue
+            case .warning: return .systemYellow
+            case .error: return .systemOrange  
+            case .critical: return .systemRed
+            }
+        }
+    }
+}
 
 /// Debug settings manager for controlling visibility and behavior of debug features
 class DebugSettings: ObservableObject {
@@ -31,6 +102,18 @@ class DebugSettings: ObservableObject {
 
     // MARK: - Configuration Access
     var currentConfiguration: LipDetectionConfiguration = .default
+    
+    // MARK: - Exception Logging & Monitoring
+    @Published var enableExceptionLogging: Bool = true
+    @Published var enableMemoryMonitoring: Bool = true
+    @Published var enableThreadSafetyValidation: Bool = true
+    @Published var exceptionCount: Int = 0
+    @Published var lastExceptionMessage: String = ""
+    @Published var lastExceptionTime: Date?
+    
+    // System health tracking
+    @Published var systemHealthStatus: SystemHealthStatus = .healthy
+    @Published var visionSystemErrors: [VisionSystemError] = []
 
     // MARK: - Color Schemes
     enum DebugColorScheme: String, CaseIterable {
@@ -136,6 +219,78 @@ class DebugSettings: ObservableObject {
     /// Update configuration (called from VisionService)
     func updateConfiguration(_ config: LipDetectionConfiguration) {
         currentConfiguration = config
+    }
+    
+    /// Log a vision system error
+    func logError(_ type: VisionSystemError.ErrorType, message: String, severity: VisionSystemError.Severity = .warning) {
+        guard enableExceptionLogging else { return }
+        
+        let error = VisionSystemError(
+            timestamp: Date(),
+            type: type,
+            message: message,
+            severity: severity
+        )
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.visionSystemErrors.append(error)
+            
+            // Keep only last 50 errors
+            if let self = self, self.visionSystemErrors.count > 50 {
+                self.visionSystemErrors.removeFirst(self.visionSystemErrors.count - 50)
+            }
+            
+            // Update exception count and last message
+            self?.exceptionCount += 1
+            self?.lastExceptionMessage = message
+            self?.lastExceptionTime = Date()
+            
+            // Update system health status
+            self?.updateSystemHealthStatus()
+        }
+        
+        print("🔍 [VisionSystem] \(severity) - \(type): \(message)")
+    }
+    
+    /// Log thread safety violation
+    func logThreadSafetyViolation(_ message: String) {
+        guard enableThreadSafetyValidation else { return }
+        logError(.threadSafetyViolation, message: message, severity: .error)
+    }
+    
+    /// Log memory pressure event
+    func logMemoryPressure(_ level: String, details: String = "") {
+        guard enableMemoryMonitoring else { return }
+        let message = "Memory pressure: \(level)" + (details.isEmpty ? "" : " - \(details)")
+        logError(.memoryPressure, message: message, severity: .warning)
+    }
+    
+    /// Update system health status based on recent errors
+    private func updateSystemHealthStatus() {
+        let recentErrors = visionSystemErrors.filter { 
+            $0.timestamp.timeIntervalSinceNow > -300 // Last 5 minutes
+        }
+        
+        let criticalErrors = recentErrors.filter { $0.severity == .critical }
+        let errors = recentErrors.filter { $0.severity == .error }
+        let warnings = recentErrors.filter { $0.severity == .warning }
+        
+        if !criticalErrors.isEmpty {
+            systemHealthStatus = .failure
+        } else if errors.count >= 3 {
+            systemHealthStatus = .critical
+        } else if warnings.count >= 5 {
+            systemHealthStatus = .warning
+        } else {
+            systemHealthStatus = .healthy
+        }
+    }
+    
+    /// Clear old errors (older than 1 hour)
+    func cleanupOldErrors() {
+        let oneHourAgo = Date().addingTimeInterval(-3600)
+        visionSystemErrors.removeAll { $0.timestamp < oneHourAgo }
+        updateSystemHealthStatus()
     }
 
     // MARK: - Private Methods

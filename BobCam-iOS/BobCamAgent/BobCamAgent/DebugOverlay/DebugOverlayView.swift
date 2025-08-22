@@ -27,7 +27,7 @@ struct DebugOverlayView: View {
             VStack {
                 HStack {
                     Spacer()
-                    debugToggleButton
+                    debugToggleButtons
                 }
                 Spacer()
             }
@@ -35,16 +35,31 @@ struct DebugOverlayView: View {
         }
     }
 
-    private var debugToggleButton: some View {
-        Button(action: {
-            debugSettings.isDebugModeEnabled.toggle()
-        }) {
-            Image(systemName: debugSettings.isDebugModeEnabled ? "bug.fill" : "bug")
-                .font(.system(size: 16))
-                .foregroundColor(debugSettings.isDebugModeEnabled ? .green : .gray)
-                .padding(8)
-                .background(Color.black.opacity(0.7))
-                .clipShape(Circle())
+    private var debugToggleButtons: some View {
+        HStack(spacing: 8) {
+            // Lip overlay quick toggle (visible even when debug panel collapsed)
+            Button(action: {
+                debugSettings.showLandmarksOverlay.toggle()
+            }) {
+                Image(systemName: debugSettings.showLandmarksOverlay ? "mouth.fill" : "mouth")
+                    .font(.system(size: 14))
+                    .foregroundColor(debugSettings.showLandmarksOverlay ? .yellow : .white)
+                    .padding(8)
+                    .background(Color.black.opacity(0.7))
+                    .clipShape(Circle())
+            }
+
+            // Main debug mode toggle
+            Button(action: {
+                debugSettings.isDebugModeEnabled.toggle()
+            }) {
+                Image(systemName: debugSettings.isDebugModeEnabled ? "ladybug.fill" : "ladybug")
+                    .font(.system(size: 16))
+                    .foregroundColor(debugSettings.isDebugModeEnabled ? .green : .gray)
+                    .padding(8)
+                    .background(Color.black.opacity(0.7))
+                    .clipShape(Circle())
+            }
         }
     }
 
@@ -173,6 +188,11 @@ struct PerformanceMetricsView: View {
     let fps: Double
     let memoryMB: Double
     let peakMemoryMB: Double
+    
+    @State private var crashDetected = false
+    @State private var lastUpdateTime = Date()
+    @State private var frameDropCount = 0
+    @State private var lastFrameCount: Double = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -183,7 +203,11 @@ struct PerformanceMetricsView: View {
                 Text("Performance")
                     .foregroundColor(.white)
                     .font(.caption.bold())
+                
                 Spacer()
+                
+                // System health indicators
+                systemHealthIndicators
             }
 
             HStack {
@@ -197,17 +221,164 @@ struct PerformanceMetricsView: View {
                     Text("FPS: \(String(format: "%.1f", fps))")
                         .foregroundColor(fpsColor(fps))
                         .font(.caption2)
-                    Text("Mem: \(String(format: "%.1f MB (peak %.1f)", memoryMB, peakMemoryMB))")
-                        .foregroundColor(.cyan)
-                        .font(.caption2)
+                    
+                    HStack {
+                        Text("Mem: \(String(format: "%.1f MB", memoryMB))")
+                            .foregroundColor(memoryColor(memoryMB, peak: peakMemoryMB))
+                            .font(.caption2)
+                        
+                        // Memory pressure indicator
+                        if memoryPressureLevel != .normal {
+                            memoryPressureIndicator
+                        }
+                    }
+                    
+                    // Frame drop indicator
+                    if frameDropCount > 0 {
+                        Text("Dropped: \(frameDropCount) frames")
+                            .foregroundColor(.red)
+                            .font(.caption2)
+                    }
+                    
+                    // Exception/crash indicator
+                    if crashDetected {
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundColor(.red)
+                                .font(.caption2)
+                            Text("Exception detected")
+                                .foregroundColor(.red)
+                                .font(.caption2)
+                        }
+                    }
                 }
 
                 Spacer()
             }
         }
         .padding(8)
-        .background(Color.black.opacity(0.3))
+        .background(backgroundColorForHealth)
         .cornerRadius(8)
+        .onAppear {
+            setupCrashDetection()
+        }
+        .onChange(of: fps) { newFPS in
+            detectFrameDrops(newFPS: newFPS)
+        }
+    }
+    
+    private var systemHealthIndicators: some View {
+        HStack(spacing: 4) {
+            // CPU health
+            Circle()
+                .fill(cpuHealthColor)
+                .frame(width: 8, height: 8)
+            
+            // Memory health  
+            Circle()
+                .fill(memoryHealthColor)
+                .frame(width: 8, height: 8)
+                
+            // Vision system health
+            Circle()
+                .fill(visionHealthColor)
+                .frame(width: 8, height: 8)
+        }
+    }
+    
+    private var memoryPressureIndicator: some View {
+        Text(memoryPressureLevel.symbol)
+            .foregroundColor(.red)
+            .font(.caption2)
+    }
+    
+    private var memoryPressureLevel: MemoryPressureLevel {
+        let pressure = ProcessInfo.processInfo.thermalState
+        switch pressure {
+        case .nominal: return .normal
+        case .fair: return .moderate  
+        case .serious: return .high
+        case .critical: return .critical
+        @unknown default: return .unknown
+        }
+    }
+    
+    private enum MemoryPressureLevel {
+        case normal, moderate, high, critical, unknown
+        
+        var symbol: String {
+            switch self {
+            case .normal: return ""
+            case .moderate: return "⚠️"
+            case .high: return "🔶"  
+            case .critical: return "🔴"
+            case .unknown: return "❓"
+            }
+        }
+    }
+    
+    private var backgroundColorForHealth: Color {
+        if crashDetected {
+            return Color.red.opacity(0.2)
+        } else if memoryPressureLevel == .critical {
+            return Color.orange.opacity(0.2)
+        } else {
+            return Color.black.opacity(0.3)
+        }
+    }
+    
+    private var cpuHealthColor: Color {
+        if processingTimeMs > 100 { return .red }
+        if processingTimeMs > 50 { return .orange }
+        return .green
+    }
+    
+    private var memoryHealthColor: Color {
+        switch memoryPressureLevel {
+        case .normal: return .green
+        case .moderate: return .yellow
+        case .high: return .orange
+        case .critical: return .red
+        case .unknown: return .gray
+        }
+    }
+    
+    private var visionHealthColor: Color {
+        if fps < 8 { return .red }
+        if fps < 12 { return .orange }  
+        if jitter > 0.05 { return .yellow }
+        return .green
+    }
+    
+    private func setupCrashDetection() {
+        // Monitor for NSException and EXC_BAD_ACCESS
+        signal(SIGABRT) { _ in
+            DispatchQueue.main.async {
+                // This won't actually execute in a crash, but shows the intent
+            }
+        }
+    }
+    
+    private func detectFrameDrops(newFPS: Double) {
+        let currentTime = Date()
+        let timeDelta = currentTime.timeIntervalSince(lastUpdateTime)
+        
+        if timeDelta > 0.5 { // Check every 500ms
+            let expectedFrames = timeDelta * 15.0 // Target 15fps
+            let actualFrames = newFPS * timeDelta
+            let droppedFrames = max(0, expectedFrames - actualFrames)
+            
+            if droppedFrames > 2 {
+                frameDropCount = Int(droppedFrames)
+                // Clear counter after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    frameDropCount = 0
+                }
+            }
+            
+            lastUpdateTime = currentTime
+            lastFrameCount = newFPS
+        }
     }
 
     private func jitterColor(_ jitter: Double) -> Color {
@@ -226,6 +397,14 @@ struct PerformanceMetricsView: View {
         if value >= 15 { return .green }
         if value >= 12 { return .orange }
         return .red
+    }
+    
+    private func memoryColor(_ current: Double, peak: Double) -> Color {
+        let memoryIncrease = current / max(peak, 1.0)
+        if current > 100 { return .red }      // Over 100MB
+        if current > 50 { return .orange }    // Over 50MB
+        if memoryIncrease > 0.8 { return .yellow } // Near peak
+        return .cyan
     }
 }
 

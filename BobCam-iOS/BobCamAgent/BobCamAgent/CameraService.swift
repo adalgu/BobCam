@@ -68,7 +68,35 @@ class CameraService: NSObject, ObservableObject {
     // MARK: - Public Methods
     func startSession() {
         sessionQueue.async { [weak self] in
-            self?.startCaptureSession()
+            guard let self = self else { return }
+
+            // If permission status is not determined, request permission first so the system prompt appears.
+            if self.permissionStatus == .notDetermined {
+                // Use a Task to call the async permission request and then continue on the session queue.
+                Task {
+                    let granted = await self.requestPermission()
+                    if granted {
+                        // Ensure startCaptureSession runs on the session queue
+                        self.sessionQueue.async { [weak self] in
+                            self?.startCaptureSession()
+                        }
+                    } else {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.delegate?.didEncounterCameraError(.permissionDenied)
+                        }
+                    }
+                }
+                return
+            }
+
+            // If permission already determined, proceed or report denied
+            if self.permissionStatus == .authorized {
+                self.startCaptureSession()
+            } else {
+                DispatchQueue.main.async {
+                    self.delegate?.didEncounterCameraError(.permissionDenied)
+                }
+            }
         }
     }
 
