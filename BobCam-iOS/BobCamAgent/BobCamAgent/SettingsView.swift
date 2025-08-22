@@ -15,6 +15,7 @@ struct SettingsView: View {
     @State private var showingPrivacyPolicy = false
     @State private var selectedSensitivity: Double = 0.5
     @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
+    @AppStorage("useMultiModalDetection") private var useMultiModalDetection: Bool = false
 
     var body: some View {
         NavigationView {
@@ -32,7 +33,8 @@ struct SettingsView: View {
                         selectedSensitivity: $selectedSensitivity,
                         isDebugModeEnabled: $isDebugModeEnabled,
                         showPerformanceMetrics: $showPerformanceMetrics,
-                        showAccuracyDisplay: $showAccuracyDisplay
+                        showAccuracyDisplay: $showAccuracyDisplay,
+                        useMultiModalDetection: $useMultiModalDetection
                     )
 
                     // User Experience Settings
@@ -125,6 +127,7 @@ struct AlgorithmSettingsSection: View {
     @Binding var isDebugModeEnabled: Bool
     @Binding var showPerformanceMetrics: Bool
     @Binding var showAccuracyDisplay: Bool
+    @Binding var useMultiModalDetection: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -197,6 +200,46 @@ struct AlgorithmSettingsSection: View {
                         .background(visionService.serviceState.color.opacity(0.2))
                         .foregroundColor(visionService.serviceState.color)
                         .clipShape(Capsule())
+                }
+            }
+            .padding()
+            .background(Color.secondary.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+
+            // Detection Method Selection
+            VStack(alignment: .leading, spacing: 8) {
+                Toggle("멀티모달 감지 (실험적)", isOn: $useMultiModalDetection)
+                    .font(.subheadline)
+                
+                if useMultiModalDetection {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("멀티모달 감지 활성화:")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Text("• 입술 움직임 감지")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        
+                        Text("• 손 동작 감지 (8fps)")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        
+                        Text("• 숟가락/젓가락 감지 (4fps)")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        
+                        Text("⚠️ 베타 기능: 배터리 사용량이 증가할 수 있습니다")
+                            .font(.caption2)
+                            .foregroundColor(.orange)
+                            .padding(.top, 2)
+                    }
+                    .padding(.top, 4)
+                } else {
+                    Text("기본 립 트래킹 모드 (15fps)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.top, 4)
                 }
             }
             .padding()

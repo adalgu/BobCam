@@ -6,10 +6,12 @@ import Combine
 struct ContentView: View {
     @StateObject private var cameraService = CameraService()
     @StateObject private var visionService = VisionService()
+    @StateObject private var multiModalService = MultiModalEatingDetectionService()
     @StateObject private var videoService = VideoService()
     @StateObject private var videoSelectionService: VideoSelectionService
     @State private var showingSettings = false
     @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
+    @AppStorage("useMultiModalDetection") private var useMultiModalDetection: Bool = false
     @State private var feedbackState: FeedbackBannerView.FeedbackState = .neutral
 
     init() {
@@ -18,13 +20,25 @@ struct ContentView: View {
         _videoSelectionService = StateObject(wrappedValue: VideoSelectionService(videoService: videoService))
     }
 
+    // Current detection service (선택된 감지 서비스)
+    private var currentDetectionService: any FaceTrackingServiceProtocol {
+          useMultiModalDetection ? multiModalService : visionService
+        }
+    
     // Debounced publisher to stabilize feedback banner updates
     private var debouncedEatingPublisher: AnyPublisher<Bool, Never> {
-        visionService.$isEating
-            .removeDuplicates()
-            .debounce(for: .seconds(1.5), scheduler: RunLoop.main)
-            .eraseToAnyPublisher()
-    }
+          if useMultiModalDetection {
+              return multiModalService.$isEating
+                  .removeDuplicates()
+                  .debounce(for: .seconds(1.5), scheduler: RunLoop.main)
+                  .eraseToAnyPublisher()
+          } else {
+              return visionService.$isEating
+                  .removeDuplicates()
+                  .debounce(for: .seconds(1.5), scheduler: RunLoop.main)
+                  .eraseToAnyPublisher()
+          }
+        }
 
     // Localized message derived from current feedback state
     private var localizedMessage: String {
@@ -58,12 +72,16 @@ struct ContentView: View {
                     CameraView(cameraService: cameraService)
                         .onAppear {
                             cameraService.startSession()
-                            cameraService.delegate = visionService
-                            visionService.startTracking()
+                            setupDetectionService()
                         }
                         .onDisappear {
-                            visionService.stopTracking()
+                            stopAllDetectionServices()
                             cameraService.stopSession()
+                        }
+                        .onChange(of: useMultiModalDetection) { _ in
+                            // A/B 테스트: 감지 모드 변경 시 서비스 전환
+                            stopAllDetectionServices()
+                            setupDetectionService()
                         }
 
                     if showFeedbackBanner {
@@ -91,11 +109,11 @@ struct ContentView: View {
             }
             .overlay(alignment: .bottom) {
                 StatusBar(
-                    isEating: visionService.isEating,
+                    isEating: currentDetectionService.isEating,
                     visionService: visionService,
                     videoService: videoService,
                     videoSelectionService: videoSelectionService,
-                    sensitivity: $visionService.sensitivity
+                                          sensitivity: useMultiModalDetection ? $multiModalService.sensitivity : $visionService.sensitivity
                 )
                 .padding()
             }
@@ -116,13 +134,25 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
         .onReceive(visionService.$isEating) { isEating in
-            // 립 감지 결과에 따른 비디오 제어
-            if isEating {
-                videoService.playVideo()
-            } else {
-                videoService.pauseVideo()
+            // 기존 립 감지 결과에 따른 비디오 제어
+            if !useMultiModalDetection {
+                if isEating {
+                    videoService.playVideo()
+                } else {
+                    videoService.pauseVideo()
+                }
             }
         }
+        // .onReceive(multiModalService.$isEating) { isEating in
+        //     // 멀티모달 감지 결과에 따른 비디오 제어
+        //     if useMultiModalDetection {
+        //         if isEating {
+        //             videoService.playVideo()
+        //         } else {
+        //             videoService.pauseVideo()
+        //         }
+        //     }
+        // }
         .onReceive(debouncedEatingPublisher) { isEating in
             feedbackState = isEating ? .eating : .notEating
         }
@@ -134,6 +164,26 @@ struct ContentView: View {
                 isPresented: $showingSettings
             )
         }
+    }
+    
+    // MARK: - Helper Methods
+    private func setupDetectionService() {
+        if useMultiModalDetection {
+            print("[ContentView] 멀티모달 감지 모드 시작")
+            cameraService.delegate = multiModalService
+            multiModalService.startTracking()
+        } else {
+            print("[ContentView] 기본 립 트래킹 모드 시작")
+            cameraService.delegate = visionService
+            visionService.startTracking()
+        }
+    }
+    
+    private func stopAllDetectionServices() {
+        print("[ContentView] 모든 감지 서비스 중지")
+        visionService.stopTracking()
+        multiModalService.stopTracking()
+        cameraService.delegate = nil
     }
 }
 

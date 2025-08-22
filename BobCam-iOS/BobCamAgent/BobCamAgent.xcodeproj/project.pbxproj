@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		288F32A3BFC84B570FC08A4F /* Pods_BobCamAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E0C4817F1C307B7CA21154 /* Pods_BobCamAgent.framework */; };
+		2F16158ECEC03615E006DC00 /* MultiModalEatingDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1946458322DFE1806E784D4E /* MultiModalEatingDetectionService.swift */; };
 		35A7D251808D05D7C47F4DE0 /* Pods_BobCamAgent_BobCamAgentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BA7BF8F481AC8C761AD6EA /* Pods_BobCamAgent_BobCamAgentUITests.framework */; };
 		5055E1617C7308B79ADB7E31 /* Pods_BobCamAgentTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75433229224FAB2C79674824 /* Pods_BobCamAgentTests.framework */; };
 		A10001021B00000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001031B00000000000001 /* ContentView.swift */; };
@@ -64,6 +65,7 @@
 /* Begin PBXFileReference section */
 		00BA7BF8F481AC8C761AD6EA /* Pods_BobCamAgent_BobCamAgentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BobCamAgent_BobCamAgentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08E0C4817F1C307B7CA21154 /* Pods_BobCamAgent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BobCamAgent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1946458322DFE1806E784D4E /* MultiModalEatingDetectionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiModalEatingDetectionService.swift; sourceTree = "<group>"; };
 		232D0D25C80E1E49B9D4C0B6 /* Pods-BobCamAgentTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgentTests.debug.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests.debug.xcconfig"; sourceTree = "<group>"; };
 		28C7A1CC96EBBFA42693A22A /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		330BED35A79161F74D36BFA1 /* Pods-BobCamAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgent.release.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent.release.xcconfig"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				A1000113F1B00000000000001 /* run_phase2_test.swift */,
 				A1FB10011B00000000000001 /* Localizable.strings */,
 				A10001501B00000000000001 /* Info.plist */,
+				1946458322DFE1806E784D4E /* MultiModalEatingDetectionService.swift */,
 			);
 			path = BobCamAgent;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				A10001341B00000000000001 /* ParameterTuningFramework.swift in Sources */,
 				A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */,
 				A10001381B00000000000001 /* TuningIntegration.swift in Sources */,
+				2F16158ECEC03615E006DC00 /* MultiModalEatingDetectionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
