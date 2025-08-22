@@ -41,6 +41,7 @@
 		A10001441B00000000000001 /* BobCamAgentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001451B00000000000001 /* BobCamAgentUITestsLaunchTests.swift */; };
 		A10001B11B00000000000001 /* BobCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001011B00000000000001 /* BobCamApp.swift */; };
 		A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB00011B00000000000001 /* FeedbackBannerView.swift */; };
+		A1FB10041B00000000000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1FB10011B00000000000001 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,7 +110,21 @@
 		A10001521B00000000000001 /* BobCamAgentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BobCamAgentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10001B21B00000000000001 /* BobCamAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BobCamAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1FB00011B00000000000001 /* FeedbackBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackBannerView.swift; sourceTree = "<group>"; };
+		A1FB10021B00000000000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A1FB10031B00000000000001 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXVariantGroup section */
+		A1FB10011B00000000000001 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1FB10021B00000000000001 /* en */,
+				A1FB10031B00000000000001 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A10001F31B00000000000001 /* Frameworks */ = {
@@ -242,6 +257,7 @@
 				A1000113B1B00000000000001 /* Phase2ValidationTest.swift */,
 				A1000113D1B00000000000001 /* VideoSelectionIntegrationTest.swift */,
 				A1000113F1B00000000000001 /* run_phase2_test.swift */,
+				A1FB10011B00000000000001 /* Localizable.strings */,
 				A10001501B00000000000001 /* Info.plist */,
 			);
 			path = BobCamAgent;
@@ -360,6 +376,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = A10001561B00000000000001;
 			productRefGroup = A1000115A1B00000000000001 /* Products */;
@@ -378,6 +395,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1FB10041B00000000000001 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
