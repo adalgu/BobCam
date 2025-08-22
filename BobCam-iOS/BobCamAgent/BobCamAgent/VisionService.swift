@@ -166,6 +166,22 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         return (debugLandmarks, debugFaceObservation)
     }
 
+    func detect(from landmarks: VNFaceLandmarks2D, faceObservation: VNFaceObservation) -> LipDetectionState {
+        guard let lipDistance = calculateSmoothedLipDistance(landmarks) else {
+            return .uncertain
+        }
+
+        lipDistanceHistory.write(lipDistance)
+        let state = analyzeEatingPattern()
+        let currentJitter = metricsCalculator.calculateJitter(currentBox: faceObservation.boundingBox)
+
+        DispatchQueue.main.async {
+            self.jitter = currentJitter
+        }
+
+        return state
+    }
+
     func processFrame(_ pixelBuffer: CVPixelBuffer) {
         guard isTracking, serviceState == .running else { return }
 

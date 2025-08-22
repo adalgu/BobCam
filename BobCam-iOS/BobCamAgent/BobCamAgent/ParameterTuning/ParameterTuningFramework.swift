@@ -197,7 +197,7 @@ class ParameterTuningEngine: ObservableObject {
 
         // Create service with current parameters
         let configuration = combination.toLipDetectionConfiguration()
-        let service = OptimizedLipDetectionService(configuration: configuration)
+        let service = VisionService(configuration: configuration)
 
         // Track metrics
         var truePositives = 0
@@ -214,7 +214,7 @@ class ParameterTuningEngine: ObservableObject {
 
             // Get face landmarks from pixel buffer
             if let faceData = await extractFaceLandmarks(from: pixelBuffer) {
-                let detectionResult = service.detect(from: faceData.landmarks, faceObservation: faceData.observation, groundTruthBox: groundTruth.lipBoundingBox)
+                let detectionResult = service.detect(from: faceData.landmarks, faceObservation: faceData.observation)
                 let predictedEating = detectionResult == .eating
 
                 // Update confusion matrix
@@ -319,7 +319,7 @@ class ParameterTuningEngine: ObservableObject {
         return groundTruthData.min { abs($0.timestamp - timestamp) < abs($1.timestamp - timestamp) }
     }
 
-    private func calculateTemporalAccuracy(service: OptimizedLipDetectionService) -> Double {
+    private func calculateTemporalAccuracy(service: VisionService) -> Double {
         // Implement temporal accuracy calculation based on eating event duration
         // This measures how well the algorithm captures the actual duration of eating events
         return 0.75 // Placeholder - implement based on ground truth eating durations
