@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AC07DA166EB498BB7FFF8721B00000000000001 /* VideoTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243C06C9246B45C0B264C7701B00000000000001 /* VideoTypes.swift */; };
+		4FEA7D4FB2B248B7A51511BC1B00000000000001 /* YouTubePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73266E6CF404759A1796DAD1B00000000000001 /* YouTubePlayerView.swift */; };
+		3DAC1BC12D0E4CB4B8E2F5461B00000000000001 /* YouTubeIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EE9A91348A48A9B56E8F351B00000000000001 /* YouTubeIntegrationTest.swift */; };
 		288F32A3BFC84B570FC08A4F /* Pods_BobCamAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E0C4817F1C307B7CA21154 /* Pods_BobCamAgent.framework */; };
 		2F16158ECEC03615E006DC00 /* MultiModalEatingDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1946458322DFE1806E784D4E /* MultiModalEatingDetectionService.swift */; };
 		35A7D251808D05D7C47F4DE0 /* Pods_BobCamAgent_BobCamAgentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BA7BF8F481AC8C761AD6EA /* Pods_BobCamAgent_BobCamAgentUITests.framework */; };
@@ -43,7 +46,11 @@
 		A10001B11B00000000000001 /* BobCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001011B00000000000001 /* BobCamApp.swift */; };
 		A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB00011B00000000000001 /* FeedbackBannerView.swift */; };
 		A1FB10041B00000000000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1FB10011B00000000000001 /* Localizable.strings */; };
-/* End PBXBuildFile section */
+		A1B97F497D68845519FD0B719B1B00000000000001 /* CharacterOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11183BCBCBF8BC0D98123F3061B00000000000001 /* CharacterOverlayView.swift */; };
+		A12E0DA4E3E587D2040DDF1BCB1B00000000000001 /* MiniCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AB30FC5B57DB22BF4E2B1E91B00000000000001 /* MiniCameraView.swift */; };
+		A1E1DCDAE1FA7C52CE991F83311B00000000000001 /* GameStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14C0780E617DA25F9C8040B571B00000000000001 /* GameStatsView.swift */; };
+		A190A33DAF3E9DE4B1B11F36731B00000000000001 /* ParentControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A106A99A1DB38D7324C790634B1B00000000000001 /* ParentControlsView.swift */; };
+		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		A10001461B00000000000001 /* PBXContainerItemProxy */ = {
@@ -114,7 +121,14 @@
 		A1FB00011B00000000000001 /* FeedbackBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackBannerView.swift; sourceTree = "<group>"; };
 		A1FB10021B00000000000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A1FB10031B00000000000001 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		A11183BCBCBF8BC0D98123F3061B00000000000001 /* CharacterOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterOverlayView.swift; sourceTree = "<group>"; };
+		A11AB30FC5B57DB22BF4E2B1E91B00000000000001 /* MiniCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCameraView.swift; sourceTree = "<group>"; };
+		A14C0780E617DA25F9C8040B571B00000000000001 /* GameStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStatsView.swift; sourceTree = "<group>"; };
+		243C06C9246B45C0B264C7701B00000000000001 /* VideoTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTypes.swift; sourceTree = "<group>"; };
+		B73266E6CF404759A1796DAD1B00000000000001 /* YouTubePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubePlayerView.swift; sourceTree = "<group>"; };
+		E9EE9A91348A48A9B56E8F351B00000000000001 /* YouTubeIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeIntegrationTest.swift; sourceTree = "<group>"; };
+		A106A99A1DB38D7324C790634B1B00000000000001 /* ParentControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentControlsView.swift; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A10001F31B00000000000001 /* Frameworks */ = {
@@ -230,6 +244,10 @@
 			children = (
 				A10001011B00000000000001 /* BobCamApp.swift */,
 				A10001031B00000000000001 /* ContentView.swift */,
+				A11183BCBCBF8BC0D98123F3061B00000000000001 /* CharacterOverlayView.swift */,
+				A11AB30FC5B57DB22BF4E2B1E91B00000000000001 /* MiniCameraView.swift */,
+				A14C0780E617DA25F9C8040B571B00000000000001 /* GameStatsView.swift */,
+				A106A99A1DB38D7324C790634B1B00000000000001 /* ParentControlsView.swift */,
 				A10001051B00000000000001 /* CameraService.swift */,
 				A10001071B00000000000001 /* CameraView.swift */,
 				A10001091B00000000000001 /* VisionService.swift */,
@@ -250,6 +268,9 @@
 				A1FB10011B00000000000001 /* Localizable.strings */,
 				A10001501B00000000000001 /* Info.plist */,
 				1946458322DFE1806E784D4E /* MultiModalEatingDetectionService.swift */,
+				243C06C9246B45C0B264C7701B00000000000001 /* VideoTypes.swift */,
+				B73266E6CF404759A1796DAD1B00000000000001 /* YouTubePlayerView.swift */,
+				E9EE9A91348A48A9B56E8F351B00000000000001 /* YouTubeIntegrationTest.swift */,
 			);
 			path = BobCamAgent;
 			sourceTree = "<group>";
@@ -482,6 +503,10 @@
 			files = (
 				A10001B11B00000000000001 /* BobCamApp.swift in Sources */,
 				A10001021B00000000000001 /* ContentView.swift in Sources */,
+				A1B97F497D68845519FD0B719B1B00000000000001 /* CharacterOverlayView.swift in Sources */,
+				A12E0DA4E3E587D2040DDF1BCB1B00000000000001 /* MiniCameraView.swift in Sources */,
+				A1E1DCDAE1FA7C52CE991F83311B00000000000001 /* GameStatsView.swift in Sources */,
+				A190A33DAF3E9DE4B1B11F36731B00000000000001 /* ParentControlsView.swift in Sources */,
 				A10001041B00000000000001 /* CameraService.swift in Sources */,
 				A10001061B00000000000001 /* CameraView.swift in Sources */,
 				A10001081B00000000000001 /* VisionService.swift in Sources */,
@@ -509,6 +534,8 @@
 				A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */,
 				A10001381B00000000000001 /* TuningIntegration.swift in Sources */,
 				2F16158ECEC03615E006DC00 /* MultiModalEatingDetectionService.swift in Sources */,
+				5AC07DA166EB498BB7FFF8721B00000000000001 /* VideoTypes.swift in Sources */,
+				4FEA7D4FB2B248B7A51511BC1B00000000000001 /* YouTubePlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,7 +543,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10001401B00000000000001 /* BobCamAgentTests.swift in Sources */,
+				A10001B11B00000000000001 /* BobCamApp.swift in Sources */,
+				A10001021B00000000000001 /* ContentView.swift in Sources */,
+				A1B97F497D68845519FD0B719B1B00000000000001 /* CharacterOverlayView.swift in Sources */,
+				A12E0DA4E3E587D2040DDF1BCB1B00000000000001 /* MiniCameraView.swift in Sources */,
+				A1E1DCDAE1FA7C52CE991F83311B00000000000001 /* GameStatsView.swift in Sources */,
+				A190A33DAF3E9DE4B1B11F36731B00000000000001 /* ParentControlsView.swift in Sources */,
+				A10001041B00000000000001 /* CameraService.swift in Sources */,
+				A10001061B00000000000001 /* CameraView.swift in Sources */,
+				A10001081B00000000000001 /* VisionService.swift in Sources */,
+				A1000110A1B00000000000001 /* VideoService.swift in Sources */,
+				A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */,
+				A10001101B00000000000001 /* OnboardingView.swift in Sources */,
+				A10001121B00000000000001 /* SettingsView.swift in Sources */,
+				A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */,
+				A10001141B00000000000001 /* StatusBar.swift in Sources */,
+				A10001161B00000000000001 /* VideoPickerView.swift in Sources */,
+				A10001181B00000000000001 /* AccuracyMonitor.swift in Sources */,
+				A1000111A1B00000000000001 /* PerformanceMonitor.swift in Sources */,
+				A1000111C1B00000000000001 /* CircularBuffer.swift in Sources */,
+				A1000111E1B00000000000001 /* MetricsCalculator.swift in Sources */,
+				A10001201B00000000000001 /* ContentView+Debug.swift in Sources */,
+				A10001221B00000000000001 /* DebugCameraView.swift in Sources */,
+				A10001241B00000000000001 /* DebugIntegrationGuide.swift in Sources */,
+				A10001261B00000000000001 /* DebugOverlayView.swift in Sources */,
+				A10001281B00000000000001 /* DebugSettings.swift in Sources */,
+				A1000112A1B00000000000001 /* LandmarksOverlayView.swift in Sources */,
+				A1000112C1B00000000000001 /* GroundTruthManager.swift in Sources */,
+				A1000112E1B00000000000001 /* OptimizationEngine.swift in Sources */,
+				A10001301B00000000000001 /* OptimizationRunner.swift in Sources */,
+				A10001341B00000000000001 /* ParameterTuningFramework.swift in Sources */,
+				A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */,
+				A10001381B00000000000001 /* TuningIntegration.swift in Sources */,
+				2F16158ECEC03615E006DC00 /* MultiModalEatingDetectionService.swift in Sources */,
+				5AC07DA166EB498BB7FFF8721B00000000000001 /* VideoTypes.swift in Sources */,
+				4FEA7D4FB2B248B7A51511BC1B00000000000001 /* YouTubePlayerView.swift in Sources */,
+				3DAC1BC12D0E4CB4B8E2F5461B00000000000001 /* YouTubeIntegrationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,8 +586,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10001441B00000000000001 /* BobCamAgentUITestsLaunchTests.swift in Sources */,
-				A10001421B00000000000001 /* BobCamAgentUITests.swift in Sources */,
+				A10001B11B00000000000001 /* BobCamApp.swift in Sources */,
+				A10001021B00000000000001 /* ContentView.swift in Sources */,
+				A1B97F497D68845519FD0B719B1B00000000000001 /* CharacterOverlayView.swift in Sources */,
+				A12E0DA4E3E587D2040DDF1BCB1B00000000000001 /* MiniCameraView.swift in Sources */,
+				A1E1DCDAE1FA7C52CE991F83311B00000000000001 /* GameStatsView.swift in Sources */,
+				A190A33DAF3E9DE4B1B11F36731B00000000000001 /* ParentControlsView.swift in Sources */,
+				A10001041B00000000000001 /* CameraService.swift in Sources */,
+				A10001061B00000000000001 /* CameraView.swift in Sources */,
+				A10001081B00000000000001 /* VisionService.swift in Sources */,
+				A1000110A1B00000000000001 /* VideoService.swift in Sources */,
+				A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */,
+				A10001101B00000000000001 /* OnboardingView.swift in Sources */,
+				A10001121B00000000000001 /* SettingsView.swift in Sources */,
+				A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */,
+				A10001141B00000000000001 /* StatusBar.swift in Sources */,
+				A10001161B00000000000001 /* VideoPickerView.swift in Sources */,
+				A10001181B00000000000001 /* AccuracyMonitor.swift in Sources */,
+				A1000111A1B00000000000001 /* PerformanceMonitor.swift in Sources */,
+				A1000111C1B00000000000001 /* CircularBuffer.swift in Sources */,
+				A1000111E1B00000000000001 /* MetricsCalculator.swift in Sources */,
+				A10001201B00000000000001 /* ContentView+Debug.swift in Sources */,
+				A10001221B00000000000001 /* DebugCameraView.swift in Sources */,
+				A10001241B00000000000001 /* DebugIntegrationGuide.swift in Sources */,
+				A10001261B00000000000001 /* DebugOverlayView.swift in Sources */,
+				A10001281B00000000000001 /* DebugSettings.swift in Sources */,
+				A1000112A1B00000000000001 /* LandmarksOverlayView.swift in Sources */,
+				A1000112C1B00000000000001 /* GroundTruthManager.swift in Sources */,
+				A1000112E1B00000000000001 /* OptimizationEngine.swift in Sources */,
+				A10001301B00000000000001 /* OptimizationRunner.swift in Sources */,
+				A10001341B00000000000001 /* ParameterTuningFramework.swift in Sources */,
+				A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */,
+				A10001381B00000000000001 /* TuningIntegration.swift in Sources */,
+				2F16158ECEC03615E006DC00 /* MultiModalEatingDetectionService.swift in Sources */,
+				5AC07DA166EB498BB7FFF8721B00000000000001 /* VideoTypes.swift in Sources */,
+				4FEA7D4FB2B248B7A51511BC1B00000000000001 /* YouTubePlayerView.swift in Sources */,
+				3DAC1BC12D0E4CB4B8E2F5461B00000000000001 /* YouTubeIntegrationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

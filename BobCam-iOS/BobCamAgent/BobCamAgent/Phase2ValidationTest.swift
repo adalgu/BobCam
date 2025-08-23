@@ -113,6 +113,68 @@ class Phase2ValidationTest {
 
         return hasValidIoU && hasValidJitter
     }
+    
+    /// Test MultiModalEatingDetectionService with utensil detection
+    func testMultiModalUtensilDetection() -> Bool {
+        print("🧪 Testing MultiModal service with utensil detection...")
+        
+        let config = MultiModalConfiguration.default
+        let multiModalService = MultiModalEatingDetectionService(configuration: config)
+        
+        // Test initialization
+        let initialState = multiModalService.serviceState
+        let isInitialized = (initialState == .idle)
+        print("✅ MultiModal service initialized: \(isInitialized ? "✓" : "✗")")
+        
+        // Test configuration
+        let utensilEnabled = config.utensilDetectionEnabled
+        let validThreshold = config.utensilConfidenceThreshold > 0.0 && config.utensilConfidenceThreshold <= 1.0
+        let validDistance = config.utensilToMouthDistanceThreshold > 0.0
+        let validFPS = config.utensilDetectionFPS > 0
+        
+        print("✅ Utensil detection enabled: \(utensilEnabled ? "✓" : "✗")")
+        print("✅ Valid confidence threshold: \(validThreshold ? "✓" : "✗") (\(config.utensilConfidenceThreshold))")
+        print("✅ Valid distance threshold: \(validDistance ? "✓" : "✗") (\(config.utensilToMouthDistanceThreshold))")
+        print("✅ Valid FPS setting: \(validFPS ? "✓" : "✗") (\(config.utensilDetectionFPS))")
+        
+        // Test helper methods
+        let spoonLabel = multiModalService.isUtensilLabel("spoon")
+        let forkLabel = multiModalService.isUtensilLabel("fork")
+        let nonUtensilLabel = multiModalService.isUtensilLabel("cup")
+        
+        print("✅ Utensil label detection: \(spoonLabel && forkLabel && !nonUtensilLabel ? "✓" : "✗")")
+        
+        // Test utensil distance calculation
+        let utensilCenter = CGPoint(x: 0.5, y: 0.5)
+        let faceBox = CGRect(x: 0.4, y: 0.4, width: 0.2, height: 0.2)
+        let distance = multiModalService.calculateUtensilToMouthDistance(utensilCenter: utensilCenter, faceBox: faceBox)
+        let validDistanceCalculation = distance >= 0.0 && distance <= 1.0
+        
+        print("✅ Utensil distance calculation: \(validDistanceCalculation ? "✓" : "✗") (distance: \(distance))")
+        
+        // Test performance metrics
+        let metrics = multiModalService.getPerformanceMetrics()
+        let hasUtensilMetrics = metrics.keys.contains("utensil_confidence") && 
+                               metrics.keys.contains("utensil_detection_enabled") &&
+                               metrics.keys.contains("utensil_fps")
+        
+        print("✅ Utensil performance metrics: \(hasUtensilMetrics ? "✓" : "✗")")
+        
+        // Test utensil details
+        let utensilDetails = multiModalService.getUtensilDetectionDetails()
+        let hasDetails = utensilDetails.keys.contains("enabled") && 
+                        utensilDetails.keys.contains("confidence_threshold") &&
+                        utensilDetails.keys.contains("distance_threshold")
+        
+        print("✅ Utensil detection details: \(hasDetails ? "✓" : "✗")")
+        
+        let allChecks = isInitialized && utensilEnabled && validThreshold && 
+                       validDistance && validFPS && spoonLabel && forkLabel && 
+                       !nonUtensilLabel && validDistanceCalculation && 
+                       hasUtensilMetrics && hasDetails
+        
+        return allChecks
+    }
 
     // MARK: - Main Test Runner
 
@@ -125,7 +187,8 @@ class Phase2ValidationTest {
             ("Monitoring Integration", testMonitoringIntegration),
             ("Configuration Compatibility", testConfigurationCompatibility),
             ("CircularBuffer Functionality", testCircularBuffer),
-            ("MetricsCalculator Functionality", testMetricsCalculator)
+            ("MetricsCalculator Functionality", testMetricsCalculator),
+            ("MultiModal Utensil Detection", testMultiModalUtensilDetection)
         ]
 
         var passedTests = 0

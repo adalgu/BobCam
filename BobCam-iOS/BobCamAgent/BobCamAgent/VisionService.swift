@@ -109,6 +109,9 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     // MARK: - Debug Support
     @Published var debugLandmarks: VNFaceLandmarks2D?
     @Published var debugFaceObservation: VNFaceObservation?
+    
+    // MARK: - Face Detection Status
+    @Published var isFaceDetected: Bool = false
 
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
@@ -285,6 +288,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         guard let results = request.results as? [VNFaceObservation] else {
             DispatchQueue.main.async {
                 self.isEating = false
+                self.isFaceDetected = false
                 self.updateDebugLandmarks(nil, faceObservation: nil)
             }
             return
@@ -294,6 +298,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
               let landmarks = firstFace.landmarks else {
             DispatchQueue.main.async {
                 self.isEating = false
+                self.isFaceDetected = false
                 self.updateDebugLandmarks(nil, faceObservation: nil)
             }
             return
@@ -312,6 +317,7 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
 
         DispatchQueue.main.async {
             self.isEating = (state == .eating)
+            self.isFaceDetected = true
             self.jitter = currentJitter
             self.updateDebugLandmarks(landmarks, faceObservation: firstFace)
         }
@@ -440,5 +446,10 @@ extension VisionService: CameraServiceDelegate {
         print("CameraService encountered an error: \(error.localizedDescription)")
         // Optionally, update the service state to failed
         // self.serviceState = .failed(error)
+    }
+    
+    func didUpdateFaceDetection(_ isDetecting: Bool) {
+        // This will be called by CameraService when face detection status changes
+        // For now, we'll leave this empty as the VisionService handles its own face detection
     }
 }

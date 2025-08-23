@@ -18,6 +18,7 @@ struct MultiModalConfiguration: Codable {
     // 도구 감지 설정
     let utensilDetectionEnabled: Bool
     let utensilConfidenceThreshold: Float
+    let utensilToMouthDistanceThreshold: Float // 입 근처 판단 임계값
     
     // 신호 융합 설정
     let lipWeight: Float
@@ -36,6 +37,7 @@ struct MultiModalConfiguration: Codable {
         handToMouthDistanceThreshold: 0.15, // 정규화된 좌표계에서 15cm 정도
         utensilDetectionEnabled: true,
         utensilConfidenceThreshold: 0.5,
+        utensilToMouthDistanceThreshold: 0.2, // 도구는 손보다 조금 더 먼 거리에서 감지
         lipWeight: 0.4,
         handWeight: 0.4,
         utensilWeight: 0.2,
@@ -83,7 +85,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
     // MARK: - Debug Properties
     @Published var debugHandPose: VNHumanHandPoseObservation?
     @Published var debugFaceObservation: VNFaceObservation?
-    @Published var debugObjects: [VNRecognizedObjectObservation] = []
+    @Published var debugObjects: [VNRectangleObservation] = []
     
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.multimodal.vision", qos: .userInteractive)
@@ -125,14 +127,17 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         return request
     }()
     
-    /*
-    private lazy var objectRecognitionRequest: VNRecognizeObjectsRequest = {
-        let request = VNRecognizeObjectsRequest { [weak self] request, error in
+    private lazy var objectRecognitionRequest: VNDetectRectanglesRequest = {
+        let request = VNDetectRectanglesRequest { [weak self] request, error in
             self?.handleObjectRecognitionResults(request: request, error: error)
         }
+        // 사각형 감지 설정 - 식기류의 긴 직사각형 형태 감지
+        request.minimumAspectRatio = 0.3  // 세로가 긴 형태
+        request.maximumAspectRatio = 3.0  // 가로가 긴 형태
+        request.minimumSize = 0.01        // 최소 크기
+        request.maximumObservations = 10  // 최대 관찰 수
         return request
     }()
-    */
     
     // MARK: - Initialization
     init(configuration: MultiModalConfiguration = .default) {
@@ -208,6 +213,11 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         }
     }
     
+    func didUpdateFaceDetection(_ isDetecting: Bool) {
+        // This will be called by CameraService when face detection status changes
+        // For now, we'll leave this empty as MultiModalService handles its own face detection
+    }
+    
     // MARK: - Multi-Modal Frame Processing
     private func processFrameMultiModal(_ pixelBuffer: CVPixelBuffer, startTime: CFTimeInterval) {
         defer { isProcessing = false }
@@ -227,13 +237,11 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
             lastHandProcessedTime = now
         }
         
-        /*
         // 3. 도구 감지 (4fps)
         if configuration.utensilDetectionEnabled && now - lastUtensilProcessedTime >= utensilFrameInterval {
             requestsToProcess.append(objectRecognitionRequest)
             lastUtensilProcessedTime = now
         }
-        */
         
         // Vision requests 실행
         if !requestsToProcess.isEmpty {
@@ -321,10 +329,9 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         updateSignalFusion(with: finalSignal)
     }
     
-    /*
     private func handleObjectRecognitionResults(request: VNRequest, error: Error?) {
         guard error == nil,
-              let results = request.results as? [VNRecognizedObjectObservation] else {
+              let results = request.results as? [VNRectangleObservation] else {
             
             // 도구가 감지되지 않은 경우
             let noUtensilSignal = EatingSignal.utensilDetected(
@@ -336,33 +343,68 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
             return
         }
         
-        // 숟가락, 젓가락, 포크 등을 찾기
-        let utensilLabels = ["spoon", "fork", "chopstick", "utensil"]
-        var bestUtensil: VNRecognizedObjectObservation?
+        // 직사각형 기반 식기 감지 (형태학적 특성 활용)
+        var bestUtensil: VNRectangleObservation?
         var maxConfidence: Float = 0.0
         
         for observation in results {
-            let topLabel = observation.labels.first
-            if let label = topLabel,
-               utensilLabels.contains(where: { label.identifier.lowercased().contains($0) }),
-               label.confidence > configuration.utensilConfidenceThreshold,
-               label.confidence > maxConfidence {
-                maxConfidence = label.confidence
+            let confidence = observation.confidence
+            
+            // 식기류 형태 특성: 길쭉한 형태 (aspect ratio 체크)
+            let box = observation.boundingBox
+            let aspectRatio = box.height / box.width
+            let isElongated = aspectRatio > 2.5 || aspectRatio < 0.4 // 숟가락, 젓가락, 포크 등의 긴 형태
+            
+            // 적절한 크기 체크 (너무 작거나 큰 객체 제외)
+            let area = box.width * box.height
+            let isReasonableSize = area > 0.002 && area < 0.05 // 적절한 식기류 크기
+            
+            if isElongated && isReasonableSize && 
+               confidence > configuration.utensilConfidenceThreshold &&
+               confidence > maxConfidence {
+                maxConfidence = confidence
                 bestUtensil = observation
+                
+                // 디버깅용 로그
+                print("[Utensil Detection] Found rectangle: aspect_ratio=\(aspectRatio), area=\(area), confidence=\(confidence)")
             }
         }
         
         let utensilSignal: EatingSignal
         if let utensil = bestUtensil {
+            // 바운딩 박스의 중심점 계산
             let center = CGPoint(
                 x: utensil.boundingBox.midX,
                 y: utensil.boundingBox.midY
             )
+            
+            // 입 근처에 있는지 확인 (손-입 거리 계산과 유사한 방식)
+            var isNearMouth = false
+            if let face = debugFaceObservation {
+                let faceCenter = CGPoint(
+                    x: face.boundingBox.midX,
+                    y: face.boundingBox.midY
+                )
+                
+                let distance = sqrt(
+                    pow(center.x - faceCenter.x, 2) +
+                    pow(center.y - faceCenter.y, 2)
+                )
+                
+                // 입 근처 임계값 (설정값 사용)
+                isNearMouth = Float(distance) < configuration.utensilToMouthDistanceThreshold
+            }
+            
+            // 입 근처에 있을 때만 높은 신뢰도 부여
+            let adjustedConfidence = isNearMouth ? maxConfidence : maxConfidence * 0.5
+            
             utensilSignal = EatingSignal.utensilDetected(
-                confidence: maxConfidence,
+                confidence: adjustedConfidence,
                 position: center,
                 detected: true
             )
+            
+            print("[Utensil Detection] Signal created: confidence=\(adjustedConfidence), nearMouth=\(isNearMouth)")
         } else {
             utensilSignal = EatingSignal.utensilDetected(
                 confidence: 0.0,
@@ -378,54 +420,111 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         
         updateSignalFusion(with: utensilSignal)
     }
-    */
     
     // MARK: - Signal Processing
-    private func processHandObservation(_ handObservation: VNHumanHandPoseObservation) -> EatingSignal? {
-        do {
-            // 주요 손가락 및 손목 포인트 획득
-            let wristPoint = try handObservation.recognizedPoint(.wrist)
-            let thumbTip = try handObservation.recognizedPoint(.thumbTip)
-            let indexTip = try handObservation.recognizedPoint(.indexTip)
-            
-            // 신뢰도 검사
-            guard wristPoint.confidence > configuration.handConfidenceThreshold,
-                  thumbTip.confidence > configuration.handConfidenceThreshold else {
-                return nil
-            }
-            
-            // 손-입 근접성 계산 (얼굴 영역과의 거리)
-            let handCenter = CGPoint(
-                x: (wristPoint.location.x + thumbTip.location.x + indexTip.location.x) / 3,
-                y: (wristPoint.location.y + thumbTip.location.y + indexTip.location.y) / 3
-            )
-            
-            // 얼굴 중심 추정 (이전 얼굴 감지 결과 사용)
-            let faceCenter = CGPoint(x: 0.5, y: 0.5) // 기본값, 실제로는 debugFaceObservation 사용
-            if let face = debugFaceObservation {
-                let actualFaceCenter = CGPoint(
-                    x: face.boundingBox.midX,
-                    y: face.boundingBox.midY
-                )
-            }
-            
-            let distance = Float(sqrt(
-                pow(handCenter.x - faceCenter.x, 2) +
-                pow(handCenter.y - faceCenter.y, 2)
-            ))
-            
-            let isNearMouth = distance < configuration.handToMouthDistanceThreshold
-            let confidence = max(0.0, 1.0 - Float(distance / configuration.handToMouthDistanceThreshold))
-            
-            return EatingSignal.handToMouth(
-                confidence: confidence,
-                distance: Float(distance),
-                detected: isNearMouth
-            )
-            
-        } catch {
-            print("[MultiModal] 손 포즈 처리 오류: \(error)")
+    func processHandObservation(_ handObservation: VNHumanHandPoseObservation) -> EatingSignal? {
+        // 주요 손가락 및 손목 포인트 획득
+        guard let wristPoint = try? handObservation.recognizedPoint(.wrist),
+              let thumbTip = try? handObservation.recognizedPoint(.thumbTip),
+              let indexTip = try? handObservation.recognizedPoint(.indexTip) else {
             return nil
+        }
+        
+        // 신뢰도 검사
+        guard wristPoint.confidence > configuration.handConfidenceThreshold,
+              thumbTip.confidence > configuration.handConfidenceThreshold else {
+            return nil
+        }
+        
+        // 손-입 근접성 계산 (얼굴 영역과의 거리)
+        let handCenter = CGPoint(
+            x: (wristPoint.location.x + thumbTip.location.x + indexTip.location.x) / 3,
+            y: (wristPoint.location.y + thumbTip.location.y + indexTip.location.y) / 3
+        )
+        
+        // 얼굴 중심 추정 (이전 얼굴 감지 결과 사용)
+        var faceCenter = CGPoint(x: 0.5, y: 0.5) // 기본값, 실제로는 debugFaceObservation 사용
+        if let face = debugFaceObservation {
+            faceCenter = CGPoint(
+                x: face.boundingBox.midX,
+                y: face.boundingBox.midY
+            )
+        }
+        
+        let distance = Float(sqrt(
+            pow(handCenter.x - faceCenter.x, 2) +
+            pow(handCenter.y - faceCenter.y, 2)
+        ))
+        
+        let isNearMouth = distance < configuration.handToMouthDistanceThreshold
+        let confidence = max(0.0, 1.0 - Float(distance / configuration.handToMouthDistanceThreshold))
+        
+        return EatingSignal.handToMouth(
+            confidence: confidence,
+            distance: Float(distance),
+            detected: isNearMouth
+        )
+    }
+    
+    // MARK: - Test Interface Methods
+    
+    /// 테스트용 메서드: 손-입 거리 계산
+    func calculateHandToMouthDistance(handPoints: [VNHumanHandPoseObservation.JointName: CGPoint], faceBox: CGRect) -> Float {
+        guard let wristPoint = handPoints[.wrist],
+              let thumbTip = handPoints[.thumbTip],
+              let indexTip = handPoints[.indexTip] else {
+            return 1.0 // 최대 거리 반환
+        }
+        
+        // 손 중심점 계산
+        let handCenter = CGPoint(
+            x: (wristPoint.x + thumbTip.x + indexTip.x) / 3,
+            y: (wristPoint.y + thumbTip.y + indexTip.y) / 3
+        )
+        
+        // 얼굴 중심점 계산
+        let faceCenter = CGPoint(
+            x: faceBox.midX,
+            y: faceBox.midY
+        )
+        
+        // 거리 계산
+        let distance = Float(sqrt(
+            pow(handCenter.x - faceCenter.x, 2) +
+            pow(handCenter.y - faceCenter.y, 2)
+        ))
+        
+        return distance
+    }
+    
+    /// 테스트용 메서드: 도구-입 거리 계산
+    func calculateUtensilToMouthDistance(utensilCenter: CGPoint, faceBox: CGRect) -> Float {
+        // 얼굴 중심점 계산
+        let faceCenter = CGPoint(
+            x: faceBox.midX,
+            y: faceBox.midY
+        )
+        
+        // 거리 계산
+        let distance = Float(sqrt(
+            pow(utensilCenter.x - faceCenter.x, 2) +
+            pow(utensilCenter.y - faceCenter.y, 2)
+        ))
+        
+        return distance
+    }
+    
+    /// 테스트용 메서드: 특정 라벨이 식기류인지 확인
+    func isUtensilLabel(_ label: String) -> Bool {
+        let utensilLabels = [
+            "spoon", "fork", "chopstick", "chopsticks", "utensil", "cutlery",
+            "knife", "ladle", "spatula", "eating utensil", "silverware",
+            "tableware", "dinnerware"
+        ]
+        
+        let labelText = label.lowercased()
+        return utensilLabels.contains { keyword in
+            labelText.contains(keyword)
         }
     }
     
@@ -481,7 +580,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
     }
     
     // MARK: - Signal Fusion Algorithm
-    private func fuseSignals(_ signals: [EatingSignal]) -> EatingDetectionState {
+    func fuseSignals(_ signals: [EatingSignal]) -> EatingDetectionState {
         var lipScore: Float = 0.0
         var handScore: Float = 0.0
         var utensilScore: Float = 0.0
@@ -507,21 +606,38 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         ) / totalWeight
 
         // 신호 간 상호작용 보너스
+        var interactionBonus: Float = 1.0
+        
+        // 손과 입이 동시에 활성화되면 보너스
         if handScore > 0.5 && lipScore > 0.5 {
-            weightedScore *= 1.2 // 손과 입이 동시에 활성화되면 20% 보너스
+            interactionBonus *= 1.2
         }
+        
+        // 도구와 입이 동시에 활성화되면 추가 보너스
+        if utensilScore > 0.3 && lipScore > 0.5 {
+            interactionBonus *= 1.15
+        }
+        
+        // 세 신호가 모두 활성화되면 최대 보너스
+        if handScore > 0.3 && lipScore > 0.5 && utensilScore > 0.3 {
+            interactionBonus *= 1.3
+        }
+        
+        weightedScore *= interactionBonus
         
         // 민감도 적용
         let adjustedThreshold = configuration.fusionThreshold * (1.0 - sensitivity + 0.5)
         let finalScore = weightedScore * (0.5 + sensitivity)
         
         // 최종 상태 결정
-        if self.smoothedFusedConfidence >= adjustedThreshold {
+        if signals.isEmpty {
+            return .uncertain(reason: "신호 없음")
+        } else if finalScore >= adjustedThreshold {
             return .eating(confidence: finalScore)
-        } else if finalScore >= adjustedThreshold * 0.5 {
-            return .notEating(confidence: 1.0 - finalScore)
+        } else if finalScore >= adjustedThreshold * 0.2 {
+            return .uncertain(reason: "신호 강도 모호함 (score: \(String(format: "%.2f", finalScore)))")
         } else {
-            return .uncertain(reason: "신호 강도 부족 (score: \(String(format: "%.2f", finalScore)))")
+            return .notEating(confidence: 1.0 - finalScore)
         }
     }
     
@@ -596,8 +712,49 @@ extension MultiModalEatingDetectionService {
             "hand_confidence": handConfidence,
             "utensil_confidence": utensilConfidence,
             "fused_confidence": fusedConfidence,
+            "smoothed_fused_confidence": smoothedFusedConfidence,
             "signal_count": currentSignals.count,
-            "service_state": "\(serviceState)"
+            "service_state": "\(serviceState)",
+            "utensil_detection_enabled": configuration.utensilDetectionEnabled,
+            "utensil_objects_detected": debugObjects.count,
+            "utensil_fps": configuration.utensilDetectionFPS,
+            "interaction_bonus_active": {
+                let lipScore = lipConfidence
+                let handScore = handConfidence  
+                let utensilScore = utensilConfidence
+                
+                var bonus = false
+                if handScore > 0.5 && lipScore > 0.5 { bonus = true }
+                if utensilScore > 0.3 && lipScore > 0.5 { bonus = true }
+                if handScore > 0.3 && lipScore > 0.5 && utensilScore > 0.3 { bonus = true }
+                
+                return bonus
+            }()
+        ]
+    }
+    
+    /// 도구 감지 상세 정보 반환
+    func getUtensilDetectionDetails() -> [String: Any] {
+        return [
+            "enabled": configuration.utensilDetectionEnabled,
+            "confidence_threshold": configuration.utensilConfidenceThreshold,
+            "distance_threshold": configuration.utensilToMouthDistanceThreshold,
+            "current_confidence": utensilConfidence,
+            "fps": configuration.utensilDetectionFPS,
+            "objects_detected": debugObjects.count,
+            "detected_objects": debugObjects.count,
+            "rectangle_boxes": debugObjects.map { observation in
+                [
+                    "confidence": observation.confidence,
+                    "box": [
+                        "x": observation.boundingBox.origin.x,
+                        "y": observation.boundingBox.origin.y,
+                        "width": observation.boundingBox.width,
+                        "height": observation.boundingBox.height
+                    ],
+                    "aspect_ratio": observation.boundingBox.height / observation.boundingBox.width
+                ]
+            }
         ]
     }
 }

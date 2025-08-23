@@ -100,8 +100,7 @@ struct VideoSettingsSection: View {
 
             // 비디오 선택 카드
             VideoPreviewCard(
-                selectionService: selectionService,
-                videoService: videoService
+                selectionService: selectionService
             )
 
             // 비디오 선택 버튼

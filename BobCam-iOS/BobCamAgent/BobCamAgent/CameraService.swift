@@ -7,6 +7,7 @@ import UIKit
 protocol CameraServiceDelegate: AnyObject {
     func didReceiveFrame(_ pixelBuffer: CVPixelBuffer)
     func didEncounterCameraError(_ error: CameraServiceError)
+    func didUpdateFaceDetection(_ isDetecting: Bool)
 }
 
 // MARK: - Camera Service Errors
@@ -37,13 +38,30 @@ class CameraService: NSObject, ObservableObject {
     @Published var isSessionRunning = false
     @Published var captureDevice: AVCaptureDevice?
     @Published var permissionStatus: AVAuthorizationStatus = .notDetermined
+    @Published var isDetectingFace = false
 
     // MARK: - Private Properties
     let captureSession = AVCaptureSession()
     private let videoDataOutput = AVCaptureVideoDataOutput()
     private let sessionQueue = DispatchQueue(label: "com.bobcam.camera", qos: .userInitiated)
+    
+    // Preview layer for mini camera view
+    private(set) lazy var previewLayer: AVCaptureVideoPreviewLayer = {
+        let layer = AVCaptureVideoPreviewLayer(session: captureSession)
+        layer.videoGravity = .resizeAspectFill
+        return layer
+    }()
 
     weak var delegate: CameraServiceDelegate?
+
+    // MARK: - Public Methods for Face Detection Updates
+    func updateFaceDetectionStatus(_ isDetecting: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.isDetectingFace = isDetecting
+            self.delegate?.didUpdateFaceDetection(isDetecting)
+        }
+    }
 
     // O3 제안: CVPixelBufferPool로 메모리 최적화
     private var pixelBufferPool: CVPixelBufferPool?

@@ -66,70 +66,100 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
-                // 카메라 피드 (상단 40%) + 피드백 배너를 카메라 영역 하단에 배치
-                ZStack(alignment: .bottom) {
-                    CameraView(cameraService: cameraService)
-                        .onAppear {
-                            cameraService.startSession()
-                            setupDetectionService()
-                        }
-                        .onDisappear {
-                            stopAllDetectionServices()
-                            cameraService.stopSession()
-                        }
-                        .onChange(of: useMultiModalDetection) { _ in
-                            // A/B 테스트: 감지 모드 변경 시 서비스 전환
-                            stopAllDetectionServices()
-                            setupDetectionService()
-                        }
-
-                    if showFeedbackBanner {
+            ZStack {
+                // Full screen video player background
+                VideoPlayerView(
+                    videoService: videoService,
+                    videoSelectionService: videoSelectionService
+                )
+                .ignoresSafeArea()
+                .onAppear {
+                    cameraService.startSession()
+                    setupDetectionService()
+                }
+                .onDisappear {
+                    stopAllDetectionServices()
+                    cameraService.stopSession()
+                }
+                .onChange(of: useMultiModalDetection) { _ in
+                    // A/B 테스트: 감지 모드 변경 시 서비스 전환
+                    stopAllDetectionServices()
+                    setupDetectionService()
+                }
+                
+                // Character overlay layer
+                CharacterOverlayView(
+                    isEating: currentDetectionService.isEating,
+                    isVideoPlaying: videoService.playbackState == .playing
+                )
+                
+                // Mini camera view (top-right corner)
+                MiniCameraView(cameraService: cameraService)
+                
+                // Game stats view (top center)
+                GameStatsView(
+                    isEating: currentDetectionService.isEating,
+                    isVideoPlaying: videoService.playbackState == .playing
+                )
+                
+                // Parent controls overlay
+                ParentControlsView(
+                    videoService: videoService,
+                    videoSelectionService: videoSelectionService,
+                    visionService: visionService
+                )
+                
+                // Legacy feedback banner (if still enabled)
+                if showFeedbackBanner {
+                    VStack {
+                        Spacer()
                         FeedbackBannerView(
                             state: feedbackState,
                             text: localizedMessage
                         )
                         .padding(.horizontal, 12)
-                        .padding(.bottom, 8)
+                        .padding(.bottom, 80) // Above status bar
                         .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .zIndex(1)
                         .animation(.easeInOut(duration: 0.25), value: feedbackState)
                     }
                 }
-                .frame(height: geometry.size.height * 0.4)
-                .frame(maxWidth: .infinity)
-                .clipped()
-                // 비디오 플레이어 (하단 60%)
-                VideoPlayerView(
-                    videoService: videoService,
-                    videoSelectionService: videoSelectionService
-                )
-                .frame(maxWidth: .infinity)
-                .frame(height: geometry.size.height * 0.6)
-            }
-            .overlay(alignment: .bottom) {
-                StatusBar(
-                    isEating: currentDetectionService.isEating,
-                    visionService: visionService,
-                    videoService: videoService,
-                    videoSelectionService: videoSelectionService,
-                                          sensitivity: useMultiModalDetection ? $multiModalService.sensitivity : $visionService.sensitivity
-                )
-                .padding()
-            }
-            .overlay(alignment: .topTrailing) {
-                // 설정 버튼
-                Button(action: {
-                    showingSettings = true
-                }) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                        .padding(12)
-                        .background(Color.black.opacity(0.6))
-                        .clipShape(Circle())
+                
+                // Status bar (bottom)
+                VStack {
+                    Spacer()
+                    StatusBar(
+                        isEating: currentDetectionService.isEating,
+                        visionService: visionService,
+                        videoService: videoService,
+                        videoSelectionService: videoSelectionService,
+                        sensitivity: useMultiModalDetection ? $multiModalService.sensitivity : $visionService.sensitivity
+                    )
+                    .padding()
                 }
-                .padding()
+                
+                // Settings button (top-right, below mini camera)
+                VStack {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 12) {
+                            Spacer()
+                                .frame(height: 180) // Space for mini camera
+                            
+                            Button(action: {
+                                showingSettings = true
+                            }) {
+                                Image(systemName: "gearshape.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.white)
+                                    .padding(12)
+                                    .background(Color.black.opacity(0.6))
+                                    .clipShape(Circle())
+                            }
+                        }
+                    }
+                    .padding()
+                    Spacer()
+                }
             }
         }
         .ignoresSafeArea()
@@ -155,6 +185,9 @@ struct ContentView: View {
         // }
         .onReceive(debouncedEatingPublisher) { isEating in
             feedbackState = isEating ? .eating : .notEating
+        }
+        .onReceive(visionService.$isFaceDetected) { isFaceDetected in
+            cameraService.updateFaceDetectionStatus(isFaceDetected)
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView(

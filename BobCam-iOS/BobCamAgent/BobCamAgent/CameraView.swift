@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import WebKit
 
 // MARK: - Camera View (UIViewRepresentable)
 struct CameraView: UIViewRepresentable {
@@ -40,6 +41,7 @@ struct CameraView: UIViewRepresentable {
 struct VideoPlayerView: View {
     @ObservedObject var videoService: VideoService
     @ObservedObject var videoSelectionService: VideoSelectionService
+    @StateObject private var youTubePlayerController = YouTubePlayerController()
 
     var body: some View {
         GeometryReader { _ in
@@ -47,63 +49,48 @@ struct VideoPlayerView: View {
                 // 백그라운드
                 Color.black
 
-                // 비디오 플레이어
-                if let player = videoService.avPlayer {
-                    VideoPlayer(player: player)
-                        .opacity(videoService.playerOpacity)
-                        .animation(.easeInOut(duration: 0.5), value: videoService.playerOpacity)
-                } else {
-                    // 플레이스홀더
-                    VStack(spacing: 16) {
-                        Image(systemName: "video.slash")
-                            .font(.system(size: 48))
-                            .foregroundColor(.gray)
-
-                        Text("비디오를 선택해주세요")
-                            .foregroundColor(.gray)
-                            .font(.headline)
-
-                        VideoSelectionButton(selectionService: videoSelectionService)
+                // 비디오 플레이어 - 로컬 또는 YouTube
+                Group {
+                    switch videoSelectionService.selectedVideoType {
+                    case .local:
+                        // AVPlayer for local videos
+                        if let player = videoService.avPlayer {
+                            VideoPlayer(player: player)
+                                .opacity(videoService.playerOpacity)
+                                .animation(.easeInOut(duration: 0.5), value: videoService.playerOpacity)
+                        } else {
+                            videoPlaceholder
+                        }
+                    case .youtube(let youTubeVideo):
+                        // WKWebView for YouTube videos
+                        if videoService.isNetworkAvailable {
+                            YouTubePlayerView(
+                                youTubeVideo: youTubeVideo,
+                                playerState: $youTubePlayerController.playerState,
+                                isReady: $youTubePlayerController.isReady
+                            )
+                            .opacity(videoService.playerOpacity)
+                            .animation(.easeInOut(duration: 0.5), value: videoService.playerOpacity)
+                        } else {
+                            networkUnavailableView
+                        }
+                    case .none:
+                        videoPlaceholder
                     }
                 }
 
                 // 로딩 인디케이터
                 if videoService.playbackState == .loading {
-                    VStack {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(1.5)
-
-                        Text("비디오 로딩 중...")
-                            .foregroundColor(.white)
-                            .font(.caption)
-                            .padding(.top, 8)
-                    }
+                    loadingView
                 }
 
                 // 에러 표시
                 if case .failed(let error) = videoService.playbackState {
-                    VStack(spacing: 16) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 32))
-                            .foregroundColor(.red)
-
-                        Text("재생 오류")
-                            .foregroundColor(.red)
-                            .font(.headline)
-
-                        Text(error.localizedDescription)
-                            .foregroundColor(.gray)
-                            .font(.caption)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-
-                        VideoSelectionButton(selectionService: videoSelectionService)
-                    }
+                    errorView(error)
                 }
 
-                // 상단 좌측 비디오 선택 버튼 (비디오가 재생 중일 때)
-                if videoService.avPlayer != nil {
+                // 상단 좌측 비디오 선택 버튼 (비디오가 로드되어 있을 때)
+                if hasLoadedVideo {
                     VStack {
                         HStack {
                             VideoSelectionButton(selectionService: videoSelectionService)
@@ -114,6 +101,102 @@ struct VideoPlayerView: View {
                     .padding()
                 }
             }
+        }
+        .onAppear {
+            videoService.setYouTubePlayerController(youTubePlayerController)
+        }
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var hasLoadedVideo: Bool {
+        switch videoSelectionService.selectedVideoType {
+        case .local:
+            return videoService.avPlayer != nil
+        case .youtube:
+            return videoService.isNetworkAvailable
+        case .none:
+            return false
+        }
+    }
+    
+    // MARK: - Subviews
+    
+    private var videoPlaceholder: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "video.slash")
+                .font(.system(size: 48))
+                .foregroundColor(.gray)
+
+            Text("비디오를 선택해주세요")
+                .foregroundColor(.gray)
+                .font(.headline)
+
+            VideoSelectionButton(selectionService: videoSelectionService)
+        }
+    }
+    
+    private var networkUnavailableView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "wifi.slash")
+                .font(.system(size: 48))
+                .foregroundColor(.orange)
+
+            Text("네트워크 연결 필요")
+                .foregroundColor(.orange)
+                .font(.headline)
+
+            Text("YouTube 비디오 재생을 위해 인터넷 연결을 확인해주세요")
+                .foregroundColor(.gray)
+                .font(.caption)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+            VideoSelectionButton(selectionService: videoSelectionService)
+        }
+    }
+    
+    private var loadingView: some View {
+        VStack {
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                .scaleEffect(1.5)
+
+            Text(loadingText)
+                .foregroundColor(.white)
+                .font(.caption)
+                .padding(.top, 8)
+        }
+    }
+    
+    private var loadingText: String {
+        switch videoSelectionService.selectedVideoType {
+        case .local:
+            return "비디오 로딩 중..."
+        case .youtube:
+            return "YouTube 비디오 로딩 중..."
+        case .none:
+            return "로딩 중..."
+        }
+    }
+    
+    private func errorView(_ error: Error) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 32))
+                .foregroundColor(.red)
+
+            Text("재생 오류")
+                .foregroundColor(.red)
+                .font(.headline)
+
+            Text(error.localizedDescription)
+                .foregroundColor(.gray)
+                .font(.caption)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+            VideoSelectionButton(selectionService: videoSelectionService)
         }
     }
 }
