@@ -30,32 +30,41 @@ enum LipDetectionState {
 
 // MARK: - 개선된 Configuration 및 에러 처리
 
-enum VisionServiceState: Equatable {
-    case idle
-    case running
-    case paused
-    case failed(Error)
+public enum VisionServiceState: Equatable {
+        case idle
+        case running
+        case paused
+        case failed(Error)
+        case cameraError(Error)
 
-    static func == (lhs: VisionServiceState, rhs: VisionServiceState) -> Bool {
-        switch (lhs, rhs) {
-        case (.idle, .idle):
-            return true
-        case (.running, .running):
-            return true
-        case (.paused, .paused):
-            return true
-        case (.failed, .failed):
-            return true
-        default:
-            return false
+        public static func == (lhs: VisionServiceState, rhs: VisionServiceState) -> Bool {
+            switch (lhs, rhs) {
+            case (.idle, .idle):
+                return true
+            case (.running, .running):
+                return true
+            case (.paused, .paused):
+                return true
+            case (.failed, .failed):
+                return true
+            case (.cameraError, .cameraError):
+                return true
+            default:
+                return false
+            }
         }
     }
+
+// MARK: - VisionServiceState Extension for UI Display
+extension VisionServiceState {
+    
 }
 
 enum VisionServiceError: LocalizedError {
     case visionRequestFailed(Error)
     case landmarksNotAvailable
     case configurationInvalid
+    case cameraError(Error)
 
     var errorDescription: String? {
         switch self {
@@ -65,6 +74,8 @@ enum VisionServiceError: LocalizedError {
             return "얼굴 특징점을 감지할 수 없습니다"
         case .configurationInvalid:
             return "립 트래킹 설정이 올바르지 않습니다"
+        case .cameraError(let error):
+            return "카메라 오류: \(error.localizedDescription)"
         }
     }
 }

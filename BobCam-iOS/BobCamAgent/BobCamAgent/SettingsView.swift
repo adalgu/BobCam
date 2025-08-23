@@ -616,6 +616,8 @@ extension VisionServiceState {
             return "Paused"
         case .failed:
             return "Error"
+        case .cameraError:
+            return "Camera Error"
         }
     }
 
@@ -627,7 +629,7 @@ extension VisionServiceState {
             return .green
         case .paused:
             return .orange
-        case .failed:
+        case .failed, .cameraError:
             return .red
         }
     }

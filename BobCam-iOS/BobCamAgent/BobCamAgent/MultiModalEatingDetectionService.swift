@@ -73,6 +73,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
     @Published var handConfidence: Float = 0.0
     @Published var utensilConfidence: Float = 0.0
     @Published var fusedConfidence: Float = 0.0
+    @Published var smoothedFusedConfidence: Float = 0.0
     
     // MARK: - Performance Monitoring
     @Published var processingTimeMs: Double = 0.0
@@ -185,7 +186,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         print("[MultiModal] 멀티모달 감지 초기화")
     }
     
-    func didReceiveFrame(_ pixelBuffer: CVPixelBuffer) {
+    func processFrame(_ pixelBuffer: CVPixelBuffer) {
         guard isTracking, serviceState == .running else { return }
         guard !isProcessing else { return } // Frame dropping for performance
         
@@ -195,6 +196,10 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         visionQueue.async { [weak self] in
             self?.processFrameMultiModal(pixelBuffer, startTime: startTime)
         }
+    }
+
+    func didReceiveFrame(_ pixelBuffer: CVPixelBuffer) {
+        processFrame(pixelBuffer)
     }
 
     func didEncounterCameraError(_ error: CameraServiceError) {
@@ -381,7 +386,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
             // 주요 손가락 및 손목 포인트 획득
             let wristPoint = try handObservation.recognizedPoint(.wrist)
             let thumbTip = try handObservation.recognizedPoint(.thumbTip)
-            let indexTip = try handObservation.recognizedPoint(.indexFingerTip)
+            let indexTip = try handObservation.recognizedPoint(.indexTip)
             
             // 신뢰도 검사
             guard wristPoint.confidence > configuration.handConfidenceThreshold,
@@ -404,10 +409,10 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
                 )
             }
             
-            let distance = sqrt(
+            let distance = Float(sqrt(
                 pow(handCenter.x - faceCenter.x, 2) +
                 pow(handCenter.y - faceCenter.y, 2)
-            )
+            ))
             
             let isNearMouth = distance < configuration.handToMouthDistanceThreshold
             let confidence = max(0.0, 1.0 - Float(distance / configuration.handToMouthDistanceThreshold))
@@ -471,6 +476,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
             case .uncertain:
                 self.fusedConfidence = 0.0
             }
+            self.smoothedFusedConfidence = (0.2 * self.fusedConfidence) + (0.8 * self.smoothedFusedConfidence)
         }
     }
     
@@ -494,18 +500,23 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         
         // 가중 평균 계산
         let totalWeight = configuration.lipWeight + configuration.handWeight + configuration.utensilWeight
-        let weightedScore = (
+        var weightedScore = (
             lipScore * configuration.lipWeight +
             handScore * configuration.handWeight +
             utensilScore * configuration.utensilWeight
         ) / totalWeight
+
+        // 신호 간 상호작용 보너스
+        if handScore > 0.5 && lipScore > 0.5 {
+            weightedScore *= 1.2 // 손과 입이 동시에 활성화되면 20% 보너스
+        }
         
         // 민감도 적용
         let adjustedThreshold = configuration.fusionThreshold * (1.0 - sensitivity + 0.5)
         let finalScore = weightedScore * (0.5 + sensitivity)
         
         // 최종 상태 결정
-        if finalScore >= adjustedThreshold {
+        if self.smoothedFusedConfidence >= adjustedThreshold {
             return .eating(confidence: finalScore)
         } else if finalScore >= adjustedThreshold * 0.5 {
             return .notEating(confidence: 1.0 - finalScore)
@@ -559,7 +570,7 @@ extension MultiModalEatingDetectionService {
                 return "Lip: \(String(format: "%.2f", conf)) (dist: \(String(format: "%.3f", dist)))"
             case .handToMouth(let conf, let dist, let detected):
                 return "Hand: \(String(format: "%.2f", conf)) (dist: \(String(format: "%.3f", dist)), detected: \(detected))"
-            case .utensilDetected(let conf, let pos, let detected):
+            case .utensilDetected(let conf, _, let detected):
                 return "Utensil: \(String(format: "%.2f", conf)) (detected: \(detected))"
             }
         }.joined(separator: ", ")
