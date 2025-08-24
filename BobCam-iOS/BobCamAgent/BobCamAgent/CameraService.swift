@@ -66,9 +66,7 @@ class CameraService: NSObject, ObservableObject {
     // O3 제안: CVPixelBufferPool로 메모리 최적화
     private var pixelBufferPool: CVPixelBufferPool?
 
-    // 프레임 스로틀링을 위한 카운터 (VisionService와 독립적)
-    private var frameCounter: Int = 0
-    private let frameSkipInterval: Int = 4 // 60fps -> 15fps (4프레임마다 1번 처리)
+    // O3 최적화: 프레임 스로틀링 제거 (VisionService에서 처리)
 
     // MARK: - Configuration
     struct Configuration {
@@ -229,6 +227,9 @@ class CameraService: NSObject, ObservableObject {
         // 비디오 데이터 출력 설정
         configureVideoDataOutput()
 
+        // O3 최적화: CVPixelBufferPool 초기화 (메모리 관리 개선)
+        createPixelBufferPool()
+
         captureSession.commitConfiguration()
     }
 
@@ -289,16 +290,37 @@ extension CameraService: AVCaptureVideoDataOutputSampleBufferDelegate {
                       didOutput sampleBuffer: CMSampleBuffer,
                       from connection: AVCaptureConnection) {
 
-        // 프레임 스킵핑으로 15fps 처리 구현
-        frameCounter += 1
-        guard frameCounter % frameSkipInterval == 0 else { return }
-
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+        // O3 최적화: 프레임 스로틀링 제거 (VisionService에서 처리)
+        // O3 최적화: CVPixelBufferPool을 사용한 메모리 효율적 처리
+        guard let sourcePixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        // Pool에서 버퍼 가져오기
+        var pooledBuffer: CVPixelBuffer?
+        let status = CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, pixelBufferPool!, &pooledBuffer)
+        
+        guard status == kCVReturnSuccess, let pooledPixelBuffer = pooledBuffer else {
+            // Pool 실패시 원본 사용 (fallback)
+            delegate?.didReceiveFrame(sourcePixelBuffer)
             return
         }
+        
+        // 픽셀 데이터 복사 (pooled buffer로)
+        CVPixelBufferLockBaseAddress(sourcePixelBuffer, .readOnly)
+        CVPixelBufferLockBaseAddress(pooledPixelBuffer, [])
+        
+        let sourceBaseAddress = CVPixelBufferGetBaseAddress(sourcePixelBuffer)
+        let pooledBaseAddress = CVPixelBufferGetBaseAddress(pooledPixelBuffer)
+        let dataSize = CVPixelBufferGetDataSize(sourcePixelBuffer)
+        
+        if let source = sourceBaseAddress, let pooled = pooledBaseAddress {
+            memcpy(pooled, source, dataSize)
+        }
+        
+        CVPixelBufferUnlockBaseAddress(pooledPixelBuffer, [])
+        CVPixelBufferUnlockBaseAddress(sourcePixelBuffer, .readOnly)
 
-        // 델리게이트로 프레임 전달
-        delegate?.didReceiveFrame(pixelBuffer)
+        // 델리게이트로 pooled 프레임 전달
+        delegate?.didReceiveFrame(pooledPixelBuffer)
     }
 
     func captureOutput(_ output: AVCaptureOutput,

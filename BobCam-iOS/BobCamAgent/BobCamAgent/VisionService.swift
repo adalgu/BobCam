@@ -15,9 +15,9 @@ struct LipDetectionConfiguration: Codable {
 
     static let `default` = LipDetectionConfiguration(
         historySize: 15,
-        minMovementThreshold: 0.05,
-        eatingPatternThreshold: 0.15,
-        varianceThreshold: 0.001,
+        minMovementThreshold: 0.08,  // 작은 움직임 필터링 강화
+        eatingPatternThreshold: 0.25,  // 더 엄격한 식사 감지 기준
+        varianceThreshold: 0.003,  // 안정성 향상
         emaAlpha: 0.3
     )
 }
@@ -391,7 +391,52 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
 
         let adjustedThreshold = configuration.eatingPatternThreshold * sensitivity
 
-        return changeRate > adjustedThreshold ? .eating : .notEating
+        // 기본 임계값 체크
+        guard changeRate > adjustedThreshold else {
+            return .notEating
+        }
+
+        // 연속성 검증: 실제 씹는 동작 패턴 분석
+        let continuousMovement = analyzeContinuousMovement(history)
+        let movementVariance = calculateMovementVariance(history)
+        
+        // 짧은 순간적 움직임 필터링
+        guard continuousMovement >= 3 else {  // 최소 3번의 연속 움직임 필요
+            return .notEating
+        }
+        
+        // 과도한 변동성 필터링 (단순 입 벌림 vs 씹기 동작 구분)
+        guard movementVariance < configuration.varianceThreshold * 10 else {
+            return .notEating
+        }
+
+        return .eating
+    }
+    
+    // 연속된 움직임 패턴 분석
+    private func analyzeContinuousMovement(_ history: [Float]) -> Int {
+        var continuousCount = 0
+        var maxContinuous = 0
+        let threshold = configuration.minMovementThreshold
+        
+        for i in 1..<history.count {
+            let movement = abs(history[i] - history[i-1])
+            if movement > threshold {
+                continuousCount += 1
+                maxContinuous = max(maxContinuous, continuousCount)
+            } else {
+                continuousCount = 0
+            }
+        }
+        
+        return maxContinuous
+    }
+    
+    // 움직임 변동성 계산 (씹기 vs 단순 입 벌림 구분)
+    private func calculateMovementVariance(_ history: [Float]) -> Float {
+        let mean = history.reduce(0, +) / Float(history.count)
+        let variance = history.map { pow($0 - mean, 2) }.reduce(0, +) / Float(history.count)
+        return variance
     }
 
     private func getAveragePoint(from region: VNFaceLandmarkRegion2D, indices: [Int]) -> CGPoint? {

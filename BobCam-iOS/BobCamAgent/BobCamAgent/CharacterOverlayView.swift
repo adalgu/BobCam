@@ -56,10 +56,19 @@ enum CharacterAnimation: String, CaseIterable {
     case wave = "wave"
 }
 
+// MARK: - Animation Phase System (O3 최적화)
+enum AnimationPhase: String, CaseIterable {
+    case idle = "idle"
+    case celebrating = "celebrating"
+    case celebratingFinishing = "celebratingFinishing" 
+    case encouraging = "encouraging"
+}
+
 // MARK: - Character Overlay View
 struct CharacterOverlayView: View {
     @State private var characterState: CharacterState = .waiting
     @State private var currentAnimation: CharacterAnimation = .idle
+    @State private var animationPhase: AnimationPhase = .idle  // O3 최적화: 상태 기반 애니메이션
     @State private var animationOffset: CGSize = .zero
     @State private var scale: CGFloat = 1.0
     @State private var rotation: Double = 0.0
@@ -123,9 +132,7 @@ struct CharacterOverlayView: View {
                 .scaleEffect(scale)
                 .rotationEffect(.degrees(rotation))
                 .offset(animationOffset)
-                .animation(.easeInOut(duration: 0.3), value: scale)
-                .animation(.easeInOut(duration: 0.5), value: rotation)
-                .animation(.spring(response: 0.5, dampingFraction: 0.8), value: animationOffset)
+                .animation(.easeInOut(duration: 0.4), value: characterState)  // O3 최적화: 단일 애니메이션
             
             // Character status message
             Text(characterState.description)
@@ -187,31 +194,39 @@ struct CharacterOverlayView: View {
             .animation(.easeInOut(duration: 0.3).repeatForever(autoreverses: true), value: isWaving)
     }
     
-    // MARK: - Animation Control Methods
+    // MARK: - Animation Control Methods (O3 최적화: 상태 기반)
     private func updateCharacterState(eating: Bool) {
         withAnimation(.easeInOut(duration: 0.5)) {
             if eating {
-                if isVideoPlaying {
-                    characterState = .celebrating
-                    triggerCelebratingAnimation()
-                } else {
-                    characterState = .encouraging
-                    triggerEncouragingAnimation()
-                }
+                animationPhase = isVideoPlaying ? .celebrating : .encouraging
+                characterState = isVideoPlaying ? .celebrating : .encouraging
+                triggerAppropriateAnimation()
             } else {
-                if characterState == .celebrating {
-                    // Delay transition from celebrating to allow completion
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                animationPhase = (animationPhase == .celebrating) ? .celebratingFinishing : .idle
+                characterState = .waiting
+                if animationPhase == .celebratingFinishing {
+                    // Use Timer instead of DispatchQueue for better control
+                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
                         if !isEating {
-                            characterState = .waiting
+                            animationPhase = .idle
                             startIdleAnimation()
                         }
                     }
                 } else {
-                    characterState = .waiting
                     startIdleAnimation()
                 }
             }
+        }
+    }
+    
+    private func triggerAppropriateAnimation() {
+        switch animationPhase {
+        case .celebrating:
+            triggerCelebratingAnimation()
+        case .encouraging:
+            triggerEncouragingAnimation()
+        default:
+            startIdleAnimation()
         }
     }
     

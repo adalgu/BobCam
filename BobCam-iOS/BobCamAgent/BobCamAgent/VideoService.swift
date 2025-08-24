@@ -98,6 +98,7 @@ class VideoService: ObservableObject {
 
     deinit {
         cleanupPlayer()
+        cancellables.removeAll()  // O3 최적화: Combine 구독 정리
         networkMonitor.cancel()
     }
 

@@ -67,6 +67,7 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
     @Published var isEating: Bool = false
     @Published var serviceState: VisionServiceState = .idle
     @Published var sensitivity: Float = 0.5
+    @Published var isFaceDetected: Bool = false
     
     // MARK: - Enhanced Published Properties
     @Published var eatingState: EatingDetectionState = .uncertain(reason: "초기화 중")
@@ -93,8 +94,15 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
     private var isProcessing = false
     private var isTracking = false
     
-    // Vision Request Handlers
-    private lazy var sequenceRequestHandler = VNSequenceRequestHandler()
+    // O3 최적화: Vision Request Handlers 병렬화
+    private lazy var faceRequestHandler = VNSequenceRequestHandler()
+    private lazy var handRequestHandler = VNSequenceRequestHandler()
+    private lazy var objectRequestHandler = VNSequenceRequestHandler()
+    
+    // O3 최적화: 처리 큐 분리 (우선순위별)
+    private let faceQueue = DispatchQueue(label: "face-detection", qos: .userInteractive)
+    private let handQueue = DispatchQueue(label: "hand-detection", qos: .userInitiated)
+    private let objectQueue = DispatchQueue(label: "object-detection", qos: .utility)
     
     // Frame Rate Control
     private var lastLipProcessedTime: CFTimeInterval = 0
@@ -218,51 +226,60 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
         // For now, we'll leave this empty as MultiModalService handles its own face detection
     }
     
-    // MARK: - Multi-Modal Frame Processing
+    // MARK: - Multi-Modal Frame Processing (O3 최적화: 병렬화)
     private func processFrameMultiModal(_ pixelBuffer: CVPixelBuffer, startTime: CFTimeInterval) {
         defer { isProcessing = false }
         
         let now = CACurrentMediaTime()
-        var requestsToProcess: [VNRequest] = []
         
-        // 1. 립 트래킹 (15fps)
+        // O3 최적화: 각 감지 타입별 독립적 병렬 처리
+        
+        // 1. 립 트래킹 (15fps) - 최고 우선순위
         if now - lastLipProcessedTime >= lipFrameInterval {
-            requestsToProcess.append(faceDetectionRequest)
+            faceQueue.async { [weak self] in
+                guard let self = self else { return }
+                do {
+                    try self.faceRequestHandler.perform([self.faceDetectionRequest], on: pixelBuffer)
+                } catch {
+                    print("[MultiModal] Face detection 실패: \(error)")
+                }
+            }
             lastLipProcessedTime = now
         }
         
-        // 2. 손 포즈 감지 (8fps)
+        // 2. 손 포즈 감지 (8fps) - 중간 우선순위  
         if configuration.handDetectionEnabled && now - lastHandProcessedTime >= handFrameInterval {
-            requestsToProcess.append(handPoseRequest)
+            handQueue.async { [weak self] in
+                guard let self = self else { return }
+                do {
+                    try self.handRequestHandler.perform([self.handPoseRequest], on: pixelBuffer)
+                } catch {
+                    print("[MultiModal] Hand detection 실패: \(error)")
+                }
+            }
             lastHandProcessedTime = now
         }
         
-        // 3. 도구 감지 (4fps)
+        // 3. 도구 감지 (4fps) - 최저 우선순위
         if configuration.utensilDetectionEnabled && now - lastUtensilProcessedTime >= utensilFrameInterval {
-            requestsToProcess.append(objectRecognitionRequest)
+            objectQueue.async { [weak self] in
+                guard let self = self else { return }
+                do {
+                    try self.objectRequestHandler.perform([self.objectRecognitionRequest], on: pixelBuffer)
+                } catch {
+                    print("[MultiModal] Object detection 실패: \(error)")
+                }
+            }
             lastUtensilProcessedTime = now
         }
         
-        // Vision requests 실행
-        if !requestsToProcess.isEmpty {
-            do {
-                try sequenceRequestHandler.perform(requestsToProcess, on: pixelBuffer)
-                
-                // 성능 메트릭 계산
-                let endTime = CACurrentMediaTime()
-                let processingTime = (endTime - startTime) * 1000.0
-                
-                DispatchQueue.main.async {
-                    self.processingTimeMs = processingTime
-                    self.fps = 1.0 / (endTime - startTime)
-                }
-                
-            } catch {
-                print("[MultiModal] Vision request 실패: \(error)")
-                DispatchQueue.main.async {
-                    self.serviceState = .failed(VisionServiceError.visionRequestFailed(error))
-                }
-            }
+        // 성능 메트릭 계산 (전체 처리 시간)
+        let endTime = CACurrentMediaTime()
+        let processingTime = (endTime - startTime) * 1000.0
+        
+        DispatchQueue.main.async {
+            self.processingTimeMs = processingTime
+            self.fps = 1.0 / (endTime - startTime)
         }
     }
     
@@ -272,7 +289,14 @@ class MultiModalEatingDetectionService: ObservableObject, FaceTrackingServicePro
               let results = request.results as? [VNFaceObservation],
               let faceObservation = results.first,
               let landmarks = faceObservation.landmarks else {
+            DispatchQueue.main.async {
+                self.isFaceDetected = false
+            }
             return
+        }
+        
+        DispatchQueue.main.async {
+            self.isFaceDetected = true
         }
         
         // 립 감지 결과 계산

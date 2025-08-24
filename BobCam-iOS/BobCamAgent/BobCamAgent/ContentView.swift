@@ -13,6 +13,7 @@ struct ContentView: View {
     @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
     @AppStorage("useMultiModalDetection") private var useMultiModalDetection: Bool = false
     @State private var feedbackState: FeedbackBannerView.FeedbackState = .neutral
+    @State private var currentDetectionStatus: String = "분석 중..."
 
     init() {
         let videoService = VideoService()
@@ -109,6 +110,38 @@ struct ContentView: View {
                     visionService: visionService
                 )
                 
+                // Real-time eating status banner (improved)
+                VStack {
+                    Spacer()
+                    HStack(spacing: 12) {
+                        Image(systemName: getStatusIcon())
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white)
+                        
+                        Text(currentDetectionStatus)
+                            .font(.system(size: 15, weight: .medium, design: .rounded))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.leading)
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(getStatusBackgroundColor().opacity(0.9))
+                            .shadow(color: getStatusBackgroundColor().opacity(0.3), radius: 8, x: 0, y: 4)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .strokeBorder(.white.opacity(0.2), lineWidth: 1)
+                    )
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 90) // Above status bar with more space
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .animation(.easeInOut(duration: 0.3), value: currentDetectionStatus)
+                }
+                
                 // Legacy feedback banner (if still enabled)
                 if showFeedbackBanner {
                     VStack {
@@ -118,7 +151,7 @@ struct ContentView: View {
                             text: localizedMessage
                         )
                         .padding(.horizontal, 12)
-                        .padding(.bottom, 80) // Above status bar
+                        .padding(.bottom, 140) // Above new status banner
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                         .animation(.easeInOut(duration: 0.25), value: feedbackState)
                     }
@@ -188,6 +221,13 @@ struct ContentView: View {
         }
         .onReceive(visionService.$isFaceDetected) { isFaceDetected in
             cameraService.updateFaceDetectionStatus(isFaceDetected)
+            updateDetectionStatus()
+        }
+        .onReceive(visionService.$isEating) { _ in
+            updateDetectionStatus()
+        }
+        .onReceive(visionService.$serviceState) { _ in
+            updateDetectionStatus()
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView(
@@ -217,6 +257,65 @@ struct ContentView: View {
         visionService.stopTracking()
         multiModalService.stopTracking()
         cameraService.delegate = nil
+    }
+    
+    private func updateDetectionStatus() {
+        let visionServiceState = visionService.serviceState
+        let isFaceDetected = visionService.isFaceDetected
+        let isEating = useMultiModalDetection ? multiModalService.isEating : visionService.isEating
+        
+        // 서비스 상태 우선 체크
+        switch visionServiceState {
+        case .failed, .cameraError:
+            currentDetectionStatus = "감지 오류가 발생했습니다"
+            return
+        case .idle, .paused:
+            currentDetectionStatus = "얼굴을 분석하고 있어요..."
+            return
+        case .running:
+            break // 계속 진행
+        }
+        
+        // 얼굴 감지 상태 체크
+        if !isFaceDetected {
+            currentDetectionStatus = "얼굴을 카메라 앞에 위치해주세요"
+            return
+        }
+        
+        // 식사 감지 상태 체크
+        if isEating {
+            currentDetectionStatus = "식사 중! 잘하고 있어요 🍽️"
+        } else {
+            currentDetectionStatus = "밥을 더 먹어보세요 😊"
+        }
+    }
+    
+    private func getStatusIcon() -> String {
+        if currentDetectionStatus.contains("식사 중") {
+            return "checkmark.circle.fill"
+        } else if currentDetectionStatus.contains("밥을 더 먹어") {
+            return "exclamationmark.circle.fill"
+        } else if currentDetectionStatus.contains("분석") {
+            return "magnifyingglass.circle.fill"
+        } else if currentDetectionStatus.contains("얼굴을") {
+            return "person.circle.fill"
+        } else {
+            return "xmark.circle.fill"
+        }
+    }
+    
+    private func getStatusBackgroundColor() -> Color {
+        if currentDetectionStatus.contains("식사 중") {
+            return .green
+        } else if currentDetectionStatus.contains("밥을 더 먹어") {
+            return .orange
+        } else if currentDetectionStatus.contains("분석") {
+            return .blue
+        } else if currentDetectionStatus.contains("얼굴을") {
+            return .gray
+        } else {
+            return .red
+        }
     }
 }
 

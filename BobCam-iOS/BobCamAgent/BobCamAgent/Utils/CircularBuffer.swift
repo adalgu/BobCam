@@ -12,6 +12,9 @@ struct CircularBuffer<T> {
     private var array: [T?]
     private var head = 0
     private(set) var count = 0
+    
+    // O3 최적화: 캐시된 결과 배열 재사용
+    private var cachedResult = [T]()
 
     init(capacity: Int) {
         array = [T?](repeating: nil, count: capacity)
@@ -51,22 +54,25 @@ struct CircularBuffer<T> {
         }
     }
 
-    /// 버퍼의 모든 아이템을 순서대로 반환
-    func allItems() -> [T] {
-        var result = [T]()
-        result.reserveCapacity(count)
+    /// 버퍼의 모든 아이템을 순서대로 반환 (O3 최적화: 캐시된 배열 재사용)
+    mutating func allItems() -> [T] {
+        cachedResult.removeAll(keepingCapacity: true)  // 용량 유지하며 클리어
+        cachedResult.reserveCapacity(count)
+        
         for index in 0..<count {
             let bufferIndex = (head + index) % capacity
             if let element = array[bufferIndex] {
-                result.append(element)
+                cachedResult.append(element)
             }
         }
-        return result
+        return cachedResult
     }
 
-    /// 버퍼를 비움
+    /// 버퍼를 비움 (O3 최적화: 기존 배열 재사용)
     mutating func clear() {
-        array = [T?](repeating: nil, count: capacity)
+        for i in 0..<capacity {
+            array[i] = nil
+        }
         head = 0
         count = 0
     }
