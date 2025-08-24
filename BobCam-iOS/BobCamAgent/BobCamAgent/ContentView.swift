@@ -170,13 +170,26 @@ struct ContentView: View {
                     .padding()
                 }
                 
-                // Settings button (top-right, below mini camera)
+                // Settings button and version info (top-right, below mini camera)
                 VStack {
                     HStack {
                         Spacer()
                         VStack(spacing: 12) {
                             Spacer()
                                 .frame(height: 180) // Space for mini camera
+                            
+                            // Compact version info
+                            HStack(spacing: 4) {
+                                Text("v\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")")
+                                    .font(.system(size: 10, weight: .medium, design: .monospaced))
+                                    .foregroundColor(.white.opacity(0.7))
+                            }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(Color.black.opacity(0.3))
+                            )
                             
                             Button(action: {
                                 showingSettings = true

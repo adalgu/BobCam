@@ -185,9 +185,12 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         self.debugFaceObservation = faceObservation
     }
 
-    /// Get current landmarks for debug overlay
+    /// Get current landmarks for debug overlay (thread-safe)
     func getCurrentLandmarksForDebug() -> (VNFaceLandmarks2D?, VNFaceObservation?) {
-        return (debugLandmarks, debugFaceObservation)
+        // CRASH FIX: Use async-safe access to avoid race conditions
+        return DispatchQueue.main.sync {
+            return (debugLandmarks, debugFaceObservation)
+        }
     }
 
     func detect(from landmarks: VNFaceLandmarks2D, faceObservation: VNFaceObservation) -> LipDetectionState {

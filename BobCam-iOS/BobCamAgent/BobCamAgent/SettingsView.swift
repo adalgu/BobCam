@@ -267,6 +267,20 @@ struct AlgorithmSettingsSection: View {
                         Text("• Detailed logging")
                             .font(.caption2)
                             .foregroundColor(.secondary)
+
+                        // PHASE 3: Safe landmarks overlay warning
+                        Divider()
+                            .padding(.vertical, 4)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("⚠️ Landmarks Overlay (Disabled)")
+                                .font(.caption)
+                                .foregroundColor(.orange)
+                            Text("This feature has been disabled due to app crash issues. Use Debug mode in development builds only.")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.leading)
+                        }
                     }
                     .padding(.top, 4)
                 }
@@ -347,9 +361,66 @@ struct PrivacyAndAppInfoSection: View {
             SectionHeader(title: "Privacy & Information", icon: "shield.checkered")
 
             // App Information
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: "info.circle.fill")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 16))
+                    
+                    Text("앱 정보")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text("버전:")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.secondary)
+                        
+                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+                            .font(.system(size: 14, weight: .regular, design: .monospaced))
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text("빌드:")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.secondary)
+                        
+                        Text(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
+                            .font(.system(size: 14, weight: .regular, design: .monospaced))
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text("빌드 시간:")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.secondary)
+                        
+                        Text(getCurrentBuildTime())
+                            .font(.system(size: 14, weight: .regular, design: .monospaced))
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                    }
+                }
+                .padding(.leading, 24)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color(.systemGray6))
+            )
+            
             VStack(spacing: 12) {
-                InfoRow(title: "Version", value: appVersion)
-                InfoRow(title: "Build", value: appBuild)
                 InfoRow(title: "iOS Minimum", value: "15.0+")
                 InfoRow(title: "Developer", value: "BobCam Team")
             }
@@ -412,6 +483,17 @@ struct PrivacyAndAppInfoSection: View {
 
     private var appBuild: String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+    }
+    
+    private func getCurrentBuildTime() -> String {
+        #if DEBUG
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd HH:mm"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return "DEBUG - " + formatter.string(from: Date())
+        #else
+        return Bundle.main.infoDictionary?["BuildTimestamp"] as? String ?? "Unknown"
+        #endif
     }
 }
 

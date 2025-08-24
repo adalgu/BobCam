@@ -132,11 +132,36 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 ```bash
 # 현재 브랜치: feature/macbook-claude/app-brain-storming
 # 최신 커밋: 0efba05 feat: Complete Phase 1.1 & 1.2 Implementation
+# 현재 빌드 버전: 20250824.1214 (앱에서 확인 가능)
 # 주요 개선사항:
 # - 식사 감지 정확도 향상 (VisionService.swift)
 # - 실시간 상태 배너 복원 (ContentView.swift)
 # - MultiModalEatingDetectionService 통합
+# - 앱 내 빌드 버전 표시 추가
 ```
+
+## 빌드 버전 확인 방법
+
+### 1. 앱 실행 화면에서 확인
+- 앱을 실행하면 우상단 (설정 버튼 위)에 `v20250824.1214` 형태로 현재 빌드 버전이 표시됩니다.
+
+### 2. Settings 화면에서 확인
+- Settings 화면을 열면 "앱 정보" 섹션에서 상세한 빌드 정보를 확인할 수 있습니다:
+  - 버전: 1.0
+  - 빌드: 20250824.1214
+  - 빌드 시간: DEBUG 모드에서는 현재 시간, Release 모드에서는 실제 빌드 시간
+
+### 3. 수동 빌드 버전 업데이트
+새로운 빌드를 만들 때마다 다음과 같이 빌드 번호를 업데이트할 수 있습니다:
+
+```bash
+# Info.plist에서 CFBundleVersion 값을 현재 날짜/시간으로 변경
+# 형식: YYYYMMDD.HHMM
+# 예: 20250824.1214 (2025년 8월 24일 12시 14분)
+```
+
+### 4. 자동 빌드 버전 업데이트 (향후)
+`Scripts/update_build_info.sh` 스크립트가 준비되어 있어 Xcode Build Phases에 추가하면 자동으로 Git 커밋 해시와 빌드 시간이 업데이트됩니다.
 
 ## 문제 해결
 
