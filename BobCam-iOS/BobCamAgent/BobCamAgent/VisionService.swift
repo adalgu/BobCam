@@ -112,6 +112,12 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     
     // MARK: - Face Detection Status
     @Published var isFaceDetected: Bool = false
+    
+    // MARK: - Real-time Debug Metrics
+    @Published var currentLipDistance: Float = 0
+    @Published var detectionConfidence: Float = 0
+    @Published var consecutiveEatingFrames: Int = 0
+    @Published var movementVariance: Float = 0
 
     // MARK: - Private Properties
     private let visionQueue = DispatchQueue(label: "com.bobcam.vision", qos: .userInteractive)
@@ -315,6 +321,14 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         lipDistanceHistory.write(lipDistance)
         let state = analyzeEatingPattern()
         let currentJitter = metricsCalculator.calculateJitter(currentBox: firstFace.boundingBox)
+        
+        // Calculate debug metrics
+        let variance = calculateVariance()
+        let confidence = calculateDetectionConfidence(lipDistance: lipDistance, variance: variance)
+        
+        // Update consecutive eating frames counter
+        let consecutiveFrames = (state == .eating) ? (consecutiveEatingFrames + 1) : 0
+        
         // --- End Core Logic ---
         self.previousFaceBoundingBox = firstFace.boundingBox
 
@@ -322,6 +336,13 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
             self.isEating = (state == .eating)
             self.isFaceDetected = true
             self.jitter = currentJitter
+            
+            // Update debug metrics
+            self.currentLipDistance = lipDistance
+            self.detectionConfidence = confidence
+            self.consecutiveEatingFrames = consecutiveFrames
+            self.movementVariance = variance
+            
             self.updateDebugLandmarks(landmarks, faceObservation: firstFace)
         }
     }
@@ -346,6 +367,39 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     private func resetAlgorithmState() {
         lipDistanceHistory.clear()
         lastSmoothedPoint = nil
+        consecutiveEatingFrames = 0
+    }
+    
+    // MARK: - Debug Metrics Calculation
+    private func calculateVariance() -> Float {
+        guard lipDistanceHistory.count > 2 else { return 0 }
+        
+        let values = lipDistanceHistory.allItems()
+        let mean = values.reduce(0, +) / Float(values.count)
+        let squaredDifferences = values.map { ($0 - mean) * ($0 - mean) }
+        return squaredDifferences.reduce(0, +) / Float(values.count)
+    }
+    
+    private func calculateDetectionConfidence(lipDistance: Float, variance: Float) -> Float {
+        // Calculate confidence based on multiple factors
+        var confidence: Float = 0.0
+        
+        // Factor 1: Lip movement is in expected range (0.05 - 0.15)
+        if lipDistance > 0.05 && lipDistance < 0.15 {
+            confidence += 0.3
+        }
+        
+        // Factor 2: Variance indicates consistent movement
+        if variance > configuration.varianceThreshold && variance < configuration.varianceThreshold * 5 {
+            confidence += 0.3
+        }
+        
+        // Factor 3: Consecutive frames detected
+        if consecutiveEatingFrames > 3 {
+            confidence += min(0.4, Float(consecutiveEatingFrames) / 20.0)
+        }
+        
+        return min(1.0, confidence)
     }
 
     private func calculateSmoothedLipDistance(_ landmarks: VNFaceLandmarks2D) -> Float? {
