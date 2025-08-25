@@ -7,29 +7,50 @@ struct StatusBar: View {
     @ObservedObject var videoService: VideoService
     @ObservedObject var videoSelectionService: VideoSelectionService
     @Binding var sensitivity: Float
+    @Binding var manualOverride: Bool // State에서 Binding으로 변경
     @State private var showSettings = false
-    @State private var manualOverride = false
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 12) {
             // 감지 상태 인디케이터
             EatingStatusIndicator(isEating: isEating || manualOverride)
 
-            Spacer()
+            Spacer(minLength: 8)
 
             // 민감도 슬라이더
             SensitivitySlider(sensitivity: $sensitivity)
 
-            Spacer()
+            Spacer(minLength: 8)
 
             // Override 버튼
             OverrideButton(isActive: $manualOverride)
+            
+            // 비디오 테스트 버튼 (디버깅용)
+            Button(action: {
+                print("[StatusBar] 수동 비디오 재생 테스트")
+                videoService.playVideo()
+            }) {
+                Image(systemName: "play.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(.green)
+            }
+            
+            // 식사 감지 테스트 버튼 (디버깅용)
+            Button(action: {
+                print("[StatusBar] 식사 감지 상태 강제 토글")
+                visionService.isEating.toggle()
+            }) {
+                Image(systemName: "fork.knife.circle.fill")
+                    .font(.title2)
+                    .foregroundColor(.orange)
+            }
 
             // 설정 버튼
             SettingsButton(action: { showSettings = true })
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 16)
         .padding(.vertical, 12)
+        .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(.ultraThinMaterial)
@@ -85,7 +106,7 @@ struct SensitivitySlider: View {
                 .font(.caption2)
                 .foregroundColor(.secondary)
 
-            HStack(spacing: 8) {
+            HStack(spacing: 6) {
                 Image(systemName: "minus.circle.fill")
                     .foregroundColor(.secondary)
                     .font(.caption)
@@ -93,7 +114,7 @@ struct SensitivitySlider: View {
                 Slider(value: $sensitivity, in: 0.1...1.0, step: 0.1) { editing in
                     isAdjusting = editing
                 }
-                .frame(width: 80)
+                .frame(width: 70)
                 .accentColor(.blue)
 
                 Image(systemName: "plus.circle.fill")
@@ -106,6 +127,7 @@ struct SensitivitySlider: View {
                 .foregroundColor(.secondary)
                 .animation(.none, value: sensitivity)
         }
+        .frame(maxWidth: 100)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("감지 민감도")
         .accessibilityValue("\(Int(sensitivity * 100))퍼센트")
@@ -190,7 +212,8 @@ struct StatusBar_Previews: PreviewProvider {
                 visionService: VisionService(),
                 videoService: videoService,
                 videoSelectionService: VideoSelectionService(videoService: videoService),
-                sensitivity: .constant(0.5)
+                sensitivity: .constant(0.5),
+                manualOverride: .constant(false)
             )
             .padding()
         }
@@ -205,7 +228,8 @@ struct StatusBar_Previews: PreviewProvider {
                 visionService: VisionService(),
                 videoService: videoService,
                 videoSelectionService: VideoSelectionService(videoService: videoService),
-                sensitivity: .constant(0.7)
+                sensitivity: .constant(0.7),
+                manualOverride: .constant(false)
             )
             .padding()
         }

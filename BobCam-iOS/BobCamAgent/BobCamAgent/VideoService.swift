@@ -10,7 +10,6 @@ enum VideoServiceError: LocalizedError {
     case playerInitializationFailed
     case playbackFailed(Error)
     case youTubeLoadFailed(String)
-    case networkUnavailable
     case unsupportedVideoType
 
     var errorDescription: String? {
@@ -23,8 +22,6 @@ enum VideoServiceError: LocalizedError {
             return "비디오 재생 오류: \(error.localizedDescription)"
         case .youTubeLoadFailed(let videoId):
             return "YouTube 비디오를 불러올 수 없습니다: \(videoId)"
-        case .networkUnavailable:
-            return "네트워크 연결을 확인해주세요"
         case .unsupportedVideoType:
             return "지원하지 않는 비디오 형식입니다"
         }
@@ -75,19 +72,9 @@ class VideoService: ObservableObject {
     // Network monitoring
     private let networkMonitor = NWPathMonitor()
     private let networkQueue = DispatchQueue(label: "NetworkMonitor")
-
+    
     // Combine subscriptions
     private var cancellables = Set<AnyCancellable>()
-
-    // 페이드 애니메이션 관련
-    private var fadeWorkItem: DispatchWorkItem?
-
-    // MARK: - Configuration
-    struct Configuration {
-        static let fadeAnimationDuration: Double = 0.5
-        static let preferredPeakBitRate: Double = 2_000_000 // 2Mbps
-        static let preferredForwardBufferDuration: TimeInterval = 1.0
-    }
 
     // MARK: - Initialization
     init() {
@@ -98,7 +85,7 @@ class VideoService: ObservableObject {
 
     deinit {
         cleanupPlayer()
-        cancellables.removeAll()  // O3 최적화: Combine 구독 정리
+        cancellables.removeAll()
         networkMonitor.cancel()
     }
 
@@ -117,12 +104,12 @@ class VideoService: ObservableObject {
         }
     }
 
-    /// 비디오 파일 로드 (backward compatibility)
+    /// Load video file (backward compatibility)
     func loadVideo(from url: URL) {
         loadVideo(.local(url))
     }
 
-    /// 비디오 재생 시작
+    /// Start video playback
     func playVideo() {
         guard playbackState == .ready || playbackState == .paused else {
             return
@@ -138,7 +125,7 @@ class VideoService: ObservableObject {
         }
     }
 
-    /// 비디오 일시정지
+    /// Pause video playback
     func pauseVideo() {
         guard playbackState == .playing else {
             return
@@ -154,7 +141,7 @@ class VideoService: ObservableObject {
         }
     }
 
-    /// 비디오 정지 및 처음으로 되돌리기
+    /// Stop video and return to start
     func stopVideo() {
         switch currentVideoType {
         case .local:
@@ -166,15 +153,12 @@ class VideoService: ObservableObject {
         }
     }
 
-    /// 리소스 정리
+    /// Clean up player resources
     func cleanupPlayer() {
-        fadeWorkItem?.cancel()
-
         player?.pause()
         playerLooper = nil
         playerItem = nil
         player = nil
-
         cancellables.removeAll()
 
         isPlaying = false
@@ -194,54 +178,51 @@ class VideoService: ObservableObject {
     private func loadLocalVideo(from url: URL) {
         cleanupPlayer()
 
-        // AVAsset 생성 및 검증
+        // Simple asset creation without complex security handling
         let asset = AVAsset(url: url)
-
-        // 비동기로 asset 로드 가능성 확인
-        Task {
-            do {
-                let isPlayable = try await asset.load(.isPlayable)
-                let duration = try await asset.load(.duration)
-
-                guard isPlayable, duration.seconds > 0 else {
-                    await MainActor.run {
-                        self.playbackState = .failed(VideoServiceError.videoLoadFailed(url))
-                    }
-                    return
-                }
-
-                await MainActor.run {
-                    self.createPlayerWithAsset(asset)
-                }
-
-            } catch {
-                await MainActor.run {
-                    self.playbackState = .failed(VideoServiceError.videoLoadFailed(url))
-                }
-            }
+        
+        // Create player item and player
+        playerItem = AVPlayerItem(asset: asset)
+        guard let playerItem = playerItem else {
+            playbackState = .failed(VideoServiceError.playerInitializationFailed)
+            return
         }
+
+        // Create player and looper
+        player = AVQueuePlayer(playerItem: playerItem)
+        guard let player = player else {
+            playbackState = .failed(VideoServiceError.playerInitializationFailed)
+            return
+        }
+
+        playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
+        
+        // Set up basic observation
+        setupPlayerObservation()
+        
+        // Wait for asset to load - status will be updated via observation
+        // Don't immediately check status as asset loading is asynchronous
+        print("[VideoService] 🎬 Local video loading started for URL: \(url.lastPathComponent)")
     }
 
     private func playLocalVideo() {
-        guard let player = player else { return }
-
-        // 부드러운 페이드 인 효과
-        fadeIn {
-            player.play()
-            self.isPlaying = true
-            self.playbackState = .playing
+        guard let player = player,
+              let playerItem = playerItem,
+              playerItem.status == .readyToPlay else {
+            return
         }
+        
+        player.play()
+        isPlaying = true
+        playbackState = .playing
     }
 
     private func pauseLocalVideo() {
         guard let player = player else { return }
-
-        // 부드러운 페이드 아웃 효과
-        fadeOut {
-            player.pause()
-            self.isPlaying = false
-            self.playbackState = .paused
-        }
+        
+        player.pause()
+        isPlaying = false
+        playbackState = .paused
     }
 
     private func stopLocalVideo() {
@@ -249,10 +230,8 @@ class VideoService: ObservableObject {
 
         player.pause()
         player.seek(to: .zero)
-
         isPlaying = false
         playbackState = .ready
-        playerOpacity = 1.0
     }
 
     // MARK: - Private Methods - YouTube Video
@@ -260,13 +239,13 @@ class VideoService: ObservableObject {
     private func loadYouTubeVideo(_ youTubeVideo: YouTubeVideo) {
         // Check network availability for YouTube
         guard isNetworkAvailable else {
-            playbackState = .failed(VideoServiceError.networkUnavailable)
+            playbackState = .failed(VideoServiceError.youTubeLoadFailed("Network unavailable"))
             return
         }
         
-        // Check child safety
+        // Basic child safety check
         guard ChildSafetyFilter.isChildSafe(youTubeVideo) else {
-            playbackState = .failed(VideoServiceError.playbackFailed(YouTubePlayerError.restrictedContent))
+            playbackState = .failed(VideoServiceError.youTubeLoadFailed(youTubeVideo.videoId))
             return
         }
         
@@ -276,9 +255,6 @@ class VideoService: ObservableObject {
         // Set current video in YouTube controller
         let controller = youTubePlayerControllerReference ?? youTubePlayerController
         controller.currentVideo = youTubeVideo
-        
-        // The actual loading will happen when the YouTubePlayerView is created
-        // For now, we set the state to ready to indicate we're prepared to load
         playbackState = .ready
     }
 
@@ -286,22 +262,18 @@ class VideoService: ObservableObject {
         let controller = youTubePlayerControllerReference ?? youTubePlayerController
         guard controller.isReady else { return }
         
-        fadeIn {
-            controller.play()
-            self.isPlaying = true
-            self.playbackState = .playing
-        }
+        controller.play()
+        isPlaying = true
+        playbackState = .playing
     }
 
     private func pauseYouTubeVideo() {
         let controller = youTubePlayerControllerReference ?? youTubePlayerController
         guard controller.isReady else { return }
         
-        fadeOut {
-            controller.pause()
-            self.isPlaying = false
-            self.playbackState = .paused
-        }
+        controller.pause()
+        isPlaying = false
+        playbackState = .paused
     }
 
     private func stopYouTubeVideo() {
@@ -310,20 +282,17 @@ class VideoService: ObservableObject {
         
         controller.stop()
         controller.seekToStart()
-        
         isPlaying = false
         playbackState = .ready
-        playerOpacity = 1.0
     }
 
     // MARK: - Setup Methods
 
     private func setupAudioSession() {
         do {
-            // 비디오 재생을 위한 오디오 세션 설정
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
         } catch {
-            print("오디오 세션 설정 실패: \(error)")
+            // Silently fail, not critical
         }
     }
 
@@ -344,7 +313,6 @@ class VideoService: ObservableObject {
     }
 
     private func setupYouTubePlayerObservation() {
-        // Observe YouTube player state changes
         let controllerToObserve = youTubePlayerControllerReference ?? youTubePlayerController
         controllerToObserve.$playerState
             .receive(on: DispatchQueue.main)
@@ -367,7 +335,6 @@ class VideoService: ObservableObject {
         case .buffering:
             playbackState = .loading
         case .ended:
-            // For looping, restart the video
             youTubePlayerController.seekToStart()
             youTubePlayerController.play()
         case .cued:
@@ -377,61 +344,36 @@ class VideoService: ObservableObject {
         }
     }
 
-    // MARK: - Local Player Setup
-
-    private func createPlayerWithAsset(_ asset: AVAsset) {
-        // AVPlayerItem 생성 및 최적화
-        playerItem = AVPlayerItem(asset: asset)
-
-        guard let playerItem = playerItem else {
-            playbackState = .failed(VideoServiceError.playerInitializationFailed)
-            return
-        }
-
-        // 성능 최적화 설정
-        playerItem.preferredPeakBitRate = Configuration.preferredPeakBitRate
-        playerItem.preferredForwardBufferDuration = Configuration.preferredForwardBufferDuration
-
-        // AVPlayer 생성
-        player = AVQueuePlayer(playerItem: playerItem)
-
-        guard let player = player else {
-            playbackState = .failed(VideoServiceError.playerInitializationFailed)
-            return
-        }
-
-        // 무한 반복을 위한 AVPlayerLooper 설정
-        playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
-
-        // 플레이어 상태 관찰 설정
-        setupPlayerObservation()
-
-        playbackState = .ready
-    }
-
     private func setupPlayerObservation() {
         guard let playerItem = playerItem else { return }
 
-        // 플레이어 아이템 상태 관찰
+        // Observe player item status
         playerItem.publisher(for: \.status)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
+                print("[VideoService] 🎬 Player item status changed: \(status.debugDescription)")
                 switch status {
                 case .readyToPlay:
+                    print("[VideoService] 🎬 Video ready to play!")
                     self?.playbackState = .ready
                 case .failed:
+                    print("[VideoService] ⚠️ Video failed to load: \(playerItem.error?.localizedDescription ?? "Unknown error")")
                     if let error = playerItem.error {
                         self?.playbackState = .failed(VideoServiceError.playbackFailed(error))
+                    } else {
+                        self?.playbackState = .failed(VideoServiceError.playerInitializationFailed)
                     }
                 case .unknown:
-                    break
+                    print("[VideoService] 🔄 Video loading...")
+                    self?.playbackState = .loading
                 @unknown default:
+                    print("[VideoService] ⚠️ Unknown player item status")
                     break
                 }
             }
             .store(in: &cancellables)
 
-        // 플레이어 재생 상태 관찰
+        // Observe player status for local videos only
         player?.publisher(for: \.timeControlStatus)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
@@ -440,7 +382,9 @@ class VideoService: ObservableObject {
                 switch status {
                 case .playing:
                     self?.isPlaying = true
-                    if self?.playbackState != .failed(VideoServiceError.playbackFailed(NSError())) {
+                    if case .failed = self?.playbackState {
+                        // Don't override failed state
+                    } else {
                         self?.playbackState = .playing
                     }
                 case .paused:
@@ -455,15 +399,6 @@ class VideoService: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-
-        // 플레이어 에러 관찰
-        player?.publisher(for: \.error)
-            .compactMap { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.playbackState = .failed(VideoServiceError.playbackFailed(error))
-            }
-            .store(in: &cancellables)
     }
 
     private func cleanupLocalPlayer() {
@@ -473,40 +408,21 @@ class VideoService: ObservableObject {
         player = nil
     }
 
-    // MARK: - 애니메이션 메서드
+}
 
-    private func fadeIn(completion: @escaping () -> Void) {
-        fadeWorkItem?.cancel()
-
-        let workItem = DispatchWorkItem { [weak self] in
-            withAnimation(.easeInOut(duration: Configuration.fadeAnimationDuration)) {
-                self?.playerOpacity = 1.0
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + Configuration.fadeAnimationDuration) {
-                completion()
-            }
+// MARK: - Debug Extensions
+extension AVPlayerItem.Status {
+    var debugDescription: String {
+        switch self {
+        case .unknown:
+            return "unknown"
+        case .readyToPlay:
+            return "readyToPlay"
+        case .failed:
+            return "failed"
+        @unknown default:
+            return "unknown_case"
         }
-
-        fadeWorkItem = workItem
-        DispatchQueue.main.async(execute: workItem)
-    }
-
-    private func fadeOut(completion: @escaping () -> Void) {
-        fadeWorkItem?.cancel()
-
-        let workItem = DispatchWorkItem { [weak self] in
-            withAnimation(.easeInOut(duration: Configuration.fadeAnimationDuration)) {
-                self?.playerOpacity = 0.3
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + Configuration.fadeAnimationDuration) {
-                completion()
-            }
-        }
-
-        fadeWorkItem = workItem
-        DispatchQueue.main.async(execute: workItem)
     }
 }
 

@@ -37,6 +37,7 @@ struct DebugContentView: View {
     @StateObject private var videoSelectionService: VideoSelectionService
     @StateObject private var debugSettings = DebugIntegrationHelpers.setupDebugEnvironment()
     @State private var showingSettings = false
+    @State private var manualOverride = false
 
     init() {
         let videoService = VideoService()
@@ -84,7 +85,8 @@ struct DebugContentView: View {
                     visionService: visionService,
                     videoService: videoService,
                     videoSelectionService: videoSelectionService,
-                    sensitivity: $visionService.sensitivity
+                    sensitivity: $visionService.sensitivity,
+                    manualOverride: $manualOverride
                 )
                 .padding()
             }

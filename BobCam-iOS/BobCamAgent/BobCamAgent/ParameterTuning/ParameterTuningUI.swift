@@ -545,7 +545,9 @@ struct ConfigurationEditor: View {
                     minMovementThreshold: config.minMovementThreshold,
                     eatingPatternThreshold: config.eatingPatternThreshold,
                     varianceThreshold: config.varianceThreshold,
-                    emaAlpha: config.emaAlpha
+                    emaAlpha: config.emaAlpha,
+                    persistentEatingFrames: config.persistentEatingFrames,
+                    stopEatingFrames: config.stopEatingFrames
                 )
             }
 
@@ -560,7 +562,9 @@ struct ConfigurationEditor: View {
                     minMovementThreshold: config.minMovementThreshold,
                     eatingPatternThreshold: Float(newValue),
                     varianceThreshold: config.varianceThreshold,
-                    emaAlpha: config.emaAlpha
+                    emaAlpha: config.emaAlpha,
+                    persistentEatingFrames: config.persistentEatingFrames,
+                    stopEatingFrames: config.stopEatingFrames
                 )
             }
 
@@ -575,7 +579,9 @@ struct ConfigurationEditor: View {
                     minMovementThreshold: config.minMovementThreshold,
                     eatingPatternThreshold: config.eatingPatternThreshold,
                     varianceThreshold: config.varianceThreshold,
-                    emaAlpha: Float(newValue)
+                    emaAlpha: Float(newValue),
+                    persistentEatingFrames: config.persistentEatingFrames,
+                    stopEatingFrames: config.stopEatingFrames
                 )
             }
         }

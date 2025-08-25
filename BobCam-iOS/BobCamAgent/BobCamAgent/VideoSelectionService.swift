@@ -470,16 +470,21 @@ class VideoSelectionService: ObservableObject {
     }
 
     private func loadDefaultVideo() {
-        guard let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4") else {
-            selectionState = .failed(VideoSelectionError.importFailed)
-            return
+        // Try to load a sample video from bundle, but don't fail if it doesn't exist
+        if let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4") {
+            let videoURL = URL(fileURLWithPath: bundlePath)
+            let videoType = VideoType.local(videoURL)
+            
+            selectedVideoType = videoType
+            hasSelectedVideo = false
+            videoService.loadVideo(videoType)
+        } else {
+            // No default video available - this is OK, user needs to select one
+            print("[VideoSelectionService] No default video file found - user must select a video")
+            selectedVideoType = nil
+            hasSelectedVideo = false
+            selectionState = .idle
         }
-        let videoURL = URL(fileURLWithPath: bundlePath)
-        let videoType = VideoType.local(videoURL)
-
-        selectedVideoType = videoType
-        hasSelectedVideo = false
-        videoService.loadVideo(videoType)
     }
 
     private func cleanupStoredVideos() {

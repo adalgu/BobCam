@@ -161,7 +161,9 @@ class ParameterOptimizationTestSuite: XCTestCase {
             minMovementThreshold: 0.05,
             eatingPatternThreshold: 0.15,
             varianceThreshold: 0.001,
-            emaAlpha: 0.3
+            emaAlpha: 0.3,
+            persistentEatingFrames: 30,
+            stopEatingFrames: 45
         )
 
         let configB = LipDetectionConfiguration(
@@ -169,7 +171,9 @@ class ParameterOptimizationTestSuite: XCTestCase {
             minMovementThreshold: 0.07,
             eatingPatternThreshold: 0.2,
             varianceThreshold: 0.002,
-            emaAlpha: 0.4
+            emaAlpha: 0.4,
+            persistentEatingFrames: 30,
+            stopEatingFrames: 45
         )
 
         let result = await abTesting.compareConfigurations(configA, configB, testFrames: frames, groundTruth: groundTruthFrames)

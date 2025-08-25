@@ -202,7 +202,9 @@ class TuningIntegrationManager: ObservableObject {
             minMovementThreshold: movementThreshold,
             eatingPatternThreshold: eatingThreshold,
             varianceThreshold: varianceThreshold,
-            emaAlpha: emaAlpha
+            emaAlpha: emaAlpha,
+            persistentEatingFrames: 30, // 기본값 사용
+            stopEatingFrames: 45 // 기본값 사용
         )
     }
 

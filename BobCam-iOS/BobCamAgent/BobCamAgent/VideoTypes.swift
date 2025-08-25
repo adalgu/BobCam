@@ -42,6 +42,15 @@ enum VideoType: Equatable, CaseIterable {
             return video.title ?? "YouTube Video"
         }
     }
+    
+    var description: String {
+        switch self {
+        case .local(let url):
+            return "Local: \(url.lastPathComponent)"
+        case .youtube(let video):
+            return "YouTube: \(video.title ?? video.videoId)"
+        }
+    }
 }
 
 // MARK: - YouTube Video Model

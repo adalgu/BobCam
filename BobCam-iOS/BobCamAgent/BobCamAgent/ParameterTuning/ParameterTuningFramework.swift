@@ -51,7 +51,9 @@ struct ParameterCombination {
             minMovementThreshold: minMovementThreshold,
             eatingPatternThreshold: eatingPatternThreshold,
             varianceThreshold: varianceThreshold,
-            emaAlpha: emaAlpha
+            emaAlpha: emaAlpha,
+            persistentEatingFrames: 30,
+            stopEatingFrames: 45
         )
     }
 }
@@ -498,7 +500,9 @@ class AutomatedTestingInfrastructure {
             minMovementThreshold: movementThreshold,
             eatingPatternThreshold: eatingThreshold,
             varianceThreshold: varianceThreshold,
-            emaAlpha: emaAlpha
+            emaAlpha: emaAlpha,
+            persistentEatingFrames: 30,
+            stopEatingFrames: 45
         )
     }
 }

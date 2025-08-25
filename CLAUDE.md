@@ -15,8 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### iOS Development
 - Open project: `open BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj`
-- Build and run: Use Xcode or `xcodebuild -project BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj -scheme BobCamAgent -destination 'platform=iOS Simulator,name=iPhone 15 Pro' build`
-- Run tests: `xcodebuild test -project BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj -scheme BobCamAgent -destination 'platform=iOS Simulator,name=iPhone 15 Pro'`
+- **Build commands**: Use deployment-engineer or ios-developer subagent through Task tool for all build operations
+- Build and run: Use Xcode or delegate to build specialist subagent
+- Run tests: Delegate to test-automator subagent for comprehensive testing
 
 ### Development Environment
 - Docker: `docker-compose up -d`

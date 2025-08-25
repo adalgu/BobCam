@@ -12,13 +12,19 @@ struct LipDetectionConfiguration: Codable {
     let eatingPatternThreshold: Float
     let varianceThreshold: Float
     let emaAlpha: Float // EMA smoothing factor
+    
+    // 끈기있는 감지를 위한 새 파라미터
+    let persistentEatingFrames: Int // 식사로 판정된 후 지속할 최소 프레임 수
+    let stopEatingFrames: Int // 식사 중단으로 판정하기 위한 연속 비식사 프레임 수
 
     static let `default` = LipDetectionConfiguration(
         historySize: 15,
-        minMovementThreshold: 0.08,  // 작은 움직임 필터링 강화
-        eatingPatternThreshold: 0.25,  // 더 엄격한 식사 감지 기준
-        varianceThreshold: 0.003,  // 안정성 향상
-        emaAlpha: 0.3
+        minMovementThreshold: 0.03,  // 더 민감한 움직임 감지 (0.08 -> 0.03)
+        eatingPatternThreshold: 0.12,  // 더 민감한 식사 감지 기준 (0.25 -> 0.12)
+        varianceThreshold: 0.005,  // 변동성 허용도 증가 (0.003 -> 0.005)
+        emaAlpha: 0.3,
+        persistentEatingFrames: 30, // 2초간 지속 (15fps * 2초)
+        stopEatingFrames: 45 // 3초간 연속 비식사 시 중단 (15fps * 3초)
     )
 }
 
@@ -155,6 +161,12 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
     private var isTracking = false
     private var consecutiveErrors = 0
     private let maxConsecutiveErrors = 3
+    
+    // 끈기있는 식사 감지를 위한 상태 변수들
+    private var isPersistentEating = false // 현재 끈기있는 식사 모드인지
+    private var eatingStartFrame = 0 // 식사 시작 프레임 카운터
+    private var consecutiveNotEatingFrames = 0 // 연속 비식사 프레임 카운터
+    private var totalFrameCount = 0 // 전체 프레임 카운터
 
     // MARK: - Initialization
     init(configuration: LipDetectionConfiguration = .default) {
@@ -319,6 +331,15 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         }
 
         lipDistanceHistory.write(lipDistance)
+        
+        // Get debug metrics before analyzing pattern  
+        let history = lipDistanceHistory.allItems()
+        let halfSize = configuration.historySize / 2
+        let recentAverage = history.suffix(halfSize).reduce(0, +) / Float(halfSize)
+        let olderAverage = history.prefix(halfSize).reduce(0, +) / Float(halfSize)
+        let changeRate = abs(recentAverage - olderAverage)
+        let adjustedThreshold = configuration.eatingPatternThreshold * sensitivity
+        
         let state = analyzeEatingPattern()
         let currentJitter = metricsCalculator.calculateJitter(currentBox: firstFace.boundingBox)
         
@@ -333,8 +354,16 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         self.previousFaceBoundingBox = firstFace.boundingBox
 
         DispatchQueue.main.async {
+            let wasEating = self.isEating
             self.isEating = (state == .eating)
             self.isFaceDetected = true
+            
+            // 상태 변화 디버그 로그
+            if wasEating != self.isEating {
+                print("[VisionService] 🔄 식사 상태 변화: \(wasEating ? "식사중" : "대기중") → \(self.isEating ? "식사중" : "대기중")")
+            }
+            
+            print("[VisionService] 📊 감지 결과 - 상태: \(state), isEating: \(self.isEating), 립거리: \(String(format: "%.3f", lipDistance)), 변화율: \(String(format: "%.3f", changeRate)), 임계값: \(String(format: "%.3f", adjustedThreshold))")
             self.jitter = currentJitter
             
             // Update debug metrics
@@ -368,6 +397,12 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         lipDistanceHistory.clear()
         lastSmoothedPoint = nil
         consecutiveEatingFrames = 0
+        
+        // 끈기있는 식사 상태 초기화
+        isPersistentEating = false
+        eatingStartFrame = 0
+        consecutiveNotEatingFrames = 0
+        totalFrameCount = 0
     }
     
     // MARK: - Debug Metrics Calculation
@@ -438,36 +473,73 @@ class VisionService: ObservableObject, FaceTrackingServiceProtocol {
         guard lipDistanceHistory.isFull else {
             return .uncertain
         }
-
+        
+        // 전체 프레임 카운터 증가
+        totalFrameCount += 1
+        
+        // 1단계: 기본 식사 감지 로직 (기존과 동일)
         let history = lipDistanceHistory.allItems()
         let halfSize = configuration.historySize / 2
-
         let recentAverage = history.suffix(halfSize).reduce(0, +) / Float(halfSize)
         let olderAverage = history.prefix(halfSize).reduce(0, +) / Float(halfSize)
         let changeRate = abs(recentAverage - olderAverage)
-
         let adjustedThreshold = configuration.eatingPatternThreshold * sensitivity
-
-        // 기본 임계값 체크
-        guard changeRate > adjustedThreshold else {
-            return .notEating
-        }
-
-        // 연속성 검증: 실제 씹는 동작 패턴 분석
+        
         let continuousMovement = analyzeContinuousMovement(history)
         let movementVariance = calculateMovementVariance(history)
+        let varianceLimit = configuration.varianceThreshold * 15
         
-        // 짧은 순간적 움직임 필터링
-        guard continuousMovement >= 3 else {  // 최소 3번의 연속 움직임 필요
-            return .notEating
+        let basicEatingDetected = changeRate > adjustedThreshold &&
+                                  continuousMovement >= 2 &&
+                                  movementVariance < varianceLimit
+        
+        // 상세 디버그 정보
+        if totalFrameCount % 30 == 0 {  // 2초마다 출력 (15fps * 2)
+            print("[VisionService] 🔍 알고리즘 분석:")
+            print("  변화율: \(String(format: "%.4f", changeRate)) vs 임계값: \(String(format: "%.4f", adjustedThreshold)) ✓\(changeRate > adjustedThreshold)")
+            print("  연속움직임: \(continuousMovement) vs 최소: 2 ✓\(continuousMovement >= 2)")
+            print("  움직임분산: \(String(format: "%.4f", movementVariance)) vs 최대: \(String(format: "%.4f", varianceLimit)) ✓\(movementVariance < varianceLimit)")
+            print("  기본감지결과: \(basicEatingDetected ? "식사중" : "감지안됨")")
+            print("  현재 끈기모드: \(isPersistentEating)")
         }
         
-        // 과도한 변동성 필터링 (단순 입 벌림 vs 씹기 동작 구분)
-        guard movementVariance < configuration.varianceThreshold * 10 else {
-            return .notEating
+        // 2단계: 끈기있는 식사 로직 적용
+        if isPersistentEating {
+            // 현재 끈기있는 식사 모드 중
+            if basicEatingDetected {
+                // 계속 식사 중 - 연속 비식사 프레임 카운터 리셋
+                consecutiveNotEatingFrames = 0
+                return .eating
+            } else {
+                // 식사가 감지되지 않음 - 연속 비식사 프레임 카운터 증가
+                consecutiveNotEatingFrames += 1
+                
+                // 충분히 오랜 시간 식사가 감지되지 않으면 끈기있는 모드 종료
+                if consecutiveNotEatingFrames >= configuration.stopEatingFrames {
+                    print("[VisionService] 끈기있는 식사 모드 종료 (연속 비식사: \(consecutiveNotEatingFrames)프레임)")
+                    isPersistentEating = false
+                    consecutiveNotEatingFrames = 0
+                    return .notEating
+                } else {
+                    // 아직 끈기있는 모드 유지
+                    print("[VisionService] 끈기있는 식사 유지 중 (비식사: \(consecutiveNotEatingFrames)/\(configuration.stopEatingFrames))")
+                    return .eating
+                }
+            }
+        } else {
+            // 현재 끈기있는 식사 모드가 아님
+            if basicEatingDetected {
+                // 새로운 식사 감지 - 끈기있는 모드 시작
+                print("[VisionService] 새로운 식사 감지! 끈기있는 모드 시작")
+                isPersistentEating = true
+                eatingStartFrame = totalFrameCount
+                consecutiveNotEatingFrames = 0
+                return .eating
+            } else {
+                // 식사 감지되지 않음
+                return .notEating
+            }
         }
-
-        return .eating
     }
     
     // 연속된 움직임 패턴 분석

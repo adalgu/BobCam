@@ -9,11 +9,13 @@ struct CameraView: UIViewRepresentable {
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
         view.backgroundColor = .black
+        view.contentMode = .scaleAspectFill
 
         // AVCaptureVideoPreviewLayer 설정
         let previewLayer = AVCaptureVideoPreviewLayer(session: cameraService.captureSession)
         previewLayer.videoGravity = .resizeAspectFill
         previewLayer.frame = view.bounds
+        previewLayer.masksToBounds = true
 
         // 전면 카메라 미러링
         if let connection = previewLayer.connection,
@@ -124,15 +126,74 @@ struct VideoPlayerView: View {
     
     private var videoPlaceholder: some View {
         VStack(spacing: 16) {
-            Image(systemName: "video.slash")
-                .font(.system(size: 48))
-                .foregroundColor(.gray)
-
-            Text("비디오를 선택해주세요")
-                .foregroundColor(.gray)
-                .font(.headline)
+            // 🍽️ 식사 상태에 따른 이모지 캐릭터 표현
+            VStack(spacing: 12) {
+                // 큰 이모지 캐릭터
+                Text(characterEmoji)
+                    .font(.system(size: 80))
+                    .scaleEffect(visionService.isEating ? 1.2 : 1.0)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.6), value: visionService.isEating)
+                
+                // 상태 메시지
+                Text(characterMessage)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(visionService.isEating ? .green : .orange)
+                    .animation(.easeInOut(duration: 0.3), value: visionService.isEating)
+                
+                // 세부 상태 메시지
+                Text(characterDetailMessage)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
+            }
 
             VideoSelectionButton(selectionService: videoSelectionService)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                colors: [
+                    Color.blue.opacity(0.1),
+                    Color.purple.opacity(0.1)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+    
+    @EnvironmentObject private var visionService: VisionService
+    
+    private var characterEmoji: String {
+        if visionService.isEating {
+            let eatingSources = ["🍽️", "😋", "🥄", "🍴"]
+            let index = Int(Date().timeIntervalSince1970) % eatingSources.count
+            return eatingSources[index]
+        } else {
+            return "😐"
+        }
+    }
+    
+    private var characterMessage: String {
+        if visionService.isEating {
+            return "잘 먹고 있어요! 🍽️"
+        } else {
+            return "밥 먹을 시간이에요 ⏰"
+        }
+    }
+    
+    private var characterDetailMessage: String {
+        if visionService.isEating {
+            let frames = visionService.consecutiveEatingFrames
+            if frames > 30 {
+                return "끈기있게 식사 중이에요! 계속해요 ✨"
+            } else {
+                return "좋아요! 계속 드세요 👍"
+            }
+        } else {
+            return "입술 움직임을 감지하고 있어요\n맛있는 음식을 드셔보세요!"
         }
     }
     
