@@ -198,6 +198,13 @@ struct ContentView: View {
             .onReceive(visionService.$fps) { newValue in
                 frameProcessingRate = Int(newValue)
             }
+            .onReceive(videoService.$playbackState) { state in
+                // Auto-play when video becomes ready if eating
+                if case .ready = state, visionService.isEating && !manualOverride {
+                    print("[ContentView] 🎬 비디오 준비 완료 & 식사 중 → 자동 재생")
+                    videoService.playVideo()
+                }
+            }
             .sheet(isPresented: $showingSettings) {
                 SettingsView(
                     videoSelectionService: videoSelectionService,
@@ -248,13 +255,32 @@ struct ContentView: View {
         if !manualOverride {
             if isEating {
                 print("[ContentView] 🎬 식사 중 → 비디오 재생 요청")
-                if videoService.currentVideoType != nil && videoService.playbackState == .ready {
-                    videoService.playVideo()
-                    print("[ContentView] 🎬 비디오 재생 요청 후 상태: \(videoService.playbackState)")
-                } else if videoService.currentVideoType == nil {
-                    print("[ContentView] ⚠️ 경고: 비디오가 로드되지 않았습니다! 비디오를 먼저 선택해주세요")
+                if videoService.currentVideoType != nil {
+                    switch videoService.playbackState {
+                    case .ready:
+                        videoService.playVideo()
+                        print("[ContentView] 🎬 비디오 재생 요청 후 상태: \(videoService.playbackState)")
+                    case .paused:
+                        videoService.playVideo()
+                        print("[ContentView] 🎬 일시정지 상태에서 재생 재개")
+                    case .playing:
+                        print("[ContentView] 🎬 이미 재생 중")
+                    case .loading:
+                        print("[ContentView] ⏳ 비디오 로딩 중... 잠시 후 자동 재생됩니다")
+                        // Store eating state to auto-play when ready
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak videoService] in
+                            if videoService?.playbackState == .ready {
+                                videoService?.playVideo()
+                                print("[ContentView] 🎬 로딩 완료 → 자동 재생 시작")
+                            }
+                        }
+                    case .failed(let error):
+                        print("[ContentView] ❌ 비디오 로드 실패: \(error)")
+                    case .idle:
+                        print("[ContentView] ⚠️ 비디오가 초기화되지 않았습니다")
+                    }
                 } else {
-                    print("[ContentView] ⚠️ 경고: 비디오가 재생 준비되지 않음. 현재 상태: \(videoService.playbackState)")
+                    print("[ContentView] ⚠️ 경고: 비디오가 로드되지 않았습니다! 비디오를 먼저 선택해주세요")
                 }
             } else {
                 print("[ContentView] 🎬 식사 안함 → 비디오 일시정지 요청")

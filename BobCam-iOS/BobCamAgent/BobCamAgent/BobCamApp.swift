@@ -7,6 +7,10 @@ struct BobCamApp: App {
             // Using ContentView with debug logging for video control testing
             ContentView()
                 .preferredColorScheme(.dark)
+                .onAppear {
+                    // Debug video loading on launch
+                    // VideoLoadingDebugger.testDemoVideoLoading()
+                }
         }
     }
 }
