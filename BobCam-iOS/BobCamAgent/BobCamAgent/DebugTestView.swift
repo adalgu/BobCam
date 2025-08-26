@@ -103,9 +103,9 @@ struct DebugTestView: View {
         addDebugMessage("Loading test video...")
         
         // Try to load from bundle first
-        if let videoURL = Bundle.main.url(forResource: "sample_video", withExtension: "mp4") {
+        if let videoURL = Bundle.main.url(forResource: "demo", withExtension: "mp4") {
             videoService.loadVideo(from: videoURL)
-            addDebugMessage("Loaded sample_video.mp4 from bundle")
+            addDebugMessage("Loaded demo.mp4 from bundle")
         } else {
             // Create a simple test video URL
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -113,7 +113,7 @@ struct DebugTestView: View {
             addDebugMessage("No bundle video found, would use: \(videoURL)")
             
             // For testing, try to load any available video from the app bundle
-            if let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4") {
+            if let bundlePath = Bundle.main.path(forResource: "demo", ofType: "mp4") {
                 let url = URL(fileURLWithPath: bundlePath)
                 videoService.loadVideo(from: url)
                 addDebugMessage("Loaded from bundle path: \(bundlePath)")

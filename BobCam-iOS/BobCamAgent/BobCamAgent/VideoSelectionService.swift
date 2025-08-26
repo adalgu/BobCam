@@ -106,6 +106,7 @@ class VideoSelectionService: ObservableObject {
 
     // MARK: - Initialization
     init(videoService: VideoService) {
+        print("[VideoSelectionService] 🎬 Initializing VideoSelectionService")
         self.videoService = videoService
         
         // Bind VideoService properties
@@ -119,7 +120,12 @@ class VideoSelectionService: ObservableObject {
         videoService.$playbackState
             .assign(to: &$playbackState)
         
+        print("[VideoSelectionService] 🔗 Property bindings established")
+        
+        // Load persisted video type or default
         loadPersistedVideoType()
+        
+        print("[VideoSelectionService] ✅ VideoSelectionService initialization completed")
     }
 
     // MARK: - Public Methods
@@ -362,7 +368,7 @@ class VideoSelectionService: ObservableObject {
         return destinationURL
     }
 
-    private static func copyVideoToDocumentsSync(from sourceURL: URL) throws -> URL {
+    private nonisolated static func copyVideoToDocumentsSync(from sourceURL: URL) throws -> URL {
         // Compute documents and target folder without touching @MainActor state
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let videoDirectory = documentsPath.appendingPathComponent(Constants.documentsSubdirectory)
@@ -438,16 +444,23 @@ class VideoSelectionService: ObservableObject {
 
     private func loadPersistedLocalVideo() {
         guard let path = UserDefaults.standard.string(forKey: "localVideoPath") else {
+            print("[VideoSelectionService] 📏 No persisted local video path found")
             loadDefaultVideo()
             return
         }
-
+        
+        print("[VideoSelectionService] 📏 Loading persisted local video from: \(path)")
         let url = URL(fileURLWithPath: path)
+        
         guard FileManager.default.fileExists(atPath: url.path) else {
+            print("[VideoSelectionService] ❌ Persisted video file no longer exists at: \(path)")
+            // Clean up the invalid reference
+            UserDefaults.standard.removeObject(forKey: "localVideoPath")
             loadDefaultVideo()
             return
         }
-
+        
+        print("[VideoSelectionService] ✅ Persisted local video file verified")
         let videoType = VideoType.local(url)
         selectedVideoType = videoType
         hasSelectedVideo = true
@@ -455,12 +468,19 @@ class VideoSelectionService: ObservableObject {
     }
 
     private func loadPersistedYouTubeVideo() {
-        guard let videoId = UserDefaults.standard.string(forKey: Constants.youTubeURLKey),
-              videoService.isNetworkAvailable else {
+        guard let videoId = UserDefaults.standard.string(forKey: Constants.youTubeURLKey) else {
+            print("[VideoSelectionService] 📏 No persisted YouTube video ID found")
             loadDefaultVideo()
             return
         }
-
+        
+        guard videoService.isNetworkAvailable else {
+            print("[VideoSelectionService] 🌐 Network unavailable for YouTube video, loading default")
+            loadDefaultVideo()
+            return
+        }
+        
+        print("[VideoSelectionService] 🔴 Loading persisted YouTube video: \(videoId)")
         let youTubeVideo = YouTubeVideo(videoId: videoId, isChildSafe: true)
         let videoType = VideoType.youtube(youTubeVideo)
         
@@ -470,21 +490,63 @@ class VideoSelectionService: ObservableObject {
     }
 
     private func loadDefaultVideo() {
-        // Try to load a sample video from bundle, but don't fail if it doesn't exist
-        if let bundlePath = Bundle.main.path(forResource: "sample_video", ofType: "mp4") {
-            let videoURL = URL(fileURLWithPath: bundlePath)
-            let videoType = VideoType.local(videoURL)
-            
-            selectedVideoType = videoType
-            hasSelectedVideo = false
-            videoService.loadVideo(videoType)
-        } else {
-            // No default video available - this is OK, user needs to select one
-            print("[VideoSelectionService] No default video file found - user must select a video")
-            selectedVideoType = nil
-            hasSelectedVideo = false
-            selectionState = .idle
+        print("[VideoSelectionService] 🎬 Loading default video from bundle...")
+        
+        // Try multiple methods to find the demo video
+        var videoURL: URL?
+        
+        // Method 1: Bundle.main.path
+        if let bundlePath = Bundle.main.path(forResource: "demo", ofType: "mp4") {
+            print("[VideoSelectionService] ✅ Found demo.mp4 via Bundle.main.path: \(bundlePath)")
+            videoURL = URL(fileURLWithPath: bundlePath)
         }
+        // Method 2: Bundle.main.url
+        else if let bundleURL = Bundle.main.url(forResource: "demo", withExtension: "mp4") {
+            print("[VideoSelectionService] ✅ Found demo.mp4 via Bundle.main.url: \(bundleURL)")
+            videoURL = bundleURL
+        }
+        // Method 3: Direct bundle resource search
+        else {
+            // List all mp4 files in bundle for debugging
+            let bundleContents = Bundle.main.paths(forResourcesOfType: "mp4", inDirectory: nil)
+            print("[VideoSelectionService] 📻 Bundle MP4 files found: \(bundleContents)")
+            
+            // Check if demo.mp4 exists in bundle root
+            if let demoPath = bundleContents.first(where: { $0.contains("demo") }) {
+                print("[VideoSelectionService] ✅ Found demo.mp4 in bundle contents: \(demoPath)")
+                videoURL = URL(fileURLWithPath: demoPath)
+            }
+        }
+        
+        // Load the video if found
+        if let videoURL = videoURL {
+            // Verify file accessibility
+            if FileManager.default.fileExists(atPath: videoURL.path) {
+                print("[VideoSelectionService] ✅ Demo video file verified at: \(videoURL.path)")
+                let videoType = VideoType.local(videoURL)
+                
+                selectedVideoType = videoType
+                hasSelectedVideo = false  // Default video doesn't count as user selection
+                videoService.loadVideo(videoType)
+                print("[VideoSelectionService] 🎬 Default video loading initiated")
+            } else {
+                print("[VideoSelectionService] ❌ Demo video file not accessible at: \(videoURL.path)")
+                handleNoDefaultVideo()
+            }
+        } else {
+            print("[VideoSelectionService] ❌ No demo video found in bundle")
+            handleNoDefaultVideo()
+        }
+    }
+    
+    private func handleNoDefaultVideo() {
+        print("[VideoSelectionService] ⚠️ No default demo video available - user must select a video")
+        selectedVideoType = nil
+        hasSelectedVideo = false
+        selectionState = .idle
+        
+        // Optionally show a message to user that they need to select a video
+        // This could trigger a UI state that prompts video selection
     }
 
     private func cleanupStoredVideos() {

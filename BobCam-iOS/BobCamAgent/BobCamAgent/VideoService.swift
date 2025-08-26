@@ -78,9 +78,11 @@ class VideoService: ObservableObject {
 
     // MARK: - Initialization
     init() {
+        print("[VideoService] 🎬 Initializing VideoService")
         setupAudioSession()
         startNetworkMonitoring()
         setupYouTubePlayerObservation()
+        print("[VideoService] ✅ VideoService initialization completed")
     }
 
     deinit {
@@ -111,16 +113,23 @@ class VideoService: ObservableObject {
 
     /// Start video playback
     func playVideo() {
+        print("[VideoService] ▶️ Play video requested - Current state: \(playbackState)")
+        print("[VideoService] 📹 Current video type: \(currentVideoType?.debugDescription ?? "none")")
+        
         guard playbackState == .ready || playbackState == .paused else {
+            print("[VideoService] ⚠️ Cannot play video - invalid state: \(playbackState)")
             return
         }
         
         switch currentVideoType {
         case .local:
+            print("[VideoService] 📹 Playing local video...")
             playLocalVideo()
         case .youtube:
+            print("[VideoService] 🔴 Playing YouTube video...")
             playYouTubeVideo()
         case .none:
+            print("[VideoService] ❌ No video type set")
             break
         }
     }
@@ -177,41 +186,97 @@ class VideoService: ObservableObject {
 
     private func loadLocalVideo(from url: URL) {
         cleanupPlayer()
-
-        // Simple asset creation without complex security handling
-        let asset = AVAsset(url: url)
         
+        print("[VideoService] 🎬 Starting video load from URL: \(url)")
+        print("[VideoService] 🔍 File exists at path: \(FileManager.default.fileExists(atPath: url.path))")
+        
+        // Verify file accessibility before creating asset
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            print("[VideoService] ❌ File not found at path: \(url.path)")
+            playbackState = .failed(VideoServiceError.videoLoadFailed(url))
+            return
+        }
+        
+        // Create asset with explicit loading
+        let asset = AVAsset(url: url)
+        print("[VideoService] 📦 AVAsset created for URL: \(url.lastPathComponent)")
+        
+        // Load asset properties asynchronously before creating player item
+        Task {
+            do {
+                // Load essential properties
+                let duration = try await asset.load(.duration)
+                let isPlayable = try await asset.load(.isPlayable)
+                
+                await MainActor.run {
+                    print("[VideoService] ✅ Asset loaded - Duration: \(duration.seconds)s, Playable: \(isPlayable)")
+                    
+                    guard isPlayable && duration.seconds > 0 else {
+                        print("[VideoService] ❌ Asset not playable or has invalid duration")
+                        self.playbackState = .failed(VideoServiceError.videoLoadFailed(url))
+                        return
+                    }
+                    
+                    // Create player item and player on main thread
+                    self.createPlayerComponents(with: asset, url: url)
+                }
+            } catch {
+                await MainActor.run {
+                    print("[VideoService] ❌ Asset loading failed: \(error.localizedDescription)")
+                    self.playbackState = .failed(VideoServiceError.playbackFailed(error))
+                }
+            }
+        }
+    }
+    
+    private func createPlayerComponents(with asset: AVAsset, url: URL) {
         // Create player item and player
         playerItem = AVPlayerItem(asset: asset)
         guard let playerItem = playerItem else {
+            print("[VideoService] ❌ Failed to create AVPlayerItem")
             playbackState = .failed(VideoServiceError.playerInitializationFailed)
             return
         }
-
+        
+        print("[VideoService] 📱 AVPlayerItem created successfully")
+        
         // Create player and looper
         player = AVQueuePlayer(playerItem: playerItem)
         guard let player = player else {
+            print("[VideoService] ❌ Failed to create AVQueuePlayer")
             playbackState = .failed(VideoServiceError.playerInitializationFailed)
             return
         }
-
-        playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
         
-        // Set up basic observation
+        print("[VideoService] 🎵 AVQueuePlayer created successfully")
+        
+        playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
+        print("[VideoService] 🔄 AVPlayerLooper created successfully")
+        
+        // Set up observation after components are ready
         setupPlayerObservation()
         
-        // Wait for asset to load - status will be updated via observation
-        // Don't immediately check status as asset loading is asynchronous
-        print("[VideoService] 🎬 Local video loading started for URL: \(url.lastPathComponent)")
+        print("[VideoService] 🎬 Local video loading completed for: \(url.lastPathComponent)")
+        print("[VideoService] 📊 Initial player item status: \(playerItem.status.debugDescription)")
     }
 
     private func playLocalVideo() {
-        guard let player = player,
-              let playerItem = playerItem,
-              playerItem.status == .readyToPlay else {
+        guard let player = player else {
+            print("[VideoService] ❌ Cannot play - player is nil")
             return
         }
         
+        guard let playerItem = playerItem else {
+            print("[VideoService] ❌ Cannot play - playerItem is nil")
+            return
+        }
+        
+        guard playerItem.status == .readyToPlay else {
+            print("[VideoService] ❌ Cannot play - playerItem not ready (status: \(playerItem.status.debugDescription))")
+            return
+        }
+        
+        print("[VideoService] ▶️ Starting local video playback")
         player.play()
         isPlaying = true
         playbackState = .playing
@@ -345,7 +410,13 @@ class VideoService: ObservableObject {
     }
 
     private func setupPlayerObservation() {
-        guard let playerItem = playerItem else { return }
+        guard let playerItem = playerItem else {
+            print("[VideoService] ❌ Cannot setup observation - playerItem is nil")
+            return
+        }
+        
+        print("[VideoService] 👀 Setting up player item observation")
+        print("[VideoService] 📊 Current player item status: \(playerItem.status.debugDescription)")
 
         // Observe player item status
         playerItem.publisher(for: \.status)
@@ -354,20 +425,27 @@ class VideoService: ObservableObject {
                 print("[VideoService] 🎬 Player item status changed: \(status.debugDescription)")
                 switch status {
                 case .readyToPlay:
-                    print("[VideoService] 🎬 Video ready to play!")
+                    print("[VideoService] ✅ Video ready to play!")
+                    print("[VideoService] 📏 Video duration: \(playerItem.duration.seconds)s")
+                    print("[VideoService] 🎥 Video tracks: \(playerItem.tracks.count)")
                     self?.playbackState = .ready
                 case .failed:
-                    print("[VideoService] ⚠️ Video failed to load: \(playerItem.error?.localizedDescription ?? "Unknown error")")
+                    let errorMsg = playerItem.error?.localizedDescription ?? "Unknown error"
+                    print("[VideoService] ❌ Video failed to load: \(errorMsg)")
+                    if let nsError = playerItem.error as? NSError {
+                        print("[VideoService] 🔍 Error domain: \(nsError.domain), code: \(nsError.code)")
+                        print("[VideoService] 📋 Error info: \(nsError.userInfo)")
+                    }
                     if let error = playerItem.error {
                         self?.playbackState = .failed(VideoServiceError.playbackFailed(error))
                     } else {
                         self?.playbackState = .failed(VideoServiceError.playerInitializationFailed)
                     }
                 case .unknown:
-                    print("[VideoService] 🔄 Video loading...")
+                    print("[VideoService] 🔄 Video loading (status: unknown)...")
                     self?.playbackState = .loading
                 @unknown default:
-                    print("[VideoService] ⚠️ Unknown player item status")
+                    print("[VideoService] ⚠️ Unknown player item status: \(status)")
                     break
                 }
             }
@@ -379,26 +457,51 @@ class VideoService: ObservableObject {
             .sink { [weak self] status in
                 guard case .local = self?.currentVideoType else { return }
                 
+                print("[VideoService] 🎵 Player timeControlStatus changed: \(status.debugDescription)")
+                
                 switch status {
                 case .playing:
+                    print("[VideoService] ▶️ Player started playing")
                     self?.isPlaying = true
                     if case .failed = self?.playbackState {
                         // Don't override failed state
+                        print("[VideoService] ⚠️ Not updating playback state - currently in failed state")
                     } else {
                         self?.playbackState = .playing
                     }
                 case .paused:
+                    print("[VideoService] ⏸️ Player paused")
                     self?.isPlaying = false
                     if self?.playbackState == .playing {
                         self?.playbackState = .paused
                     }
                 case .waitingToPlayAtSpecifiedRate:
+                    print("[VideoService] ⏳ Player waiting to play at specified rate")
                     break
                 @unknown default:
+                    print("[VideoService] ⚠️ Unknown timeControlStatus: \(status)")
                     break
                 }
             }
             .store(in: &cancellables)
+            
+        // Additional observation for player item errors
+        playerItem.publisher(for: \.error)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                if let error = error {
+                    print("[VideoService] ❌ Player item error detected: \(error.localizedDescription)")
+                    let nsError = error as NSError
+                    print("[VideoService] 🔍 Error details - Domain: \(nsError.domain), Code: \(nsError.code)")
+                    print("[VideoService] 📋 User info: \(nsError.userInfo)")
+                    self?.playbackState = .failed(VideoServiceError.playbackFailed(error))
+                }
+            }
+            .store(in: &cancellables)
+            
+        // Additional logging for current status
+        print("[VideoService] 📊 Final setup - Player item status: \(playerItem.status.debugDescription)")
+        print("[VideoService] 📊 Final setup - Player time control: \(player?.timeControlStatus.debugDescription ?? "unknown")")
     }
 
     private func cleanupLocalPlayer() {
@@ -422,6 +525,32 @@ extension AVPlayerItem.Status {
             return "failed"
         @unknown default:
             return "unknown_case"
+        }
+    }
+}
+
+extension AVPlayer.TimeControlStatus {
+    var debugDescription: String {
+        switch self {
+        case .paused:
+            return "paused"
+        case .playing:
+            return "playing"
+        case .waitingToPlayAtSpecifiedRate:
+            return "waitingToPlayAtSpecifiedRate"
+        @unknown default:
+            return "unknown_timeControlStatus"
+        }
+    }
+}
+
+extension VideoType {
+    var debugDescription: String {
+        switch self {
+        case .local(let url):
+            return "local(\(url.lastPathComponent))"
+        case .youtube(let video):
+            return "youtube(\(video.videoId))"
         }
     }
 }

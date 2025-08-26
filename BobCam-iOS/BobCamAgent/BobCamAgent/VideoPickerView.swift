@@ -389,7 +389,7 @@ struct VideoPreviewCard: View {
         
         switch videoType {
         case .local(let url):
-            return selectionService.hasSelectedVideo ? url.lastPathComponent : "sample_video.mp4"
+            return selectionService.hasSelectedVideo ? url.lastPathComponent : "demo.mp4"
         case .youtube(let youTubeVideo):
             return youTubeVideo.title ?? "YouTube Video (\(youTubeVideo.videoId))"
         }

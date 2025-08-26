@@ -21,9 +21,8 @@ do
     echo "📍 Cycle 1 - Iteration $i/20 - $(date)"
     
     # claude 명령어 실행
-    echo "🤖 Executing: claude -c -p --dangerously-skip-permissions \"continue\""
-    claude -c -p --dangerously-skip-permissions "continue with utilize subagent"
-    
+    echo "🤖 Executing: claude -c -p --dangerously-skip-permissions \"continue with utilize subagent and make sure to commit after significant developments\""
+    claude -c -p --dangerously-skip-permissions "continue with utilize subagent and make sure to commit after significant developments --output-format \"stream-json\""
     # 마지막 반복이 아니면 5분 대기
     if [ $i -lt 20 ]; then
         echo "⏳ Waiting 5 minutes until next iteration..."
@@ -47,9 +46,9 @@ do
     echo "📍 Cycle 2 - Iteration $i/20 - $(date)"
     
     # claude 명령어 실행
-    echo "🤖 Executing: claude -c -p --dangerously-skip-permissions \"continue\""
-    claude -c -p --dangerously-skip-permissions "continue with utilize subagent"
-    
+    echo "🤖 Executing: claude -c -p --dangerously-skip-permissions \"continue with utilize subagent and make sure to commit after significant developments\""
+    claude -c -p --dangerously-skip-permissions --output-format \"stream-json\" "continue with utilize subagent and make sure to commit after significant developments"
+
     # 마지막 반복이 아니면 5분 대기
     if [ $i -lt 20 ]; then
         echo "⏳ Waiting 5 minutes until next iteration..."

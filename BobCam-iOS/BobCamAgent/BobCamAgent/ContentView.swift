@@ -56,175 +56,217 @@ struct ContentView: View {
                                      comment: "Neutral analyzing state")
         }
     }
+    
+    // MARK: - View Components
+    
+    @ViewBuilder
+    private func cameraSection(geometry: GeometryProxy) -> some View {
+        ZStack {
+            CameraView(cameraService: cameraService)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
+        }
+        .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
+    }
+    
+    @ViewBuilder
+    private func statusBarSection(geometry: GeometryProxy) -> some View {
+        ZStack {
+            Rectangle()
+                .fill(statusBarGradient)
+                .frame(maxWidth: .infinity)
+            
+            statusBarContent
+        }
+        .frame(width: geometry.size.width, height: 60)
+    }
+    
+    @ViewBuilder
+    private func videoSection(geometry: GeometryProxy) -> some View {
+        ZStack(alignment: .bottom) {
+            VideoPlayerView(
+                videoService: videoService,
+                videoSelectionService: videoSelectionService
+            )
+            .environmentObject(visionService)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            // 📱 컨트롤 패널 추가 (하단 오버레이)
+            StatusBar(
+                isEating: visionService.isEating,
+                visionService: visionService,
+                videoService: videoService,
+                videoSelectionService: videoSelectionService,
+                sensitivity: $visionService.sensitivity,
+                manualOverride: $manualOverride
+            )
+            .padding(.horizontal, 16)
+            .padding(.bottom, 20)
+        }
+        .frame(width: geometry.size.width, height: geometry.size.height - (geometry.size.height * 0.4) - 60)
+    }
+    
+    private var statusBarGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [
+                getStatusBackgroundColor().opacity(0.8),
+                getStatusBackgroundColor()
+            ]),
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+    
+    @ViewBuilder
+    private var statusBarContent: some View {
+        HStack(spacing: 12) {
+            // 상태 아이콘
+            Image(systemName: getStatusIcon())
+                .font(.title2)
+                .foregroundColor(.white)
+            
+            // 상태 메시지
+            Text(currentDetectionStatus)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .multilineTextAlignment(.leading)
+                .lineLimit(1)
+            
+            Spacer(minLength: 8)
+            
+            // 디버그 정보 (오른쪽)
+            if showDebugInfo {
+                debugInfo
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+    }
+    
+    @ViewBuilder
+    private var debugInfo: some View {
+        VStack(alignment: .trailing, spacing: 2) {
+            Text("\(frameProcessingRate)fps")
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.8))
+            Text("신뢰도: \(Int(detectionConfidence * 100))%")
+                .font(.caption2)
+                .foregroundColor(.white.opacity(0.7))
+        }
+    }
 
     var body: some View {
+        mainContent
+            .ignoresSafeArea()
+            .onAppear(perform: onViewAppear)
+            .onDisappear(perform: onViewDisappear)
+            .onReceive(visionService.$isEating, perform: handleEatingStateChange)
+            .onChange(of: manualOverride) { isManualActive in
+                if isManualActive {
+                    // 수동 제어 활성화 → 비디오 재생
+                    videoService.playVideo()
+                } else {
+                    // 수동 제어 비활성화 → 자동 감지 모드로 복귀
+                    if visionService.isEating {
+                        videoService.playVideo()
+                    } else {
+                        videoService.pauseVideo()
+                    }
+                }
+            }
+            .onReceive(debouncedEatingPublisher) { isEating in
+                feedbackState = isEating ? .eating : .notEating
+            }
+            .onReceive(visionService.$isFaceDetected) { isFaceDetected in
+                cameraService.updateFaceDetectionStatus(isFaceDetected)
+                updateDetectionStatus()
+            }
+            .onReceive(visionService.$serviceState) { _ in
+                updateDetectionStatus()
+            }
+            .onReceive(visionService.$currentLipDistance) { newValue in
+                lipMovementValue = Double(newValue)
+            }
+            .onReceive(visionService.$detectionConfidence) { newValue in
+                detectionConfidence = Double(newValue)
+            }
+            .onReceive(visionService.$consecutiveEatingFrames) { newValue in
+                consecutiveEatingFrames = newValue
+            }
+            .onReceive(visionService.$fps) { newValue in
+                frameProcessingRate = Int(newValue)
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView(
+                    videoSelectionService: videoSelectionService,
+                    videoService: videoService,
+                    visionService: visionService,
+                    isPresented: $showingSettings
+                )
+            }
+    }
+    
+    private var mainContent: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 // 상단 카메라 (40%)
-                ZStack {
-                    CameraView(cameraService: cameraService)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .clipped()
-                }
-                .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
-
+                cameraSection(geometry: geometry)
+                
                 // 🌟 중간 상태바 (새로 추가된 부분!)
-                ZStack {
-                    Rectangle()
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: [
-                                    getStatusBackgroundColor().opacity(0.8),
-                                    getStatusBackgroundColor()
-                                ]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .frame(maxWidth: .infinity)
-                    
-                    HStack(spacing: 12) {
-                        // 상태 아이콘
-                        Image(systemName: getStatusIcon())
-                            .font(.title2)
-                            .foregroundColor(.white)
-                        
-                        // 상태 메시지
-                        Text(currentDetectionStatus)
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(1)
-                        
-                        Spacer(minLength: 8)
-                        
-                        // 디버그 정보 (오른쪽)
-                        if showDebugInfo {
-                            VStack(alignment: .trailing, spacing: 2) {
-                                Text("\(frameProcessingRate)fps")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.8))
-                                Text("신뢰도: \(Int(detectionConfidence * 100))%")
-                                    .font(.caption2)
-                                    .foregroundColor(.white.opacity(0.7))
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .frame(maxWidth: .infinity)
-                }
-                .frame(width: geometry.size.width, height: 60)
-
+                statusBarSection(geometry: geometry)
+                
                 // 하단 비디오 (나머지 공간)
-                ZStack(alignment: .bottom) {
-                    VideoPlayerView(
-                        videoService: videoService,
-                        videoSelectionService: videoSelectionService
-                    )
-                    .environmentObject(visionService)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    // 📱 컨트롤 패널 추가 (하단 오버레이)
-                    StatusBar(
-                        isEating: visionService.isEating,
-                        visionService: visionService,
-                        videoService: videoService,
-                        videoSelectionService: videoSelectionService,
-                        sensitivity: $visionService.sensitivity,
-                        manualOverride: $manualOverride
-                    )
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 20)
-                }
-                .frame(width: geometry.size.width, height: geometry.size.height - (geometry.size.height * 0.4) - 60)
+                videoSection(geometry: geometry)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .ignoresSafeArea()
-        .onAppear {
-            cameraService.startSession()
-            setupDetectionService()
+    }
+    
+    private func onViewAppear() {
+        cameraService.startSession()
+        setupDetectionService()
+        
+        // Debug: Test video loading functionality
+        #if DEBUG
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            print("\n🧪 [ContentView] Video loading tests disabled (VideoLoadingTest not in build target)")
+            // VideoLoadingTest.runAllTests()
         }
-        .onDisappear {
-            stopAllDetectionServices()
-            cameraService.stopSession()
-        }
-        .onReceive(visionService.$isEating) { isEating in
-            // 립 감지 결과에 따른 비디오 제어 (수동 Override가 비활성화일 때만)
-            print("[ContentView] 🎬 식사 상태 변화 감지: \(isEating ? "식사 중" : "식사 안함"), 수동제어: \(manualOverride), 현재 비디오 상태: \(videoService.playbackState)")
-            if !manualOverride {
-                if isEating {
-                    print("[ContentView] 🎬 식사 중 → 비디오 재생 요청")
-                    if videoService.currentVideoType != nil && videoService.playbackState == .ready {
-                        videoService.playVideo()
-                        print("[ContentView] 🎬 비디오 재생 요청 후 상태: \(videoService.playbackState)")
-                    } else if videoService.currentVideoType == nil {
-                        print("[ContentView] ⚠️ 경고: 비디오가 로드되지 않았습니다! 비디오를 먼저 선택해주세요")
-                    } else {
-                        print("[ContentView] ⚠️ 경고: 비디오가 재생 준비되지 않음. 현재 상태: \(videoService.playbackState)")
-                    }
-                } else {
-                    print("[ContentView] 🎬 식사 안함 → 비디오 일시정지 요청")
-                    if videoService.currentVideoType != nil && videoService.playbackState == .playing {
-                        videoService.pauseVideo()
-                        print("[ContentView] 🎬 비디오 일시정지 요청 후 상태: \(videoService.playbackState)")
-                    } else {
-                        print("[ContentView] 🎬 비디오가 없거나 재생중이 아니어서 일시정지 요청 생략")
-                    }
-                }
-            } else {
-                print("[ContentView] 🎬 수동 제어 모드로 인해 비디오 제어 건너뜀")
-            }
-        }
-        // 수동 Override 상태에 따른 비디오 제어
-        .onChange(of: manualOverride) { isManualActive in
-            if isManualActive {
-                // 수동 제어 활성화 → 비디오 재생
-                videoService.playVideo()
-            } else {
-                // 수동 제어 비활성화 → 자동 감지 모드로 복귀
-                if visionService.isEating {
+        #endif
+    }
+    
+    private func onViewDisappear() {
+        stopAllDetectionServices()
+        cameraService.stopSession()
+    }
+    
+    private func handleEatingStateChange(_ isEating: Bool) {
+        // 립 감지 결과에 따른 비디오 제어 (수동 Override가 비활성화일 때만)
+        print("[ContentView] 🎬 식사 상태 변화 감지: \(isEating ? "식사 중" : "식사 안함"), 수동제어: \(manualOverride), 현재 비디오 상태: \(videoService.playbackState)")
+        if !manualOverride {
+            if isEating {
+                print("[ContentView] 🎬 식사 중 → 비디오 재생 요청")
+                if videoService.currentVideoType != nil && videoService.playbackState == .ready {
                     videoService.playVideo()
+                    print("[ContentView] 🎬 비디오 재생 요청 후 상태: \(videoService.playbackState)")
+                } else if videoService.currentVideoType == nil {
+                    print("[ContentView] ⚠️ 경고: 비디오가 로드되지 않았습니다! 비디오를 먼저 선택해주세요")
                 } else {
+                    print("[ContentView] ⚠️ 경고: 비디오가 재생 준비되지 않음. 현재 상태: \(videoService.playbackState)")
+                }
+            } else {
+                print("[ContentView] 🎬 식사 안함 → 비디오 일시정지 요청")
+                if videoService.currentVideoType != nil && videoService.playbackState == .playing {
                     videoService.pauseVideo()
+                    print("[ContentView] 🎬 비디오 일시정지 요청 후 상태: \(videoService.playbackState)")
+                } else {
+                    print("[ContentView] 🎬 비디오가 없거나 재생중이 아니어서 일시정지 요청 생략")
                 }
             }
-        }
-        .onReceive(debouncedEatingPublisher) { isEating in
-            feedbackState = isEating ? .eating : .notEating
-        }
-        .onReceive(visionService.$isFaceDetected) { isFaceDetected in
-            cameraService.updateFaceDetectionStatus(isFaceDetected)
-            updateDetectionStatus()
-        }
-        .onReceive(visionService.$isEating) { _ in
-            updateDetectionStatus()
-        }
-        .onReceive(visionService.$serviceState) { _ in
-            updateDetectionStatus()
-        }
-        // Update debug metrics in real-time
-        .onReceive(visionService.$currentLipDistance) { newValue in
-            lipMovementValue = Double(newValue)
-        }
-        .onReceive(visionService.$detectionConfidence) { newValue in
-            detectionConfidence = Double(newValue)
-        }
-        .onReceive(visionService.$consecutiveEatingFrames) { newValue in
-            consecutiveEatingFrames = newValue
-        }
-        .onReceive(visionService.$fps) { newValue in
-            frameProcessingRate = Int(newValue)
-        }
-        .sheet(isPresented: $showingSettings) {
-            SettingsView(
-                videoSelectionService: videoSelectionService,
-                videoService: videoService,
-                visionService: visionService,
-                isPresented: $showingSettings
-            )
+        } else {
+            print("[ContentView] 🎬 수동 제어 모드로 인해 비디오 제어 건너뜀")
         }
     }
     
