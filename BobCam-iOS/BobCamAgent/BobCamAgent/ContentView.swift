@@ -107,6 +107,7 @@ struct ContentView: View {
                     visionService: visionService,
                     videoService: videoService,
                     videoSelectionService: videoSelectionService,
+                    debugSettings: debugSettings,
                     sensitivity: $visionService.sensitivity
                 )
                 .padding()

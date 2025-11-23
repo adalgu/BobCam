@@ -6,6 +6,7 @@ struct StatusBar: View {
     @ObservedObject var visionService: VisionService
     @ObservedObject var videoService: VideoService
     @ObservedObject var videoSelectionService: VideoSelectionService
+    @ObservedObject var debugSettings: DebugSettings
     @Binding var sensitivity: Float
     @State private var showSettings = false
     @State private var manualOverride = false
@@ -40,6 +41,7 @@ struct StatusBar: View {
                 videoSelectionService: videoSelectionService,
                 videoService: videoService,
                 visionService: visionService,
+                debugSettings: debugSettings,
                 isPresented: $showSettings
             )
         }
@@ -190,6 +192,7 @@ struct StatusBar_Previews: PreviewProvider {
                 visionService: VisionService(),
                 videoService: videoService,
                 videoSelectionService: VideoSelectionService(videoService: videoService),
+                debugSettings: DebugSettings(),
                 sensitivity: .constant(0.5)
             )
             .padding()
@@ -205,6 +208,7 @@ struct StatusBar_Previews: PreviewProvider {
                 visionService: VisionService(),
                 videoService: videoService,
                 videoSelectionService: VideoSelectionService(videoService: videoService),
+                debugSettings: DebugSettings(),
                 sensitivity: .constant(0.7)
             )
             .padding()
