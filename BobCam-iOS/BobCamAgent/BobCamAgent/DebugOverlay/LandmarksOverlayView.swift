@@ -79,10 +79,11 @@ class LandmarksOverlayUIView: UIView {
         self.currentLandmarks = landmarks
         self.faceObservation = faceObservation
 
-        // Store in history for trail visualization
-        if let landmarks = landmarks {
+        // Store in history for trail visualization (requires both landmarks and faceObservation)
+        if let landmarks = landmarks, let faceObservation = faceObservation {
             let frame = LandmarkFrame(
                 landmarks: landmarks,
+                faceObservation: faceObservation,
                 timestamp: CACurrentMediaTime()
             )
             landmarkHistory.write(frame)
@@ -149,9 +150,8 @@ class LandmarksOverlayUIView: UIView {
     ) {
         guard let settings = debugSettings else { return }
 
-        // Transform coordinates from Vision to view space
-        let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -rect.height)
-        let faceRect = faceObservation.boundingBox.applying(transform)
+        // Convert normalized boundingBox to view coordinates
+        let faceRect = convertBoundingBox(faceObservation.boundingBox, viewRect: rect)
 
         // Draw face bounding box
         if settings.showLandmarkLabels {
@@ -440,6 +440,7 @@ class LandmarksOverlayUIView: UIView {
                     context: context,
                     region: outerLips,
                     rect: rect,
+                    faceObservation: frame.faceObservation,
                     alpha: alpha,
                     isLatest: index == history.count - 1
                 )
@@ -451,21 +452,18 @@ class LandmarksOverlayUIView: UIView {
         context: CGContext,
         region: VNFaceLandmarkRegion2D,
         rect: CGRect,
+        faceObservation: VNFaceObservation,
         alpha: CGFloat,
         isLatest: Bool
     ) {
-        let points = region.normalizedPoints
-        let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -rect.height)
+        // Convert face bounding box to view coordinates for accurate positioning
+        let faceRect = convertBoundingBox(faceObservation.boundingBox, viewRect: rect)
 
-        // Draw simplified trail points
+        // Draw trail points with accurate coordinate conversion
         context.setFillColor(UIColor.systemRed.withAlphaComponent(alpha * 0.3).cgColor)
 
-        for point in points {
-            let transformedPoint = point.applying(transform)
-            let viewPoint = CGPoint(
-                x: transformedPoint.x * rect.width,
-                y: transformedPoint.y * rect.height
-            )
+        for point in region.normalizedPoints {
+            let viewPoint = convertPoint(point, faceRect: faceRect)
 
             let pointSize: CGFloat = isLatest ? 2.0 : 1.0
             let pointRect = CGRect(
@@ -511,10 +509,23 @@ class LandmarksOverlayUIView: UIView {
 
     // MARK: - Helper Methods
 
+    /// Convert a normalized Vision point to UIView coordinates
+    /// Vision Framework: origin at bottom-left, Y increases upward (0.0 ~ 1.0)
+    /// UIKit: origin at top-left, Y increases downward (pixels)
     private func convertPoint(_ point: CGPoint, faceRect: CGRect) -> CGPoint {
         return CGPoint(
             x: faceRect.origin.x + point.x * faceRect.width,
-            y: faceRect.origin.y + point.y * faceRect.height
+            y: faceRect.origin.y + (1.0 - point.y) * faceRect.height  // Flip Y-axis for Vision->UIKit
+        )
+    }
+
+    /// Convert Vision boundingBox (normalized) to UIView rect (pixels)
+    private func convertBoundingBox(_ boundingBox: CGRect, viewRect: CGRect) -> CGRect {
+        return CGRect(
+            x: boundingBox.origin.x * viewRect.width,
+            y: viewRect.height - (boundingBox.origin.y + boundingBox.height) * viewRect.height,
+            width: boundingBox.width * viewRect.width,
+            height: boundingBox.height * viewRect.height
         )
     }
 
@@ -526,10 +537,9 @@ class LandmarksOverlayUIView: UIView {
         faceObservation: VNFaceObservation
     ) {
         guard let outerLips = landmarks.outerLips else { return }
-        
-        // Transform coordinates from Vision to view space
-        let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -rect.height)
-        let faceRect = faceObservation.boundingBox.applying(transform)
+
+        // Convert normalized boundingBox to view coordinates
+        let faceRect = convertBoundingBox(faceObservation.boundingBox, viewRect: rect)
         
         let points = outerLips.normalizedPoints
         
@@ -579,5 +589,6 @@ class LandmarksOverlayUIView: UIView {
 /// Stores landmark data with timestamp for trail visualization
 struct LandmarkFrame {
     let landmarks: VNFaceLandmarks2D
+    let faceObservation: VNFaceObservation
     let timestamp: CFTimeInterval
 }
