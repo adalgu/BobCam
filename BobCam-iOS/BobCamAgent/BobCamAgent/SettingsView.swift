@@ -5,6 +5,7 @@ struct SettingsView: View {
     @ObservedObject var videoSelectionService: VideoSelectionService
     @ObservedObject var videoService: VideoService
     @ObservedObject var visionService: VisionService
+    @ObservedObject var debugSettings: DebugSettings
     @Binding var isPresented: Bool
 
     // Local state for settings
@@ -37,6 +38,7 @@ struct SettingsView: View {
 
                     // User Experience Settings
                     UserExperienceSection(
+                        debugSettings: debugSettings,
                         showingResetConfirmation: $showingResetConfirmation,
                         showPerformanceMetrics: $showPerformanceMetrics,
                         showAccuracyDisplay: $showAccuracyDisplay,
@@ -238,6 +240,7 @@ struct AlgorithmSettingsSection: View {
 
 // MARK: - User Experience Settings Section
 struct UserExperienceSection: View {
+    @ObservedObject var debugSettings: DebugSettings
     @Binding var showingResetConfirmation: Bool
     @Binding var showPerformanceMetrics: Bool
     @Binding var showAccuracyDisplay: Bool
@@ -253,6 +256,15 @@ struct UserExperienceSection: View {
                     title: "Feedback Banner",
                     description: "Show guidance message at the top",
                     isOn: $showFeedbackBanner
+                )
+
+                Divider()
+
+                // Lip tracking visualization toggle
+                ToggleRow(
+                    title: "Lip Tracking Line",
+                    description: "Show a line on your lips to verify tracking",
+                    isOn: $debugSettings.showLipTrackingLine
                 )
 
                 Divider()
@@ -596,6 +608,7 @@ extension VisionServiceState {
         videoSelectionService: VideoSelectionService(videoService: VideoService()),
         videoService: VideoService(),
         visionService: VisionService(),
+        debugSettings: DebugSettings(),
         isPresented: .constant(true)
     )
 }

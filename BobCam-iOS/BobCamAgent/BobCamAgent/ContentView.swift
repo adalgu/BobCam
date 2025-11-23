@@ -8,6 +8,7 @@ struct ContentView: View {
     @StateObject private var visionService = VisionService()
     @StateObject private var videoService = VideoService()
     @StateObject private var videoSelectionService: VideoSelectionService
+    @StateObject private var debugSettings = DebugSettings()
     @State private var showingSettings = false
     @AppStorage("showFeedbackBanner") private var showFeedbackBanner: Bool = true
     @State private var feedbackState: FeedbackBannerView.FeedbackState = .neutral
@@ -55,16 +56,31 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 // 카메라 피드 (상단 40%) + 피드백 배너를 카메라 영역 하단에 배치
                 ZStack(alignment: .bottom) {
-                    CameraView(cameraService: cameraService)
-                        .onAppear {
-                            cameraService.startSession()
-                            cameraService.delegate = visionService
-                            visionService.startTracking()
+                    GeometryReader { cameraGeometry in
+                        ZStack {
+                            CameraView(
+                                cameraService: cameraService,
+                                visionService: visionService,
+                                debugSettings: debugSettings
+                            )
+                            .onAppear {
+                                cameraService.startSession()
+                                cameraService.delegate = visionService
+                                visionService.startTracking()
+                            }
+                            .onDisappear {
+                                visionService.stopTracking()
+                                cameraService.stopSession()
+                            }
+                            
+                            // Landmarks overlay for lip tracking visualization
+                            LandmarksOverlayView(
+                                visionService: visionService,
+                                debugSettings: debugSettings,
+                                cameraFrame: cameraGeometry.frame(in: .local)
+                            )
                         }
-                        .onDisappear {
-                            visionService.stopTracking()
-                            cameraService.stopSession()
-                        }
+                    }
 
                     if showFeedbackBanner {
                         FeedbackBannerView(
@@ -131,6 +147,7 @@ struct ContentView: View {
                 videoSelectionService: videoSelectionService,
                 videoService: videoService,
                 visionService: visionService,
+                debugSettings: debugSettings,
                 isPresented: $showingSettings
             )
         }

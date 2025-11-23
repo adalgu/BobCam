@@ -4,6 +4,8 @@ import AVFoundation
 // MARK: - Camera View (UIViewRepresentable)
 struct CameraView: UIViewRepresentable {
     let cameraService: CameraService
+    let visionService: VisionService
+    let debugSettings: DebugSettings
 
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
