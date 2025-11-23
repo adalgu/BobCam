@@ -27,12 +27,13 @@ struct LandmarksOverlayView: UIViewRepresentable {
         uiView.cameraFrame = cameraFrame
         uiView.debugSettings = debugSettings
 
-        // Pull latest landmarks from VisionService for overlay
-        if debugSettings.showLandmarksOverlay {
+        // Pull latest landmarks if either visualization is enabled
+        if debugSettings.showLandmarksOverlay || debugSettings.showLipTrackingLine {
             let (landmarks, faceObs) = visionService.getCurrentLandmarksForDebug()
             uiView.updateLandmarks(landmarks, faceObservation: faceObs)
         } else {
-            uiView.setNeedsDisplay()
+            // Clear landmarks when both are off to prevent stale visualizations
+            uiView.updateLandmarks(nil, faceObservation: nil)
         }
     }
 }

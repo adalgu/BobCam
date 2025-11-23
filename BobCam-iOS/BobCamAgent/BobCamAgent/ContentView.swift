@@ -58,11 +58,7 @@ struct ContentView: View {
                 ZStack(alignment: .bottom) {
                     GeometryReader { cameraGeometry in
                         ZStack {
-                            CameraView(
-                                cameraService: cameraService,
-                                visionService: visionService,
-                                debugSettings: debugSettings
-                            )
+                            CameraView(cameraService: cameraService)
                             .onAppear {
                                 cameraService.startSession()
                                 cameraService.delegate = visionService
