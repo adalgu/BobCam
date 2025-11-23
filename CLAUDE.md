@@ -6,17 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Python Development
 - Install dependencies: `pip install -e .` or `uv add -e .`
-- Run main application: `python main_stable.py`
-- Run tests: `pytest tests/`
-- Run single test: `pytest tests/test_file.py::test_function -v`
-- Lint: `ruff check .`
-- Format: `ruff format .`
-- Type check: `mypy .`
+- Run main application: `cd backend && python main_stable.py`
+- Run tests: `pytest backend/tests/`
+- Run single test: `pytest backend/tests/test_file.py::test_function -v`
+- Lint: `ruff check backend/`
+- Format: `ruff format backend/`
+- Type check: `mypy backend/`
 
 ### iOS Development
-- Open project: `open BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj`
-- Build and run: Use Xcode or `xcodebuild -project BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj -scheme BobCamAgent -destination 'platform=iOS Simulator,name=iPhone 15 Pro' build`
-- Run tests: `xcodebuild test -project BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj -scheme BobCamAgent -destination 'platform=iOS Simulator,name=iPhone 15 Pro'`
+- Open project: `open BobCamAgent.xcworkspace` (recommended) or `open BobCamAgent.xcodeproj`
+- Build and run: Use Xcode or `xcodebuild -workspace BobCamAgent.xcworkspace -scheme BobCamAgent -destination 'platform=iOS Simulator,name=iPhone 15 Pro' build`
+- Run tests: `xcodebuild test -workspace BobCamAgent.xcworkspace -scheme BobCamAgent -destination 'platform=iOS Simulator,name=iPhone 15 Pro'`
 
 ### Development Environment
 - Docker: `docker-compose up -d`
@@ -25,7 +25,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Troubleshooting & Build Notes
 - **CocoaPods & Workspace**: Always use `.xcworkspace` instead of `.xcodeproj` for builds when CocoaPods are involved.
   - *Error*: `ld: framework 'Pods_BobCamAgent' not found`
-  - *Fix*: Use `xcodebuild -workspace BobCam-iOS/BobCamAgent/BobCamAgent.xcworkspace ...`
+  - *Fix*: Use `xcodebuild -workspace BobCamAgent.xcworkspace ...`
 - **SwiftUI Dependency Injection**: Ensure `@ObservedObject` properties are passed as instances, not types.
   - *Error*: `Cannot convert value of type 'DebugSettings.Type' to expected argument type 'DebugSettings'`
   - *Fix*: Check view initializations (e.g., `StatusBar(..., debugSettings: debugSettings)`) to ensure the instance is passed correctly.
@@ -35,32 +35,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### High-Level Structure
 BobCam is a smart eating monitor that uses computer vision to track lip movements and automatically control video playback based on eating behavior. The project has two main implementations:
 
-1. **Python Prototype** (`main_stable.py`, `src/`): Original OpenCV + MediaPipe implementation with Tkinter GUI
-2. **iOS Native App** (`BobCam-iOS/`): Swift/SwiftUI implementation with Vision Framework
+1. **Python Backend** (`backend/`): Original OpenCV + MediaPipe implementation with Tkinter GUI
+2. **iOS Native App** (root level): Swift/SwiftUI implementation with Vision Framework
+
+### Project Structure
+```
+BobCam/
+├── BobCamAgent/              # iOS source code
+├── BobCamAgent.xcodeproj     # Xcode project
+├── BobCamAgent.xcworkspace   # Xcode workspace (CocoaPods)
+├── BobCamAgentTests/         # iOS unit tests
+├── BobCamAgentUITests/       # iOS UI tests
+├── Podfile                   # CocoaPods configuration
+├── fastlane/                 # Fastlane deployment scripts
+├── ios-scripts/              # iOS build scripts
+├── ios-docs/                 # iOS documentation
+├── backend/                  # Python backend code
+│   ├── main.py               # Integrated version
+│   ├── main_stable.py        # Stable version
+│   ├── tests/                # Python tests
+│   └── legacy/               # Archived scripts
+├── docs/                     # Project documentation
+└── dev/                      # Development utilities
+```
 
 ### Core Components
 
-#### iOS Application (Phase 1 Complete - Phase 2 In Progress)
-- **VisionService.swift**: Real-time lip tracking using Vision Framework with optimized 15fps processing
-- **CameraService.swift**: AVFoundation-based camera capture with memory optimization (CVPixelBufferPool)
-- **VideoService.swift**: AVPlayer-based video control with automatic play/pause and fade effects
-- **ContentView.swift**: SwiftUI dual-view interface (camera 40% + video 60%)
-- **StatusBar.swift**: Real-time sensitivity control and manual override system
-- **LipDetectionImproved.swift**: Enhanced detection algorithms with EMA smoothing
-- **Monitoring/**: Real-time performance and accuracy monitoring infrastructure
-- **Utils/**: Supporting utilities including `CircularBuffer` for data management
+#### iOS Application (Root Level)
+- **BobCamAgent/VisionService.swift**: Real-time lip tracking using Vision Framework with optimized 15fps processing
+- **BobCamAgent/CameraService.swift**: AVFoundation-based camera capture with memory optimization (CVPixelBufferPool)
+- **BobCamAgent/VideoService.swift**: AVPlayer-based video control with automatic play/pause and fade effects
+- **BobCamAgent/ContentView.swift**: SwiftUI dual-view interface (camera 40% + video 60%)
+- **BobCamAgent/StatusBar.swift**: Real-time sensitivity control and manual override system
+- **BobCamAgent/Monitoring/**: Real-time performance and accuracy monitoring infrastructure
+- **BobCamAgent/Utils/**: Supporting utilities including `CircularBuffer` for data management
+- **BobCamAgent/ParameterTuning/**: Algorithm parameter optimization framework
+- **BobCamAgent/DebugOverlay/**: Debug visualization tools
 
-#### New Phase 2 Components
-- **AccuracyMonitor.swift**: Real-time accuracy measurement against ground truth
-- **PerformanceMonitor.swift**: FPS, latency, and resource usage tracking
-- **MetricsCalculator.swift**: Statistical analysis utilities for algorithm performance
-- **CircularBuffer.swift**: Efficient data structure for temporal pattern analysis
-- **Phase2ValidationTest.swift**: Integration testing framework for new components
-
-#### Python Prototype (Legacy/Development)
-- **main_stable.py**: Core application with MediaPipe FaceMesh processing
-- **dev/** directory: Development and testing utilities including YOLO models
-- **src/**: Various prototype implementations and sample scripts
+#### Python Backend (`backend/`)
+- **backend/main.py**: Integrated version with all features
+- **backend/main_stable.py**: Stable version for production use
+- **backend/main_enhanced.py**: Advanced features version
+- **backend/tests/**: Python test files
+- **backend/legacy/**: Archived legacy scripts
 
 ### Key Architecture Patterns
 
