@@ -79,10 +79,11 @@ class LandmarksOverlayUIView: UIView {
         self.currentLandmarks = landmarks
         self.faceObservation = faceObservation
 
-        // Store in history for trail visualization
-        if let landmarks = landmarks {
+        // Store in history for trail visualization (requires both landmarks and faceObservation)
+        if let landmarks = landmarks, let faceObservation = faceObservation {
             let frame = LandmarkFrame(
                 landmarks: landmarks,
+                faceObservation: faceObservation,
                 timestamp: CACurrentMediaTime()
             )
             landmarkHistory.write(frame)
@@ -439,6 +440,7 @@ class LandmarksOverlayUIView: UIView {
                     context: context,
                     region: outerLips,
                     rect: rect,
+                    faceObservation: frame.faceObservation,
                     alpha: alpha,
                     isLatest: index == history.count - 1
                 )
@@ -450,25 +452,18 @@ class LandmarksOverlayUIView: UIView {
         context: CGContext,
         region: VNFaceLandmarkRegion2D,
         rect: CGRect,
+        faceObservation: VNFaceObservation,
         alpha: CGFloat,
         isLatest: Bool
     ) {
-        let points = region.normalizedPoints
+        // Convert face bounding box to view coordinates for accurate positioning
+        let faceRect = convertBoundingBox(faceObservation.boundingBox, viewRect: rect)
 
-        // Note: Trail visualization is approximate since we don't store faceObservation with history.
-        // Landmark points are relative to face bounding box, so without it we can only show
-        // approximate positions. For accurate trails, LandmarkFrame should include faceObservation.
-
-        // Draw simplified trail points (approximate visualization)
+        // Draw trail points with accurate coordinate conversion
         context.setFillColor(UIColor.systemRed.withAlphaComponent(alpha * 0.3).cgColor)
 
-        for point in points {
-            // Convert normalized point to view coordinates
-            // Vision: Y=0 at bottom, UIKit: Y=0 at top
-            let viewPoint = CGPoint(
-                x: point.x * rect.width,
-                y: (1.0 - point.y) * rect.height
-            )
+        for point in region.normalizedPoints {
+            let viewPoint = convertPoint(point, faceRect: faceRect)
 
             let pointSize: CGFloat = isLatest ? 2.0 : 1.0
             let pointRect = CGRect(
@@ -594,5 +589,6 @@ class LandmarksOverlayUIView: UIView {
 /// Stores landmark data with timestamp for trail visualization
 struct LandmarkFrame {
     let landmarks: VNFaceLandmarks2D
+    let faceObservation: VNFaceObservation
     let timestamp: CFTimeInterval
 }
