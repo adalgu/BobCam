@@ -20,3 +20,22 @@ This document outlines the versioning and documentation strategy for projects. I
   - `systemPatterns.md`: Update to reflect any new architectural patterns or significant changes to the system design.
   - `techContext.md`: Update if new libraries, frameworks, or technologies were introduced.
   - `activeContext.md` and `progress.md`: Update to reflect the new features and current project status.
+
+---
+### Examples of Updates
+
+#### Major Update Examples (`v1.x.x` -> `v2.0.0`)
+*   Integrating a new, complex backend like YOLO for object detection.
+*   Completely overhauling the UI from Tkinter to a web-based framework like Flask.
+*   Adding fundamentally new capabilities, such as user accounts or a data analytics dashboard.
+
+#### Minor Update Examples (`v1.0.x` -> `v1.1.0` or `v1.1.x` -> `v1.2.0`)
+*   Adding a new, self-contained feature, like the screen fade effect.
+*   Refining the detection algorithm with new metrics.
+*   Improving the layout of the UI without changing the core framework.
+*   Adding a new text-to-speech notification.
+
+#### Patch Update Examples (`v1.0.0` -> `v1.0.1`)
+*   Fixing a bug that causes a crash.
+*   Correcting a typo in the UI.
+*   Improving the visibility of visual elements (like the landmark thickness change).

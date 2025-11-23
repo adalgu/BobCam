@@ -6,12 +6,13 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "mediapipe>=0.10.21",
-    "numpy>=1.26.4",
+    "numpy<2.0",
     "opencv-python>=4.11.0.86",
     "pillow>=11.2.1",
     "pyttsx3>=2.98",
-    "selenium>=4.33.0",
-    "webdriver-manager>=4.0.2",
+    "ffpyplayer>=4.3.2",
+    "sounddevice>=0.4.7",
+    "soundfile>=0.12.1",
 ]
 
 [dependency-groups]

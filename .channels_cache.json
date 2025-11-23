@@ -1,5 +1,45 @@
 [
   {
+    "id": "D090D3BG4G6",
+    "name": "@mynotibot",
+    "topic": "",
+    "purpose": "DM with MyNotiBot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D08KQMDUUMD",
+    "name": "@claude_mcp",
+    "topic": "",
+    "purpose": "DM with Claude MCP",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07JU2YRLHF",
+    "name": "@ai_shuttle_bot",
+    "topic": "",
+    "purpose": "DM with AI_Shuttle_bot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D04M25GNUMR",
+    "name": "@notion_notifications",
+    "topic": "",
+    "purpose": "DM with Notion Notifications",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
     "id": "D02CA47FV7W",
     "name": "@github2",
     "topic": "",
@@ -20,110 +60,10 @@
     "private": false
   },
   {
-    "id": "D8T94A26S",
-    "name": "@adalgu",
-    "topic": "",
-    "purpose": "DM with Kunwoo Kim",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
     "id": "D08M859BETS",
     "name": "@mcp_assistant",
     "topic": "",
     "purpose": "DM with MCP Assistant",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D07JU2YRLHF",
-    "name": "@ai_shuttle_bot",
-    "topic": "",
-    "purpose": "DM with AI_Shuttle_bot",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "DA8KJBZ6W",
-    "name": "@github",
-    "topic": "",
-    "purpose": "DM with ",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D090D3BG4G6",
-    "name": "@mynotibot",
-    "topic": "",
-    "purpose": "DM with MyNotiBot",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D04M25GNUMR",
-    "name": "@notion_notifications",
-    "topic": "",
-    "purpose": "DM with Notion Notifications",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "DML263VSQ",
-    "name": "@myapp_bot",
-    "topic": "",
-    "purpose": "DM with ",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D8SGVKQN9",
-    "name": "@jaeyoi.dev",
-    "topic": "",
-    "purpose": "DM with 조재용",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D8RSN22MP",
-    "name": "@slackbot",
-    "topic": "",
-    "purpose": "DM with Slackbot",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D08KQMDUUMD",
-    "name": "@claude_mcp",
-    "topic": "",
-    "purpose": "DM with Claude MCP",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D07J6UGT42W",
-    "name": "@assemblywatch3",
-    "topic": "",
-    "purpose": "DM with ",
     "memberCount": 2,
     "mpim": false,
     "im": true,
@@ -140,8 +80,8 @@
     "private": false
   },
   {
-    "id": "DML263VSQ",
-    "name": "@myapp_bot",
+    "id": "DA8KJBZ6W",
+    "name": "@github",
     "topic": "",
     "purpose": "DM with ",
     "memberCount": 2,
@@ -164,6 +104,76 @@
     "name": "@slackbot",
     "topic": "",
     "purpose": "DM with Slackbot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8T94A26S",
+    "name": "@adalgu",
+    "topic": "",
+    "purpose": "DM with Kunwoo Kim",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07J6UGT42W",
+    "name": "@assemblywatch3",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "DML263VSQ",
+    "name": "@myapp_bot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "DA8KJBZ6W",
+    "name": "@github",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8SGVKQN9",
+    "name": "@jaeyoi.dev",
+    "topic": "",
+    "purpose": "DM with 조재용",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8RSN22MP",
+    "name": "@slackbot",
+    "topic": "",
+    "purpose": "DM with Slackbot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8T94A26S",
+    "name": "@adalgu",
+    "topic": "",
+    "purpose": "DM with Kunwoo Kim",
     "memberCount": 2,
     "mpim": false,
     "im": true,
@@ -180,13 +190,13 @@
     "private": false
   },
   {
-    "id": "D08KQMDUUMD",
-    "name": "@claude_mcp",
+    "id": "C8TE552TB",
+    "name": "#link",
     "topic": "",
-    "purpose": "DM with Claude MCP",
+    "purpose": "",
     "memberCount": 2,
     "mpim": false,
-    "im": true,
+    "im": false,
     "private": false
   },
   {
@@ -200,10 +210,50 @@
     "private": false
   },
   {
-    "id": "D06033AUQQP",
-    "name": "@2023auditmonitoring",
+    "id": "DML263VSQ",
+    "name": "@myapp_bot",
     "topic": "",
     "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D090D3BG4G6",
+    "name": "@mynotibot",
+    "topic": "",
+    "purpose": "DM with MyNotiBot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D08KQMDUUMD",
+    "name": "@claude_mcp",
+    "topic": "",
+    "purpose": "DM with Claude MCP",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07JU2YRLHF",
+    "name": "@ai_shuttle_bot",
+    "topic": "",
+    "purpose": "DM with AI_Shuttle_bot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D04M25GNUMR",
+    "name": "@notion_notifications",
+    "topic": "",
+    "purpose": "DM with Notion Notifications",
     "memberCount": 2,
     "mpim": false,
     "im": true,
@@ -230,26 +280,6 @@
     "private": false
   },
   {
-    "id": "D8T94A26S",
-    "name": "@adalgu",
-    "topic": "",
-    "purpose": "DM with Kunwoo Kim",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "C8TE552TB",
-    "name": "#link",
-    "topic": "",
-    "purpose": "",
-    "memberCount": 2,
-    "mpim": false,
-    "im": false,
-    "private": false
-  },
-  {
     "id": "D08M859BETS",
     "name": "@mcp_assistant",
     "topic": "",
@@ -260,18 +290,8 @@
     "private": false
   },
   {
-    "id": "D07JU2YRLHF",
-    "name": "@ai_shuttle_bot",
-    "topic": "",
-    "purpose": "DM with AI_Shuttle_bot",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "DA8KJBZ6W",
-    "name": "@github",
+    "id": "D06033AUQQP",
+    "name": "@2023auditmonitoring",
     "topic": "",
     "purpose": "DM with ",
     "memberCount": 2,
@@ -280,27 +300,7 @@
     "private": false
   },
   {
-    "id": "D090D3BG4G6",
-    "name": "@mynotibot",
-    "topic": "",
-    "purpose": "DM with MyNotiBot",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "D04M25GNUMR",
-    "name": "@notion_notifications",
-    "topic": "",
-    "purpose": "DM with Notion Notifications",
-    "memberCount": 2,
-    "mpim": false,
-    "im": true,
-    "private": false
-  },
-  {
-    "id": "C085B8S21T9",
+    "id": "C096Q6WKLLC",
     "name": "#agent-integration",
     "topic": "",
     "purpose": "",

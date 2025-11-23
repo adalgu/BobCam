@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>밥 먹기 모니터링 앱</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      #video-feed {
+        width: 640px;
+        height: 480px;
+        margin: 20px auto;
+      }
+      #youtube-player {
+        margin: 20px auto;
+      }
+      #feedback {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+      button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>밥 먹기 모니터링 앱</h1>
+    <img id="video-feed" src="{{ url_for('video_feed') }}" />
+    <div id="feedback"></div>
+    <div id="youtube-player"></div>
+    <button id="play-pause">재생/일시정지</button>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      var player;
+      var playerState;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("youtube-player", {
+          height: "360",
+          width: "640",
+          videoId: "dQw4w9WgXcQ", // 예시 비디오 ID, 실제 사용 시 변경 필요
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+          },
+        });
+      }
+
+      function onPlayerReady(event) {
+        document
+          .getElementById("play-pause")
+          .addEventListener("click", function () {
+            if (playerState == YT.PlayerState.PLAYING) {
+              player.pauseVideo();
+            } else {
+              player.playVideo();
+            }
+          });
+        checkEating();
+      }
+
+      function onPlayerStateChange(event) {
+        playerState = event.data;
+      }
+
+      function checkEating() {
+        fetch("/check_eating")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.is_eating) {
+              document.getElementById("feedback").textContent =
+                "밥을 잘 먹고 있어요";
+              document.getElementById("feedback").style.color = "green";
+              player.playVideo();
+            } else {
+              document.getElementById("feedback").textContent =
+                "밥을 잘 안 먹고 있어요";
+              document.getElementById("feedback").style.color = "red";
+              player.pauseVideo();
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+
+        setTimeout(checkEating, 1000); // 1초마다 체크
+      }
+    </script>
+  </body>
+</html>
