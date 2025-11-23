@@ -22,6 +22,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Docker: `docker-compose up -d`
 - UV package manager: See `uv-setup.md` for setup instructions
 
+### Troubleshooting & Build Notes
+- **CocoaPods & Workspace**: Always use `.xcworkspace` instead of `.xcodeproj` for builds when CocoaPods are involved.
+  - *Error*: `ld: framework 'Pods_BobCamAgent' not found`
+  - *Fix*: Use `xcodebuild -workspace BobCam-iOS/BobCamAgent/BobCamAgent.xcworkspace ...`
+- **SwiftUI Dependency Injection**: Ensure `@ObservedObject` properties are passed as instances, not types.
+  - *Error*: `Cannot convert value of type 'DebugSettings.Type' to expected argument type 'DebugSettings'`
+  - *Fix*: Check view initializations (e.g., `StatusBar(..., debugSettings: debugSettings)`) to ensure the instance is passed correctly.
+
 ## Project Architecture
 
 ### High-Level Structure
