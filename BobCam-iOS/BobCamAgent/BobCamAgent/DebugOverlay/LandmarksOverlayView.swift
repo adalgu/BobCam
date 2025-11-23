@@ -27,12 +27,13 @@ struct LandmarksOverlayView: UIViewRepresentable {
         uiView.cameraFrame = cameraFrame
         uiView.debugSettings = debugSettings
 
-        // Pull latest landmarks from VisionService for overlay
-        if debugSettings.showLandmarksOverlay {
+        // Pull latest landmarks if either visualization is enabled
+        if debugSettings.showLandmarksOverlay || debugSettings.showLipTrackingLine {
             let (landmarks, faceObs) = visionService.getCurrentLandmarksForDebug()
             uiView.updateLandmarks(landmarks, faceObservation: faceObs)
         } else {
-            uiView.setNeedsDisplay()
+            // Clear landmarks when both are off to prevent stale visualizations
+            uiView.updateLandmarks(nil, faceObservation: nil)
         }
     }
 }
@@ -96,28 +97,45 @@ class LandmarksOverlayUIView: UIView {
 
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext(),
-              let settings = debugSettings,
-              settings.showLandmarksOverlay else { return }
+              let settings = debugSettings else { return }
+        
+        // Only proceed if either debug overlay or lip tracking line is enabled
+        guard settings.showLandmarksOverlay || settings.showLipTrackingLine else { return }
 
         context.saveGState()
 
         // Clear the context
         context.clear(rect)
 
-        // Draw landmark history (trails)
-        if settings.showBufferVisualization {
-            drawLandmarkTrails(context: context, rect: rect)
-        }
-
-        // Draw current landmarks
-        if let landmarks = currentLandmarks,
+        // Draw clean lip tracking line (independent of debug mode)
+        if settings.showLipTrackingLine,
+           let landmarks = currentLandmarks,
            let faceObservation = faceObservation {
-            drawCurrentLandmarks(
+            drawCleanLipLine(
                 context: context,
                 rect: rect,
                 landmarks: landmarks,
                 faceObservation: faceObservation
             )
+        }
+
+        // Draw full debug overlay if enabled
+        if settings.showLandmarksOverlay {
+            // Draw landmark history (trails)
+            if settings.showBufferVisualization {
+                drawLandmarkTrails(context: context, rect: rect)
+            }
+
+            // Draw current landmarks
+            if let landmarks = currentLandmarks,
+               let faceObservation = faceObservation {
+                drawCurrentLandmarks(
+                    context: context,
+                    rect: rect,
+                    landmarks: landmarks,
+                    faceObservation: faceObservation
+                )
+            }
         }
 
         context.restoreGState()
@@ -498,6 +516,41 @@ class LandmarksOverlayUIView: UIView {
             x: faceRect.origin.x + point.x * faceRect.width,
             y: faceRect.origin.y + point.y * faceRect.height
         )
+    }
+
+    /// Draw a clean, simple lip tracking line (for user-facing visualization)
+    private func drawCleanLipLine(
+        context: CGContext,
+        rect: CGRect,
+        landmarks: VNFaceLandmarks2D,
+        faceObservation: VNFaceObservation
+    ) {
+        guard let outerLips = landmarks.outerLips else { return }
+        
+        // Transform coordinates from Vision to view space
+        let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -rect.height)
+        let faceRect = faceObservation.boundingBox.applying(transform)
+        
+        let points = outerLips.normalizedPoints
+        
+        // Draw a simple, clean line connecting the outer lip points
+        context.setStrokeColor(UIColor.systemGreen.withAlphaComponent(0.9).cgColor)
+        context.setLineWidth(2.5)
+        
+        if !points.isEmpty {
+            context.beginPath()
+            let firstPoint = convertPoint(points[0], faceRect: faceRect)
+            context.move(to: firstPoint)
+            
+            for point in points.dropFirst() {
+                let convertedPoint = convertPoint(point, faceRect: faceRect)
+                context.addLine(to: convertedPoint)
+            }
+            
+            // Close the path to complete the lip outline
+            context.closePath()
+            context.strokePath()
+        }
     }
 
     private func calculateCenterPoint(points: [CGPoint], faceRect: CGRect) -> CGPoint {

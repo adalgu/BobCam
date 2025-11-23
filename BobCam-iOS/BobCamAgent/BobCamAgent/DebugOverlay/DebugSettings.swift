@@ -18,6 +18,7 @@ class DebugSettings: ObservableObject {
     @Published var showAlgorithmParameters: Bool = true
     @Published var showBufferVisualization: Bool = true
     @Published var showLandmarksOverlay: Bool = false
+    @Published var showLipTrackingLine: Bool = false
 
     // MARK: - Landmark Visualization Settings
     @Published var landmarkPointSize: CGFloat = 2.0
@@ -100,6 +101,7 @@ class DebugSettings: ObservableObject {
         showAlgorithmParameters = true
         showBufferVisualization = true
         showLandmarksOverlay = false
+        showLipTrackingLine = false
 
         landmarkPointSize = 2.0
         landmarkLineWidth = 1.0
@@ -171,6 +173,11 @@ class DebugSettings: ObservableObject {
             .dropFirst()
             .sink { [weak self] _ in self?.saveSettings() }
             .store(in: &cancellables)
+
+        $showLipTrackingLine
+            .dropFirst()
+            .sink { [weak self] _ in self?.saveSettings() }
+            .store(in: &cancellables)
     }
 
     private func loadSettings() {
@@ -182,6 +189,7 @@ class DebugSettings: ObservableObject {
         showAlgorithmParameters = defaults.object(forKey: "show_algorithm_parameters") as? Bool ?? true
         showBufferVisualization = defaults.object(forKey: "show_buffer_visualization") as? Bool ?? true
         showLandmarksOverlay = defaults.bool(forKey: "show_landmarks_overlay")
+        showLipTrackingLine = defaults.bool(forKey: "show_lip_tracking_line")
 
         landmarkPointSize = CGFloat(defaults.double(forKey: "landmark_point_size"))
         if landmarkPointSize == 0 { landmarkPointSize = 2.0 }
@@ -214,6 +222,7 @@ class DebugSettings: ObservableObject {
         defaults.set(showAlgorithmParameters, forKey: "show_algorithm_parameters")
         defaults.set(showBufferVisualization, forKey: "show_buffer_visualization")
         defaults.set(showLandmarksOverlay, forKey: "show_landmarks_overlay")
+        defaults.set(showLipTrackingLine, forKey: "show_lip_tracking_line")
 
         defaults.set(Double(landmarkPointSize), forKey: "landmark_point_size")
         defaults.set(Double(landmarkLineWidth), forKey: "landmark_line_width")
