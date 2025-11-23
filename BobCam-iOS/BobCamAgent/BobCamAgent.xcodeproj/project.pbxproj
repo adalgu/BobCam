@@ -1,0 +1,859 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		288F32A3BFC84B570FC08A4F /* Pods_BobCamAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E0C4817F1C307B7CA21154 /* Pods_BobCamAgent.framework */; };
+		35A7D251808D05D7C47F4DE0 /* Pods_BobCamAgent_BobCamAgentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BA7BF8F481AC8C761AD6EA /* Pods_BobCamAgent_BobCamAgentUITests.framework */; };
+		5055E1617C7308B79ADB7E31 /* Pods_BobCamAgentTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75433229224FAB2C79674824 /* Pods_BobCamAgentTests.framework */; };
+		A10001021B00000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001031B00000000000001 /* ContentView.swift */; };
+		A10001041B00000000000001 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001051B00000000000001 /* CameraService.swift */; };
+		A10001061B00000000000001 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001071B00000000000001 /* CameraView.swift */; };
+		A10001081B00000000000001 /* VisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001091B00000000000001 /* VisionService.swift */; };
+		A10001101B00000000000001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001111B00000000000001 /* OnboardingView.swift */; };
+		A1000110A1B00000000000001 /* VideoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000110B1B00000000000001 /* VideoService.swift */; };
+		A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000110D1B00000000000001 /* VideoSelectionService.swift */; };
+		A1000111A1B00000000000001 /* PerformanceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000111B1B00000000000001 /* PerformanceMonitor.swift */; };
+		A1000111C1B00000000000001 /* CircularBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000111D1B00000000000001 /* CircularBuffer.swift */; };
+		A1000111E1B00000000000001 /* MetricsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000111F1B00000000000001 /* MetricsCalculator.swift */; };
+		A10001121B00000000000001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001131B00000000000001 /* SettingsView.swift */; };
+		A1000112A1B00000000000001 /* LandmarksOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000112B1B00000000000001 /* LandmarksOverlayView.swift */; };
+		A1000112C1B00000000000001 /* GroundTruthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000112D1B00000000000001 /* GroundTruthManager.swift */; };
+		A1000112E1B00000000000001 /* OptimizationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000112F1B00000000000001 /* OptimizationEngine.swift */; };
+		A10001141B00000000000001 /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001151B00000000000001 /* StatusBar.swift */; };
+		A10001161B00000000000001 /* VideoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001171B00000000000001 /* VideoPickerView.swift */; };
+		A10001181B00000000000001 /* AccuracyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001191B00000000000001 /* AccuracyMonitor.swift */; };
+		A10001201B00000000000001 /* ContentView+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001211B00000000000001 /* ContentView+Debug.swift */; };
+		A10001221B00000000000001 /* DebugCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001231B00000000000001 /* DebugCameraView.swift */; };
+		A10001241B00000000000001 /* DebugIntegrationGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001251B00000000000001 /* DebugIntegrationGuide.swift */; };
+		A10001261B00000000000001 /* DebugOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001271B00000000000001 /* DebugOverlayView.swift */; };
+		A10001281B00000000000001 /* DebugSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001291B00000000000001 /* DebugSettings.swift */; };
+		A10001301B00000000000001 /* OptimizationRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001311B00000000000001 /* OptimizationRunner.swift */; };
+		A10001341B00000000000001 /* ParameterTuningFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001351B00000000000001 /* ParameterTuningFramework.swift */; };
+		A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001371B00000000000001 /* ParameterTuningUI.swift */; };
+		A10001381B00000000000001 /* TuningIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001391B00000000000001 /* TuningIntegration.swift */; };
+		A10001401B00000000000001 /* BobCamAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001411B00000000000001 /* BobCamAgentTests.swift */; };
+		A10001421B00000000000001 /* BobCamAgentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001431B00000000000001 /* BobCamAgentUITests.swift */; };
+		A10001441B00000000000001 /* BobCamAgentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001451B00000000000001 /* BobCamAgentUITestsLaunchTests.swift */; };
+		A10001B11B00000000000001 /* BobCamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10001011B00000000000001 /* BobCamApp.swift */; };
+		A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB00011B00000000000001 /* FeedbackBannerView.swift */; };
+		A1FB10041B00000000000001 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1FB10011B00000000000001 /* Localizable.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A10001461B00000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10001471B00000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10001001B00000000000001;
+			remoteInfo = BobCamAgent;
+		};
+		A10001491B00000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10001471B00000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10001001B00000000000001;
+			remoteInfo = BobCamAgent;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00BA7BF8F481AC8C761AD6EA /* Pods_BobCamAgent_BobCamAgentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BobCamAgent_BobCamAgentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08E0C4817F1C307B7CA21154 /* Pods_BobCamAgent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BobCamAgent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		232D0D25C80E1E49B9D4C0B6 /* Pods-BobCamAgentTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgentTests.debug.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests.debug.xcconfig"; sourceTree = "<group>"; };
+		28C7A1CC96EBBFA42693A22A /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		330BED35A79161F74D36BFA1 /* Pods-BobCamAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgent.release.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent.release.xcconfig"; sourceTree = "<group>"; };
+		38DE733FECFC024D9EDB1965 /* Pods-BobCamAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgent.debug.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent.debug.xcconfig"; sourceTree = "<group>"; };
+		5C7F19EF88C6A955F7A11A32 /* Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig"; sourceTree = "<group>"; };
+		675E4C60E5423B680E5D2BEB /* Pods-BobCamAgentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BobCamAgentTests.release.xcconfig"; path = "../BobCamAgent/Pods/Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests.release.xcconfig"; sourceTree = "<group>"; };
+		75433229224FAB2C79674824 /* Pods_BobCamAgentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BobCamAgentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10001011B00000000000001 /* BobCamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobCamApp.swift; sourceTree = "<group>"; };
+		A10001031B00000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A10001051B00000000000001 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		A10001071B00000000000001 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		A10001091B00000000000001 /* VisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionService.swift; sourceTree = "<group>"; };
+		A1000110B1B00000000000001 /* VideoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoService.swift; sourceTree = "<group>"; };
+		A1000110D1B00000000000001 /* VideoSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSelectionService.swift; sourceTree = "<group>"; };
+		A10001111B00000000000001 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		A1000111B1B00000000000001 /* PerformanceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitor.swift; sourceTree = "<group>"; };
+		A1000111D1B00000000000001 /* CircularBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularBuffer.swift; sourceTree = "<group>"; };
+		A1000111F1B00000000000001 /* MetricsCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsCalculator.swift; sourceTree = "<group>"; };
+		A1000112B1B00000000000001 /* LandmarksOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarksOverlayView.swift; sourceTree = "<group>"; };
+		A1000112D1B00000000000001 /* GroundTruthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundTruthManager.swift; sourceTree = "<group>"; };
+		A1000112F1B00000000000001 /* OptimizationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationEngine.swift; sourceTree = "<group>"; };
+		A10001131B00000000000001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1000113B1B00000000000001 /* Phase2ValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phase2ValidationTest.swift; sourceTree = "<group>"; };
+		A1000113D1B00000000000001 /* VideoSelectionIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSelectionIntegrationTest.swift; sourceTree = "<group>"; };
+		A1000113F1B00000000000001 /* run_phase2_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = run_phase2_test.swift; sourceTree = "<group>"; };
+		A10001151B00000000000001 /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
+		A10001171B00000000000001 /* VideoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPickerView.swift; sourceTree = "<group>"; };
+		A10001191B00000000000001 /* AccuracyMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyMonitor.swift; sourceTree = "<group>"; };
+		A10001211B00000000000001 /* ContentView+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+Debug.swift"; sourceTree = "<group>"; };
+		A10001231B00000000000001 /* DebugCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCameraView.swift; sourceTree = "<group>"; };
+		A10001251B00000000000001 /* DebugIntegrationGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugIntegrationGuide.swift; sourceTree = "<group>"; };
+		A10001271B00000000000001 /* DebugOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugOverlayView.swift; sourceTree = "<group>"; };
+		A10001291B00000000000001 /* DebugSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettings.swift; sourceTree = "<group>"; };
+		A10001311B00000000000001 /* OptimizationRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationRunner.swift; sourceTree = "<group>"; };
+		A10001331B00000000000001 /* OptimizationTestSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationTestSuite.swift; sourceTree = "<group>"; };
+		A10001351B00000000000001 /* ParameterTuningFramework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterTuningFramework.swift; sourceTree = "<group>"; };
+		A10001371B00000000000001 /* ParameterTuningUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterTuningUI.swift; sourceTree = "<group>"; };
+		A10001391B00000000000001 /* TuningIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuningIntegration.swift; sourceTree = "<group>"; };
+		A10001411B00000000000001 /* BobCamAgentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobCamAgentTests.swift; sourceTree = "<group>"; };
+		A10001431B00000000000001 /* BobCamAgentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobCamAgentUITests.swift; sourceTree = "<group>"; };
+		A10001451B00000000000001 /* BobCamAgentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobCamAgentUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A10001501B00000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A10001511B00000000000001 /* BobCamAgentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BobCamAgentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10001521B00000000000001 /* BobCamAgentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BobCamAgentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10001B21B00000000000001 /* BobCamAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BobCamAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1FB00011B00000000000001 /* FeedbackBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackBannerView.swift; sourceTree = "<group>"; };
+		A1FB10021B00000000000001 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A1FB10031B00000000000001 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXVariantGroup section */
+		A1FB10011B00000000000001 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1FB10021B00000000000001 /* en */,
+				A1FB10031B00000000000001 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10001F31B00000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				288F32A3BFC84B570FC08A4F /* Pods_BobCamAgent.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10001F41B00000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5055E1617C7308B79ADB7E31 /* Pods_BobCamAgentTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10001F51B00000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35A7D251808D05D7C47F4DE0 /* Pods_BobCamAgent_BobCamAgentUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16CB1F407859A8F37EA087FD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				38DE733FECFC024D9EDB1965 /* Pods-BobCamAgent.debug.xcconfig */,
+				330BED35A79161F74D36BFA1 /* Pods-BobCamAgent.release.xcconfig */,
+				28C7A1CC96EBBFA42693A22A /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */,
+				5C7F19EF88C6A955F7A11A32 /* Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig */,
+				232D0D25C80E1E49B9D4C0B6 /* Pods-BobCamAgentTests.debug.xcconfig */,
+				675E4C60E5423B680E5D2BEB /* Pods-BobCamAgentTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
+		A1000115A1B00000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10001B21B00000000000001 /* BobCamAgent.app */,
+				A10001511B00000000000001 /* BobCamAgentTests.xctest */,
+				A10001521B00000000000001 /* BobCamAgentUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1000115B1B00000000000001 /* Monitoring */ = {
+			isa = PBXGroup;
+			children = (
+				A10001191B00000000000001 /* AccuracyMonitor.swift */,
+				A1000111B1B00000000000001 /* PerformanceMonitor.swift */,
+			);
+			path = Monitoring;
+			sourceTree = "<group>";
+		};
+		A1000115C1B00000000000001 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A1000111D1B00000000000001 /* CircularBuffer.swift */,
+				A1000111F1B00000000000001 /* MetricsCalculator.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A1000115D1B00000000000001 /* DebugOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				A10001211B00000000000001 /* ContentView+Debug.swift */,
+				A10001231B00000000000001 /* DebugCameraView.swift */,
+				A10001251B00000000000001 /* DebugIntegrationGuide.swift */,
+				A10001271B00000000000001 /* DebugOverlayView.swift */,
+				A10001291B00000000000001 /* DebugSettings.swift */,
+				A1000112B1B00000000000001 /* LandmarksOverlayView.swift */,
+			);
+			path = DebugOverlay;
+			sourceTree = "<group>";
+		};
+		A1000115E1B00000000000001 /* ParameterTuning */ = {
+			isa = PBXGroup;
+			children = (
+				A1000112D1B00000000000001 /* GroundTruthManager.swift */,
+				A1000112F1B00000000000001 /* OptimizationEngine.swift */,
+				A10001311B00000000000001 /* OptimizationRunner.swift */,
+				A10001331B00000000000001 /* OptimizationTestSuite.swift */,
+				A10001351B00000000000001 /* ParameterTuningFramework.swift */,
+				A10001371B00000000000001 /* ParameterTuningUI.swift */,
+				A10001391B00000000000001 /* TuningIntegration.swift */,
+			);
+			path = ParameterTuning;
+			sourceTree = "<group>";
+		};
+		A10001561B00000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A10001571B00000000000001 /* BobCamAgent */,
+				A10001581B00000000000001 /* BobCamAgentTests */,
+				A10001591B00000000000001 /* BobCamAgentUITests */,
+				A1000115A1B00000000000001 /* Products */,
+				16CB1F407859A8F37EA087FD /* Pods */,
+				A4EE8A1F9DA291E467D935CA /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A10001571B00000000000001 /* BobCamAgent */ = {
+			isa = PBXGroup;
+			children = (
+				A10001011B00000000000001 /* BobCamApp.swift */,
+				A10001031B00000000000001 /* ContentView.swift */,
+				A10001051B00000000000001 /* CameraService.swift */,
+				A10001071B00000000000001 /* CameraView.swift */,
+				A10001091B00000000000001 /* VisionService.swift */,
+				A1000110B1B00000000000001 /* VideoService.swift */,
+				A1000110D1B00000000000001 /* VideoSelectionService.swift */,
+				A10001111B00000000000001 /* OnboardingView.swift */,
+				A10001131B00000000000001 /* SettingsView.swift */,
+				A1FB00011B00000000000001 /* FeedbackBannerView.swift */,
+				A10001151B00000000000001 /* StatusBar.swift */,
+				A10001171B00000000000001 /* VideoPickerView.swift */,
+				A1000115B1B00000000000001 /* Monitoring */,
+				A1000115C1B00000000000001 /* Utils */,
+				A1000115D1B00000000000001 /* DebugOverlay */,
+				A1000115E1B00000000000001 /* ParameterTuning */,
+				A1000113B1B00000000000001 /* Phase2ValidationTest.swift */,
+				A1000113D1B00000000000001 /* VideoSelectionIntegrationTest.swift */,
+				A1000113F1B00000000000001 /* run_phase2_test.swift */,
+				A1FB10011B00000000000001 /* Localizable.strings */,
+				A10001501B00000000000001 /* Info.plist */,
+			);
+			path = BobCamAgent;
+			sourceTree = "<group>";
+		};
+		A10001581B00000000000001 /* BobCamAgentTests */ = {
+			isa = PBXGroup;
+			children = (
+				A10001411B00000000000001 /* BobCamAgentTests.swift */,
+			);
+			path = BobCamAgentTests;
+			sourceTree = "<group>";
+		};
+		A10001591B00000000000001 /* BobCamAgentUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A10001431B00000000000001 /* BobCamAgentUITests.swift */,
+				A10001451B00000000000001 /* BobCamAgentUITestsLaunchTests.swift */,
+			);
+			path = BobCamAgentUITests;
+			sourceTree = "<group>";
+		};
+		A4EE8A1F9DA291E467D935CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08E0C4817F1C307B7CA21154 /* Pods_BobCamAgent.framework */,
+				00BA7BF8F481AC8C761AD6EA /* Pods_BobCamAgent_BobCamAgentUITests.framework */,
+				75433229224FAB2C79674824 /* Pods_BobCamAgentTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10001001B00000000000001 /* BobCamAgent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10001002B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgent" */;
+			buildPhases = (
+				15EAECB89F70FD456E8DD2B0 /* [CP] Check Pods Manifest.lock */,
+				A10001531B00000000000001 /* Sources */,
+				A10001F31B00000000000001 /* Frameworks */,
+				A10001601B00000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BobCamAgent;
+			productName = BobCamAgent;
+			productReference = A10001B21B00000000000001 /* BobCamAgent.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A10001611B00000000000001 /* BobCamAgentTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10001621B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgentTests" */;
+			buildPhases = (
+				5536BE546A6245714E71A841 /* [CP] Check Pods Manifest.lock */,
+				A10001541B00000000000001 /* Sources */,
+				A10001F41B00000000000001 /* Frameworks */,
+				A10001631B00000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A10001641B00000000000001 /* PBXTargetDependency */,
+			);
+			name = BobCamAgentTests;
+			productName = BobCamAgentTests;
+			productReference = A10001511B00000000000001 /* BobCamAgentTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A10001651B00000000000001 /* BobCamAgentUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10001661B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgentUITests" */;
+			buildPhases = (
+				A3048671DFF7E9F0330AAFE6 /* [CP] Check Pods Manifest.lock */,
+				A10001551B00000000000001 /* Sources */,
+				A10001F51B00000000000001 /* Frameworks */,
+				A10001671B00000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A10001681B00000000000001 /* PBXTargetDependency */,
+			);
+			name = BobCamAgentUITests;
+			productName = BobCamAgentUITests;
+			productReference = A10001521B00000000000001 /* BobCamAgentUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10001471B00000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A10001611B00000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = A10001481B00000000000001;
+					};
+					A10001651B00000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = A10001481B00000000000001;
+					};
+				};
+			};
+			buildConfigurationList = A10001691B00000000000001 /* Build configuration list for PBXProject "BobCamAgent" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ko,
+			);
+			mainGroup = A10001561B00000000000001;
+			productRefGroup = A1000115A1B00000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10001001B00000000000001 /* BobCamAgent */,
+				A10001611B00000000000001 /* BobCamAgentTests */,
+				A10001651B00000000000001 /* BobCamAgentUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10001601B00000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1FB10041B00000000000001 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10001631B00000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10001671B00000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15EAECB89F70FD456E8DD2B0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BobCamAgent-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5536BE546A6245714E71A841 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BobCamAgentTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3048671DFF7E9F0330AAFE6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BobCamAgent-BobCamAgentUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10001531B00000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10001B11B00000000000001 /* BobCamApp.swift in Sources */,
+				A10001021B00000000000001 /* ContentView.swift in Sources */,
+				A10001041B00000000000001 /* CameraService.swift in Sources */,
+				A10001061B00000000000001 /* CameraView.swift in Sources */,
+				A10001081B00000000000001 /* VisionService.swift in Sources */,
+				A1000110A1B00000000000001 /* VideoService.swift in Sources */,
+				A1000110C1B00000000000001 /* VideoSelectionService.swift in Sources */,
+				A10001101B00000000000001 /* OnboardingView.swift in Sources */,
+				A10001121B00000000000001 /* SettingsView.swift in Sources */,
+				A1FB00021B00000000000001 /* FeedbackBannerView.swift in Sources */,
+				A10001141B00000000000001 /* StatusBar.swift in Sources */,
+				A10001161B00000000000001 /* VideoPickerView.swift in Sources */,
+				A10001181B00000000000001 /* AccuracyMonitor.swift in Sources */,
+				A1000111A1B00000000000001 /* PerformanceMonitor.swift in Sources */,
+				A1000111C1B00000000000001 /* CircularBuffer.swift in Sources */,
+				A1000111E1B00000000000001 /* MetricsCalculator.swift in Sources */,
+				A10001201B00000000000001 /* ContentView+Debug.swift in Sources */,
+				A10001221B00000000000001 /* DebugCameraView.swift in Sources */,
+				A10001241B00000000000001 /* DebugIntegrationGuide.swift in Sources */,
+				A10001261B00000000000001 /* DebugOverlayView.swift in Sources */,
+				A10001281B00000000000001 /* DebugSettings.swift in Sources */,
+				A1000112A1B00000000000001 /* LandmarksOverlayView.swift in Sources */,
+				A1000112C1B00000000000001 /* GroundTruthManager.swift in Sources */,
+				A1000112E1B00000000000001 /* OptimizationEngine.swift in Sources */,
+				A10001301B00000000000001 /* OptimizationRunner.swift in Sources */,
+				A10001341B00000000000001 /* ParameterTuningFramework.swift in Sources */,
+				A10001361B00000000000001 /* ParameterTuningUI.swift in Sources */,
+				A10001381B00000000000001 /* TuningIntegration.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10001541B00000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10001401B00000000000001 /* BobCamAgentTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10001551B00000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10001441B00000000000001 /* BobCamAgentUITestsLaunchTests.swift in Sources */,
+				A10001421B00000000000001 /* BobCamAgentUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A10001641B00000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10001001B00000000000001 /* BobCamAgent */;
+			targetProxy = A10001461B00000000000001 /* PBXContainerItemProxy */;
+		};
+		A10001681B00000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10001001B00000000000001 /* BobCamAgent */;
+			targetProxy = A10001491B00000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A1000116A1B00000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1000116B1B00000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A1000116C1B00000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38DE733FECFC024D9EDB1965 /* Pods-BobCamAgent.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DF494HR686;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = BobCamAgent/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "BobCam needs camera access to monitor eating behavior and control video playback automatically.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bobcam.ios.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1000116D1B00000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 330BED35A79161F74D36BFA1 /* Pods-BobCamAgent.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DF494HR686;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = BobCamAgent/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "BobCam needs camera access to monitor eating behavior and control video playbook automatically.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bobcam.ios.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A1000116E1B00000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 232D0D25C80E1E49B9D4C0B6 /* Pods-BobCamAgentTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bobcam.ios.app.BobCamAgentTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BobCamAgent.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BobCamAgent";
+			};
+			name = Debug;
+		};
+		A1000116F1B00000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 675E4C60E5423B680E5D2BEB /* Pods-BobCamAgentTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bobcam.ios.app.BobCamAgentTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BobCamAgent.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BobCamAgent";
+			};
+			name = Release;
+		};
+		A10001701B00000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28C7A1CC96EBBFA42693A22A /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bobcam.ios.app.BobCamAgentUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BobCamAgent;
+			};
+			name = Debug;
+		};
+		A10001711B00000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C7F19EF88C6A955F7A11A32 /* Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bobcam.ios.app.BobCamAgentUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BobCamAgent;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10001002B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000116C1B00000000000001 /* Debug */,
+				A1000116D1B00000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10001621B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgentTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000116E1B00000000000001 /* Debug */,
+				A1000116F1B00000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10001661B00000000000001 /* Build configuration list for PBXNativeTarget "BobCamAgentUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10001701B00000000000001 /* Debug */,
+				A10001711B00000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10001691B00000000000001 /* Build configuration list for PBXProject "BobCamAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000116A1B00000000000001 /* Debug */,
+				A1000116B1B00000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10001471B00000000000001 /* Project object */;
+}

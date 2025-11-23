@@ -1,0 +1,332 @@
+[
+  {
+    "id": "D097UR54ETY",
+    "name": "@cursor",
+    "topic": "",
+    "purpose": "DM with Cursor",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8V260J15",
+    "name": "@googledrive",
+    "topic": "",
+    "purpose": "DM with Google Drive",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8T94A26S",
+    "name": "@adalgu",
+    "topic": "",
+    "purpose": "DM with Kunwoo Kim",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8SGVKQN9",
+    "name": "@jaeyoi.dev",
+    "topic": "",
+    "purpose": "DM with 조재용",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D08KQMDUUMD",
+    "name": "@claude_mcp",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07J6UGT42W",
+    "name": "@assemblywatch3",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D06033AUQQP",
+    "name": "@2023auditmonitoring",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8RSN22MP",
+    "name": "@slackbot",
+    "topic": "",
+    "purpose": "DM with Slackbot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D090D3BG4G6",
+    "name": "@mynotibot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D08M859BETS",
+    "name": "@mcp_assistant",
+    "topic": "",
+    "purpose": "DM with MCP AGENT",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07JU2YRLHF",
+    "name": "@ai_shuttle_bot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D04M25GNUMR",
+    "name": "@notion_notifications",
+    "topic": "",
+    "purpose": "DM with Notion Notifications",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D02CA47FV7W",
+    "name": "@github2",
+    "topic": "",
+    "purpose": "DM with GitHub",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "DML263VSQ",
+    "name": "@myapp_bot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "DA8KJBZ6W",
+    "name": "@github",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D097UR54ETY",
+    "name": "@cursor",
+    "topic": "",
+    "purpose": "DM with Cursor",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "C8SGASR8D",
+    "name": "#general",
+    "topic": "Company-wide announcements and work-based matters",
+    "purpose": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
+    "memberCount": 2,
+    "mpim": false,
+    "im": false,
+    "private": false
+  },
+  {
+    "id": "D8V260J15",
+    "name": "@googledrive",
+    "topic": "",
+    "purpose": "DM with Google Drive",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8T94A26S",
+    "name": "@adalgu",
+    "topic": "",
+    "purpose": "DM with Kunwoo Kim",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8SGVKQN9",
+    "name": "@jaeyoi.dev",
+    "topic": "",
+    "purpose": "DM with 조재용",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D08KQMDUUMD",
+    "name": "@claude_mcp",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07J6UGT42W",
+    "name": "@assemblywatch3",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D06033AUQQP",
+    "name": "@2023auditmonitoring",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D8RSN22MP",
+    "name": "@slackbot",
+    "topic": "",
+    "purpose": "DM with Slackbot",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D090D3BG4G6",
+    "name": "@mynotibot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D08M859BETS",
+    "name": "@mcp_assistant",
+    "topic": "",
+    "purpose": "DM with MCP AGENT",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D07JU2YRLHF",
+    "name": "@ai_shuttle_bot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D04M25GNUMR",
+    "name": "@notion_notifications",
+    "topic": "",
+    "purpose": "DM with Notion Notifications",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "D02CA47FV7W",
+    "name": "@github2",
+    "topic": "",
+    "purpose": "DM with GitHub",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "DML263VSQ",
+    "name": "@myapp_bot",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "DA8KJBZ6W",
+    "name": "@github",
+    "topic": "",
+    "purpose": "DM with ",
+    "memberCount": 2,
+    "mpim": false,
+    "im": true,
+    "private": false
+  },
+  {
+    "id": "C8TE552TB",
+    "name": "#link",
+    "topic": "",
+    "purpose": "",
+    "memberCount": 2,
+    "mpim": false,
+    "im": false,
+    "private": false
+  },
+  {
+    "id": "C096Q6WKLLC",
+    "name": "#agent",
+    "topic": "",
+    "purpose": "",
+    "memberCount": 2,
+    "mpim": false,
+    "im": false,
+    "private": true
+  }
+]

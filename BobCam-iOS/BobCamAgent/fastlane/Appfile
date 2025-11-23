@@ -1,0 +1,27 @@
+# Appfile for BobCam iOS Project
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
+
+# App identifier
+app_identifier("com.bobcam.ios.app") # Bundle identifier
+
+# Apple ID (Developer Account)
+# apple_id("your-apple-id@example.com") # Uncomment and set your Apple ID
+
+# Team ID (Developer Team)
+# team_id("XXXXXXXXXX") # Uncomment and set your Team ID
+
+# iTunes Connect Team ID (if different)
+# itunes_connect_team_id("XXXXXXXXXX") # Uncomment if needed
+
+# For App Store Connect
+# team_name("Your Team Name") # Uncomment and set your team name
+
+# Workspace configuration (if using workspace instead of project)
+# workspace("BobCam.xcworkspace")
+
+# Project file (if not using workspace)
+# project("BobCamAgent/BobCamAgent.xcodeproj")
+
+# Note: These values should be configured based on your actual development setup
+# Replace placeholder values with your actual Apple Developer account information

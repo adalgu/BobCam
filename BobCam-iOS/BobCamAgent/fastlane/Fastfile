@@ -1,0 +1,358 @@
+# Fastfile for BobCam iOS Project
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+
+# Minimum fastlane version
+fastlane_version "2.200.0"
+
+# Default platform
+default_platform(:ios)
+
+# Variables
+PROJECT_NAME = "BobCamAgent"
+SCHEME_NAME = "BobCamAgent"
+PROJECT_PATH = "#{PROJECT_NAME}.xcodeproj"
+WORKSPACE_PATH = "#{PROJECT_NAME}.xcworkspace"
+BUNDLE_ID = "com.bobcam.ios.app"
+
+# iOS platform configuration
+platform :ios do
+  # Before all lanes
+  before_all do
+    # Ensure we're in the right directory
+    ensure_git_status_clean unless ENV["SKIP_GIT_CHECK"]
+    
+    # Setup code signing
+    setup_ci if ENV["CI"]
+  end
+
+  # MARK: - Build Lanes
+
+  desc "Build Debug version"
+  lane :build_debug do
+    build_app(
+      scheme: SCHEME_NAME,
+      project: project_exists? ? PROJECT_PATH : nil,
+      workspace: workspace_exists? ? WORKSPACE_PATH : nil,
+      configuration: "Debug",
+      skip_package_ipa: true,
+      skip_archive: true,
+      destination: "platform=iOS Simulator,name=iPhone 15 Pro,OS=latest",
+      clean: true
+    )
+    
+    UI.success("✅ Debug build completed successfully!")
+  end
+
+  desc "Build Release version"
+  lane :build_release do
+    build_app(
+      scheme: SCHEME_NAME,
+      project: project_exists? ? PROJECT_PATH : nil,
+      workspace: workspace_exists? ? WORKSPACE_PATH : nil,
+      configuration: "Release",
+      skip_package_ipa: true,
+      skip_archive: true,
+      destination: "platform=iOS Simulator,name=iPhone 15 Pro,OS=latest",
+      clean: true
+    )
+    
+    UI.success("✅ Release build completed successfully!")
+  end
+
+  desc "Archive and create IPA"
+  lane :archive do
+    # Increment build number
+    increment_build_number(
+      xcodeproj: project_exists? ? PROJECT_PATH : nil
+    )
+
+    # Build and archive
+    build_app(
+      scheme: SCHEME_NAME,
+      project: project_exists? ? PROJECT_PATH : nil,
+      workspace: workspace_exists? ? WORKSPACE_PATH : nil,
+      configuration: "Release",
+      clean: true,
+      output_directory: "./fastlane/builds",
+      output_name: "BobCam-#{get_version_number}-#{get_build_number}.ipa"
+    )
+    
+    UI.success("✅ Archive and IPA creation completed!")
+  end
+
+  # MARK: - Test Lanes
+
+  desc "Run all tests"
+  lane :test do
+    run_tests(
+      scheme: SCHEME_NAME,
+      project: project_exists? ? PROJECT_PATH : nil,
+      workspace: workspace_exists? ? WORKSPACE_PATH : nil,
+      devices: ["iPhone 15 Pro"],
+      clean: true,
+      code_coverage: true,
+      output_directory: "./fastlane/test_output",
+      output_types: "html,junit",
+      buildlog_path: "./fastlane/logs"
+    )
+    
+    UI.success("✅ All tests passed!")
+  end
+
+  desc "Run unit tests only"
+  lane :test_unit do
+    run_tests(
+      scheme: SCHEME_NAME,
+      project: project_exists? ? PROJECT_PATH : nil,
+      workspace: workspace_exists? ? WORKSPACE_PATH : nil,
+      devices: ["iPhone 15 Pro"],
+      clean: true,
+      code_coverage: true,
+      skip_testing: ["#{SCHEME_NAME}UITests"],
+      output_directory: "./fastlane/test_output",
+      output_types: "html,junit"
+    )
+    
+    UI.success("✅ Unit tests completed!")
+  end
+
+  desc "Run UI tests only"
+  lane :test_ui do
+    run_tests(
+      scheme: SCHEME_NAME,
+      project: project_exists? ? PROJECT_PATH : nil,
+      workspace: workspace_exists? ? WORKSPACE_PATH : nil,
+      devices: ["iPhone 15 Pro"],
+      clean: true,
+      only_testing: ["#{SCHEME_NAME}UITests"],
+      output_directory: "./fastlane/test_output",
+      output_types: "html,junit"
+    )
+    
+    UI.success("✅ UI tests completed!")
+  end
+
+  # MARK: - Quality Assurance Lanes
+
+  desc "Run SwiftLint for code quality"
+  lane :lint do
+    swiftlint(
+      mode: :lint,
+      executable: "Pods/SwiftLint/swiftlint", # If using CocoaPods
+      config_file: ".swiftlint.yml",
+      raise_if_swiftlint_error: true,
+      ignore_exit_status: false
+    )
+    
+    UI.success("✅ SwiftLint analysis completed!")
+  end
+
+  desc "Auto-fix SwiftLint violations"
+  lane :lint_fix do
+    swiftlint(
+      mode: :fix,
+      executable: "Pods/SwiftLint/swiftlint",
+      config_file: ".swiftlint.yml"
+    )
+    
+    UI.success("✅ SwiftLint auto-fix completed!")
+  end
+
+  desc "Generate code coverage report"
+  lane :coverage do
+    # Run tests with coverage
+    test
+    
+    # Generate coverage report (if using slather)
+    # slather(
+    #   cobertura_xml: true,
+    #   jenkins: true,
+    #   html: true,
+    #   scheme: SCHEME_NAME,
+    #   proj: PROJECT_PATH,
+    #   output_directory: "./fastlane/coverage"
+    # )
+    
+    UI.success("✅ Code coverage report generated!")
+  end
+
+  # MARK: - CI/CD Lanes
+
+  desc "Complete CI pipeline - Build, Test, and Quality checks"
+  lane :ci do
+    UI.header("🚀 Starting BobCam CI Pipeline")
+    
+    # Code quality check
+    lint
+    
+    # Build for testing
+    build_debug
+    
+    # Run all tests
+    test
+    
+    # Generate coverage
+    coverage
+    
+    # Build release version
+    build_release
+    
+    UI.success("✅ CI Pipeline completed successfully!")
+  end
+
+  desc "Continuous Deployment - Archive and prepare for distribution"
+  lane :cd do
+    UI.header("📦 Starting BobCam CD Pipeline")
+    
+    # Ensure everything is ready
+    ensure_git_status_clean
+    
+    # Run CI first
+    ci
+    
+    # Create archive
+    archive
+    
+    UI.success("✅ CD Pipeline completed - Ready for distribution!")
+  end
+
+  # MARK: - App Store Lanes
+
+  desc "Upload to TestFlight"
+  lane :beta do
+    UI.header("🧪 Deploying to TestFlight")
+    
+    # Build and archive
+    archive
+    
+    # Upload to TestFlight
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      distribute_external: false,
+      notify_external_testers: false,
+      changelog: "Latest beta build from CI/CD pipeline"
+    )
+    
+    UI.success("✅ Successfully uploaded to TestFlight!")
+  end
+
+  desc "Release to App Store"
+  lane :release do
+    UI.header("🚀 Releasing to App Store")
+    
+    # Ensure we're on main branch
+    ensure_git_branch(branch: "main")
+    
+    # Build and archive
+    archive
+    
+    # Upload to App Store
+    upload_to_app_store(
+      force: false,
+      reject_if_possible: true,
+      skip_metadata: false,
+      skip_screenshots: false,
+      submit_for_review: false
+    )
+    
+    # Tag the release
+    add_git_tag(
+      tag: get_version_number
+    )
+    
+    UI.success("✅ Successfully released to App Store!")
+  end
+
+  # MARK: - Utility Lanes
+
+  desc "Setup development environment"
+  lane :setup do
+    UI.header("⚙️ Setting up BobCam development environment")
+    
+    # Create necessary directories
+    sh("mkdir -p ../fastlane/builds")
+    sh("mkdir -p ../fastlane/test_output")
+    sh("mkdir -p ../fastlane/logs")
+    sh("mkdir -p ../fastlane/coverage")
+    
+    # Install CocoaPods if Podfile exists and Xcode is available
+    if File.exist?("../Podfile") && system("which xcodebuild > /dev/null 2>&1")
+      cocoapods(
+        clean_install: true,
+        repo_update: true
+      )
+    else
+      UI.message("⏭️  Skipping CocoaPods installation (Xcode not available or Podfile not found)")
+    end
+    
+    UI.success("✅ Development environment setup completed!")
+  end
+
+  desc "Clean build artifacts"
+  lane :clean do
+    UI.header("🧹 Cleaning build artifacts")
+    
+    # Clean derived data
+    clear_derived_data
+    
+    # Clean build folders
+    sh("rm -rf ../fastlane/builds/*") if Dir.exist?("../fastlane/builds")
+    sh("rm -rf ../fastlane/test_output/*") if Dir.exist?("../fastlane/test_output")
+    sh("rm -rf ../fastlane/logs/*") if Dir.exist?("../fastlane/logs")
+    
+    UI.success("✅ Clean completed!")
+  end
+
+  # MARK: - Helper Methods
+
+  def project_exists?
+    File.exist?(PROJECT_PATH)
+  end
+
+  def workspace_exists?
+    File.exist?(WORKSPACE_PATH)
+  end
+
+  # Error handling
+  error do |lane, exception|
+    UI.error("❌ Lane '#{lane}' failed with exception: #{exception}")
+    
+    # Notify about failure (can be extended with Slack, Discord, etc.)
+    # slack(
+    #   message: "BobCam iOS build failed in lane: #{lane}",
+    #   success: false
+    # )
+  end
+
+  # After all lanes
+  after_all do |lane|
+    UI.success("🎉 Lane '#{lane}' completed successfully!")
+    
+    # Notify about success (can be extended with Slack, Discord, etc.)
+    # slack(
+    #   message: "BobCam iOS build succeeded in lane: #{lane}",
+    #   success: true
+    # )
+  end
+end
+
+# MARK: - Global Helper Functions
+
+def get_version_number
+  get_version_number(
+    xcodeproj: project_exists? ? PROJECT_PATH : nil,
+    target: PROJECT_NAME
+  )
+rescue
+  "1.0.0"
+end
+
+def get_build_number
+  get_build_number(
+    xcodeproj: project_exists? ? PROJECT_PATH : nil
+  )
+rescue
+  "1"
+end

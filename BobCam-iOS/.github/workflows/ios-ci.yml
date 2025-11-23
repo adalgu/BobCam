@@ -1,0 +1,212 @@
+name: iOS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, "feature/*" ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_15.2.app/Contents/Developer
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-14
+    
+    strategy:
+      matrix:
+        destination: ['platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2']
+        
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        working-directory: BobCam-iOS
+        
+    - name: Cache Bundle dependencies
+      uses: actions/cache@v4
+      with:
+        path: BobCam-iOS/vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+          
+    - name: Install dependencies
+      working-directory: BobCam-iOS
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+        
+    - name: Install fastlane
+      working-directory: BobCam-iOS
+      run: |
+        bundle exec fastlane --version
+        
+    - name: Cache CocoaPods
+      uses: actions/cache@v4
+      with:
+        path: BobCam-iOS/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+          
+    - name: Setup development environment
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane setup
+      
+    - name: Run SwiftLint
+      working-directory: BobCam-iOS
+      run: |
+        if command -v swiftlint &> /dev/null; then
+          bundle exec fastlane lint
+        else
+          echo "SwiftLint not installed, skipping lint check"
+        fi
+        
+    - name: Build Debug
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane build_debug
+      
+    - name: Run Tests
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane test
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: BobCam-iOS/fastlane/test_output/
+        
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-reports
+        path: BobCam-iOS/fastlane/coverage/
+        
+    - name: Build Release
+      if: github.ref == 'refs/heads/main'
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane build_release
+
+  archive:
+    name: Archive and Package
+    runs-on: macos-14
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        working-directory: BobCam-iOS
+        
+    - name: Install dependencies
+      working-directory: BobCam-iOS
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+        
+    - name: Setup development environment
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane setup
+      
+    - name: Create Archive
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane archive
+      env:
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+        
+    - name: Upload IPA artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: BobCam-IPA
+        path: BobCam-iOS/fastlane/builds/*.ipa
+        retention-days: 30
+
+  testflight:
+    name: Deploy to TestFlight
+    runs-on: macos-14
+    needs: archive
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: testflight
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        working-directory: BobCam-iOS
+        
+    - name: Install dependencies
+      working-directory: BobCam-iOS
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+        
+    - name: Deploy to TestFlight
+      working-directory: BobCam-iOS
+      run: bundle exec fastlane beta
+      env:
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+
+  quality-gate:
+    name: Quality Gate
+    runs-on: macos-14
+    needs: build-and-test
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        working-directory: BobCam-iOS
+        
+    - name: Install dependencies
+      working-directory: BobCam-iOS
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+        
+    - name: Run Quality Checks
+      working-directory: BobCam-iOS
+      run: |
+        bundle exec fastlane ci
+        
+    - name: Comment PR with results
+      uses: actions/github-script@v7
+      if: github.event_name == 'pull_request'
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '✅ Quality Gate passed! All tests and quality checks completed successfully.'
+          })

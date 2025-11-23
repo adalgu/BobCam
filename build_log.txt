@@ -1,0 +1,103 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace BobCamAgent.xcworkspace -scheme BobCamAgent -sdk iphonesimulator -configuration Debug build
+
+Build settings from command line:
+    SDKROOT = iphonesimulator18.5
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'BobCamAgent' in project 'BobCamAgent'
+        ➜ Implicit dependency on target 'Pods-BobCamAgent' in project 'Pods' via file 'Pods_BobCamAgent.framework' in build phase 'Link Binary'
+    Target 'Pods-BobCamAgent' in project 'Pods'
+        ➜ Explicit dependency on target 'SwiftLint' in project 'Pods'
+    Target 'SwiftLint' in project 'Pods' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -V
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 52b2b6be15283302356119bed88b00c1
+Build description path: /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Intermediates.noindex/XCBuildData/52b2b6be15283302356119bed88b00c1.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/macmini/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+
+ProcessInfoPlistFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Info.plist /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist (in target 'Pods-BobCamAgent' from project 'Pods')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/Pods
+    builtin-infoPlistUtility /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/Pods/Target\ Support\ Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist -producttype com.apple.product-type.framework -expandbuildsettings -format binary -platform iphonesimulator -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework/Info.plist
+
+CopyStringsFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/en.lproj/Localizable.strings /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/en.lproj/Localizable.strings (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/en.lproj -- /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/en.lproj/Localizable.strings
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'BobCamAgent' from project 'BobCamAgent')
+
+CopyStringsFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/ko.lproj/Localizable.strings /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ko.lproj/Localizable.strings (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/ko.lproj -- /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ko.lproj/Localizable.strings
+/Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/ko.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'BobCamAgent' from project 'BobCamAgent')
+
+ProcessInfoPlistFile /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Info.plist /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-infoPlistUtility /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Info.plist
+
+CopySwiftLibs /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/BobCamAgent.debug.dylib --scan-folder /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Frameworks --scan-folder /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/PlugIns --scan-folder /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/SystemExtensions --scan-folder /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Extensions --scan-folder /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/Pods_BobCamAgent.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Intermediates.noindex/BobCamAgent.build/Debug-iphonesimulator/BobCamAgent.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/BobCamAgent.debug.dylib (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/BobCamAgent.debug.dylib
+/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/BobCamAgent.debug.dylib: replacing existing signature
+
+CodeSign /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/__preview.dylib (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/__preview.dylib
+/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app/__preview.dylib: replacing existing signature
+
+CodeSign /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app
+/Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app: replacing existing signature
+
+Validate /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app (in target 'BobCamAgent' from project 'BobCamAgent')
+    cd /Users/macmini/study/BobCam/BobCam-iOS/BobCamAgent
+    builtin-validationUtility /Users/macmini/Library/Developer/Xcode/DerivedData/BobCamAgent-cbzkagmydtzhirefewumbbwproml/Build/Products/Debug-iphonesimulator/BobCamAgent.app -infoplist-subpath Info.plist
+
+** BUILD SUCCEEDED **
+
