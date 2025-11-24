@@ -1,5 +1,8 @@
 # Environment variables
 .env
+.env.local
+.env.development
+.env.production
 
 # Python-generated files
 __pycache__/
@@ -17,6 +20,82 @@ wheels/
 
 # Editor directories
 .vscode/
+.idea/
 
 # Media files
 *.mp4
+
+# Xcode
+## User settings
+xcuserdata/
+
+## compatibility with Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+## compatibility with Xcode 3 and earlier
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.build/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Accio dependency management
+Dependencies/
+.accio/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+fastlane/builds
+fastlane/logs
+fastlane/coverage
+
+# Code Injection
+iOSInjectionProject/
+
+# Bundle dependencies
+vendor/bundle
+
+# Ruby
+Gemfile.lock
+
+# Temporary files
+*.tmp
+*.temp
+
+# Cache files
+.channels_cache.json
+.users_cache.json
+
+# Build & validation reports
+build_verification.txt
+validation-report.md
