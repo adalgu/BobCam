@@ -95,3 +95,7 @@ Gemfile.lock
 # Cache files
 .channels_cache.json
 .users_cache.json
+
+# Build & validation reports
+build_verification.txt
+validation-report.md
