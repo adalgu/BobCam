@@ -23,7 +23,7 @@ BobCam은 '밥(Bob)'을 먹는지를 모니터링하는 카메라(Cam)의 약자
 - **Status**: ✅ **READY FOR APP STORE SUBMISSION**
 - **Platform**: iOS 15.0+, SwiftUI + Vision Framework
 - **Accuracy**: 70%+ lip detection with systematic parameter optimization
-- **Location**: `BobCam-iOS/` directory
+- **Location**: Root directory (`BobCamAgent.xcodeproj`, `BobCamAgent/`)
 
 #### **Key Features**:
 - **Advanced Lip Detection**: Vision Framework with EMA smoothing and CircularBuffer optimization
@@ -37,7 +37,7 @@ BobCam은 '밥(Bob)'을 먹는지를 모니터링하는 카메라(Cam)의 약자
 - **Status**: ✅ Complete prototype implementation
 - **Platform**: Python 3 + OpenCV + MediaPipe + Tkinter
 - **Purpose**: Algorithm development and proof of concept
-- **Location**: `main_stable.py`, `src/` directory
+- **Location**: `backend/` directory (`backend/main_stable.py`, `backend/main.py`)
 
 ---
 
@@ -106,9 +106,11 @@ BobCam은 '밥(Bob)'을 먹는지를 모니터링하는 카메라(Cam)의 약자
 
 2. **Build and Run**:
    ```bash
-   cd BobCam-iOS
-   open BobCamAgent/BobCamAgent.xcodeproj
-   # Build and run in Xcode
+   # Open the Xcode workspace (recommended for CocoaPods)
+   open BobCamAgent.xcworkspace
+   # Or open the project directly
+   open BobCamAgent.xcodeproj
+   # Build and run in Xcode (Cmd+R)
    ```
 
 3. **Features Setup**:
@@ -131,7 +133,10 @@ BobCam은 '밥(Bob)'을 먹는지를 모니터링하는 카메라(Cam)의 약자
 
 3. **Run Application**:
    ```bash
+   cd backend
    python main_stable.py
+   # or
+   python main.py  # Latest integrated version
    ```
 
 ## 📊 **Development Progress**

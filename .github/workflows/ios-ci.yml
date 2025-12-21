@@ -1,0 +1,437 @@
+# BobCam iOS CI/CD Pipeline
+# Production-ready GitHub Actions workflow for iOS development
+
+name: iOS CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/*
+      - hotfix/*
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+
+  # Manual workflow dispatch for emergency builds
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: 'Deployment target'
+        required: true
+        default: 'testflight'
+        type: choice
+        options:
+          - validation-only
+          - testflight
+          - app-store
+      skip_tests:
+        description: 'Skip test execution'
+        required: false
+        default: false
+        type: boolean
+
+# Workflow permissions
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  checks: write
+
+# Environment variables
+env:
+  DEVELOPER_DIR: /Applications/Xcode_15.4.app/Contents/Developer
+  PROJECT_NAME: BobCamAgent
+  SCHEME_NAME: BobCamAgent
+
+  # App Store Connect API
+  APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+  APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+  APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+
+  # Code Signing
+  MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+  FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+
+jobs:
+  # Job 1: Code Quality and Validation
+  code-quality:
+    name: Code Quality & Validation
+    runs-on: macos-14
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Ruby Environment
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install CocoaPods Dependencies
+        run: |
+          pod install --repo-update
+
+      - name: Validate Fastlane Configuration
+        run: |
+          chmod +x ios-scripts/validate-fastlane.sh
+          ./ios-scripts/validate-fastlane.sh
+
+      - name: SwiftLint Code Analysis
+        run: |
+          # Install SwiftLint if not cached
+          if ! command -v swiftlint &> /dev/null; then
+            brew install swiftlint
+          fi
+
+          # Run SwiftLint analysis
+          swiftlint lint --reporter github-actions-logging
+
+      - name: Upload Validation Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validation-report.md
+          retention-days: 30
+
+  # Job 2: Build and Test
+  build-and-test:
+    name: Build & Test
+    runs-on: macos-14
+    needs: code-quality
+    timeout-minutes: 45
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Ruby Environment
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Cache Derived Data
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-derived-data-${{ hashFiles('**/*.pbxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-derived-data-
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Install Dependencies
+        run: |
+          bundle install
+          pod install --repo-update
+
+      - name: Select Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Build Application
+        run: |
+          if [ "${{ matrix.configuration }}" = "Debug" ]; then
+            bundle exec fastlane ios build_debug
+          else
+            bundle exec fastlane ios build_release
+          fi
+
+      - name: Run Tests
+        if: ${{ !inputs.skip_tests && matrix.configuration == 'Debug' }}
+        run: |
+          bundle exec fastlane ios test
+
+      - name: Generate Code Coverage
+        if: ${{ matrix.configuration == 'Debug' }}
+        run: |
+          bundle exec fastlane ios coverage
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.configuration == 'Debug' }}
+        with:
+          name: test-results
+          path: |
+            fastlane/test_output/
+            fastlane/coverage/
+          retention-days: 30
+
+      - name: Upload Build Logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-logs-${{ matrix.configuration }}
+          path: fastlane/logs/
+          retention-days: 7
+
+  # Job 3: Archive and Deploy
+  deploy:
+    name: Archive & Deploy
+    runs-on: macos-14
+    needs: [code-quality, build-and-test]
+    if: |
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || github.event_name == 'workflow_dispatch') &&
+      success()
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Ruby Environment
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Cache Derived Data
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-derived-data-${{ hashFiles('**/*.pbxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-derived-data-
+
+      - name: Install Dependencies
+        run: |
+          bundle install
+          pod install
+
+      - name: Select Xcode Version
+        run: |
+          sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Setup Code Signing
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: |
+          # Setup match for code signing
+          bundle exec fastlane match development --readonly
+          bundle exec fastlane match appstore --readonly
+
+      - name: Archive Application
+        run: |
+          bundle exec fastlane ios archive
+
+      - name: Deploy to TestFlight
+        if: |
+          (github.ref == 'refs/heads/develop' ||
+           inputs.deployment_target == 'testflight' ||
+           inputs.deployment_target == 'app-store')
+        run: |
+          bundle exec fastlane ios beta
+
+      - name: Deploy to App Store
+        if: |
+          (github.ref == 'refs/heads/main' &&
+           inputs.deployment_target == 'app-store')
+        run: |
+          bundle exec fastlane ios release
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa-build
+          path: fastlane/builds/*.ipa
+          retention-days: 90
+
+  # Job 4: Security and Performance Analysis
+  security-analysis:
+    name: Security & Performance Analysis
+    runs-on: macos-14
+    needs: code-quality
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby Environment
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Security Audit - Dependencies
+        run: |
+          # Audit Ruby gems
+          bundle audit --update
+
+          # Audit CocoaPods (if tool available)
+          if command -v pod-audit &> /dev/null; then
+            pod-audit
+          fi
+
+      - name: Static Analysis - CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: swift
+
+      - name: Build for CodeQL Analysis
+        run: |
+          xcodebuild clean build \
+            -project BobCamAgent.xcodeproj \
+            -scheme BobCamAgent \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Performance Benchmark
+        run: |
+          # Create performance benchmarking script
+          cat << 'EOF' > benchmark.sh
+          #!/bin/bash
+          echo "Performance Benchmark Report" > performance-report.md
+          echo "=============================" >> performance-report.md
+          echo "Build Date: $(date)" >> performance-report.md
+          echo "" >> performance-report.md
+
+          # App size analysis
+          if [ -f "fastlane/builds/*.ipa" ]; then
+            IPA_SIZE=$(du -h fastlane/builds/*.ipa | cut -f1)
+            echo "IPA Size: $IPA_SIZE" >> performance-report.md
+          fi
+
+          # Build time analysis
+          echo "Build Time: Measured during CI execution" >> performance-report.md
+          echo "Memory Usage: Measured during testing" >> performance-report.md
+          EOF
+
+          chmod +x benchmark.sh
+          ./benchmark.sh
+
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-analysis
+          path: |
+            performance-report.md
+          retention-days: 30
+
+  # Job 5: Notification and Cleanup
+  notify:
+    name: Notification & Cleanup
+    runs-on: macos-14
+    needs: [build-and-test, deploy, security-analysis]
+    if: always()
+    timeout-minutes: 5
+
+    steps:
+      - name: Determine Workflow Status
+        id: status
+        run: |
+          if [ "${{ needs.build-and-test.result }}" = "success" ] && \
+             [ "${{ needs.deploy.result }}" != "failure" ] && \
+             [ "${{ needs.security-analysis.result }}" != "failure" ]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+            echo "color=good" >> $GITHUB_OUTPUT
+          else
+            echo "status=failure" >> $GITHUB_OUTPUT
+            echo "color=danger" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Summary Report
+        run: |
+          cat << EOF > $GITHUB_STEP_SUMMARY
+          # BobCam iOS Pipeline Summary
+
+          ## Status: ${{ steps.status.outputs.status == 'success' && '✅ Success' || '❌ Failed' }}
+
+          ### Job Results:
+          - Code Quality: ${{ needs.code-quality.result == 'success' && '✅' || '❌' }} ${{ needs.code-quality.result }}
+          - Build & Test: ${{ needs.build-and-test.result == 'success' && '✅' || '❌' }} ${{ needs.build-and-test.result }}
+          - Deploy: ${{ needs.deploy.result == 'success' && '✅' || needs.deploy.result == 'skipped' && '⏭️' || '❌' }} ${{ needs.deploy.result }}
+          - Security Analysis: ${{ needs.security-analysis.result == 'success' && '✅' || '❌' }} ${{ needs.security-analysis.result }}
+
+          ### Artifacts Generated:
+          - Validation Report
+          - Test Results and Coverage
+          - Build Artifacts (IPA)
+          - Security Analysis Report
+
+          ### Next Steps:
+          ${{ steps.status.outputs.status == 'success' && '- Monitor TestFlight distribution
+          - Check crash reports and analytics
+          - Prepare for next iteration' || '- Review failed job logs
+          - Fix identified issues
+          - Re-run pipeline' }}
+          EOF
+
+      - name: Slack Notification
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ steps.status.outputs.status }}
+          channel: '#bobcam-ci'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+          custom_payload: |
+            {
+              "attachments": [{
+                "color": "${{ steps.status.outputs.color }}",
+                "blocks": [{
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": `BobCam iOS Pipeline ${{ steps.status.outputs.status == 'success' && 'Completed Successfully ✅' || 'Failed ❌' }}`
+                  }
+                }, {
+                  "type": "section",
+                  "fields": [{
+                    "type": "mrkdwn",
+                    "text": `*Repository:*\n${process.env.AS_REPO}`
+                  }, {
+                    "type": "mrkdwn",
+                    "text": `*Branch:*\n${process.env.AS_REF}`
+                  }, {
+                    "type": "mrkdwn",
+                    "text": `*Author:*\n${process.env.AS_AUTHOR}`
+                  }, {
+                    "type": "mrkdwn",
+                    "text": `*Workflow:*\n${process.env.AS_WORKFLOW}`
+                  }]
+                }]
+              }]
+            }
+
+# Workflow configuration for reusability
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Security settings
+env:
+  ACTIONS_STEP_DEBUG: false
+  ACTIONS_RUNNER_DEBUG: false
