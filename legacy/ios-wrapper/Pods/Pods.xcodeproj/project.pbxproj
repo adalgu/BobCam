@@ -1,0 +1,950 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		3C675F9D58FF43666B42820A9AABD4CF /* Pods-BobCamAgent-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0083FC5FEB19A953B03BB4FEE5CBB665 /* Pods-BobCamAgent-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58AE3B31DBFB382EC11C359CF51B1444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		8A2B1E8DE0F4CBCC68666DE6D3F5C1AB /* Pods-BobCamAgentTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B3A2CADD35906D60343E58BEEA1863F /* Pods-BobCamAgentTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9F5B97D18232DA583FE1044B83D8A2C8 /* Pods-BobCamAgent-BobCamAgentUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 60F3BC1FD25315C30B160A8453AEDF17 /* Pods-BobCamAgent-BobCamAgentUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A8EAB7031E73AA7D04E4DC594642C866 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		D5C8110035D90E7AE3681EBB415599F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		DB90C75D77B192E55CC5959B049D8C23 /* Pods-BobCamAgentTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 90784BF711B81C8A89E32C7B4EE0E072 /* Pods-BobCamAgentTests-dummy.m */; };
+		ECF0750FCE15E5ED9A9793F78C40C5A0 /* Pods-BobCamAgent-BobCamAgentUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3EF051700008DD231FFAE0E3A2EF87 /* Pods-BobCamAgent-BobCamAgentUITests-dummy.m */; };
+		F08F90DB21B582040AE54CB4571D4929 /* Pods-BobCamAgent-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C075C5D38DE0EAE994C3E3F34E725E /* Pods-BobCamAgent-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		00FF874997FAC662F710B7138B155D67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
+			remoteInfo = SwiftLint;
+		};
+		0880A775D409B9577504293F5673F536 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
+			remoteInfo = SwiftLint;
+		};
+		5D1B4A73F83669BFB6678863602AC314 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E75593E58C9EAD8D5655557DAF797BA;
+			remoteInfo = "Pods-BobCamAgent";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0083FC5FEB19A953B03BB4FEE5CBB665 /* Pods-BobCamAgent-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BobCamAgent-umbrella.h"; sourceTree = "<group>"; };
+		06751909041B2BD493313D509B0075E8 /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		068727714BE33E038C6C55C89D09EA0E /* Pods-BobCamAgent.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BobCamAgent.modulemap"; sourceTree = "<group>"; };
+		162A67653BAAFAFE789E981D4DF3AAA5 /* Pods-BobCamAgent-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BobCamAgent-Info.plist"; sourceTree = "<group>"; };
+		1B3A2CADD35906D60343E58BEEA1863F /* Pods-BobCamAgentTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BobCamAgentTests-umbrella.h"; sourceTree = "<group>"; };
+		1CB01CF51DCAE67F67A71DFD62C3703E /* Pods-BobCamAgentTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BobCamAgentTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
+		48F8FCD73559F4CF34EB925216AD8071 /* Pods-BobCamAgent-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BobCamAgent-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4B2A0DBB35374E1F37DCA1707E2ECCB0 /* Pods-BobCamAgentTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BobCamAgentTests.modulemap"; sourceTree = "<group>"; };
+		59FEAF0A563CBDA591B8C82BF4E71CA0 /* Pods-BobCamAgentTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BobCamAgentTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		5A35DC4B093CE6801C0531DF95B1CBAD /* Pods-BobCamAgentTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-BobCamAgentTests"; path = Pods_BobCamAgentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA1BE122210945F46D077E0E67E1B47 /* Pods-BobCamAgent-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BobCamAgent-acknowledgements.plist"; sourceTree = "<group>"; };
+		60F3BC1FD25315C30B160A8453AEDF17 /* Pods-BobCamAgent-BobCamAgentUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BobCamAgent-BobCamAgentUITests-umbrella.h"; sourceTree = "<group>"; };
+		6FA64BADBBB4D7039B67A3506785224D /* Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig"; sourceTree = "<group>"; };
+		775D38967DD72412D873C58432D663A8 /* Pods-BobCamAgent-BobCamAgentUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BobCamAgent-BobCamAgentUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		7B38728EDA00D3471072070988BD5F8A /* Pods-BobCamAgent-BobCamAgentUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BobCamAgent-BobCamAgentUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
+		8CA595DE6162908D628E6EF48D71BC93 /* Pods-BobCamAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BobCamAgent.release.xcconfig"; sourceTree = "<group>"; };
+		90784BF711B81C8A89E32C7B4EE0E072 /* Pods-BobCamAgentTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BobCamAgentTests-dummy.m"; sourceTree = "<group>"; };
+		9D2EA8F04CE73DEDCB31A44153DB9305 /* Pods-BobCamAgent-BobCamAgentUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BobCamAgent-BobCamAgentUITests.modulemap"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A16106BF5A79B2EE2ACC10013FCBAA32 /* Pods-BobCamAgent-BobCamAgentUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-BobCamAgent-BobCamAgentUITests"; path = Pods_BobCamAgent_BobCamAgentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0DD548B76E89BD4BC14421B20360FA1 /* Pods-BobCamAgent */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-BobCamAgent"; path = Pods_BobCamAgent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B83B8DBD1B7D12E2B15F5A4C68C9B718 /* Pods-BobCamAgentTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BobCamAgentTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BF3152AAA9BFCF00E1429784F43ADE46 /* Pods-BobCamAgentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BobCamAgentTests.release.xcconfig"; sourceTree = "<group>"; };
+		C048AB1758E332866B7C21AD3AD78825 /* Pods-BobCamAgentTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BobCamAgentTests-Info.plist"; sourceTree = "<group>"; };
+		CC3EF051700008DD231FFAE0E3A2EF87 /* Pods-BobCamAgent-BobCamAgentUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BobCamAgent-BobCamAgentUITests-dummy.m"; sourceTree = "<group>"; };
+		E4C075C5D38DE0EAE994C3E3F34E725E /* Pods-BobCamAgent-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BobCamAgent-dummy.m"; sourceTree = "<group>"; };
+		E6D9C4DB4E74DF354197FBAA2A3003A0 /* Pods-BobCamAgent-BobCamAgentUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BobCamAgent-BobCamAgentUITests-Info.plist"; sourceTree = "<group>"; };
+		F39535DE95B05F47D210C6F72D4A1FB8 /* Pods-BobCamAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BobCamAgent.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2CEA5D9D8D75D2EA5B2F25A3737B366E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8EAB7031E73AA7D04E4DC594642C866 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A0A5782D47E2BFA3237C2E9BB39B694 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5C8110035D90E7AE3681EBB415599F9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C493C462EB6E59A15787CFFB451CEFF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58AE3B31DBFB382EC11C359CF51B1444 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4B7C0528F14A92F64297B5E31B2BE392 /* Pods-BobCamAgentTests */ = {
+			isa = PBXGroup;
+			children = (
+				4B2A0DBB35374E1F37DCA1707E2ECCB0 /* Pods-BobCamAgentTests.modulemap */,
+				1CB01CF51DCAE67F67A71DFD62C3703E /* Pods-BobCamAgentTests-acknowledgements.markdown */,
+				59FEAF0A563CBDA591B8C82BF4E71CA0 /* Pods-BobCamAgentTests-acknowledgements.plist */,
+				90784BF711B81C8A89E32C7B4EE0E072 /* Pods-BobCamAgentTests-dummy.m */,
+				C048AB1758E332866B7C21AD3AD78825 /* Pods-BobCamAgentTests-Info.plist */,
+				1B3A2CADD35906D60343E58BEEA1863F /* Pods-BobCamAgentTests-umbrella.h */,
+				B83B8DBD1B7D12E2B15F5A4C68C9B718 /* Pods-BobCamAgentTests.debug.xcconfig */,
+				BF3152AAA9BFCF00E1429784F43ADE46 /* Pods-BobCamAgentTests.release.xcconfig */,
+			);
+			name = "Pods-BobCamAgentTests";
+			path = "Target Support Files/Pods-BobCamAgentTests";
+			sourceTree = "<group>";
+		};
+		530F1A40391B6D67DA84B4E819641156 /* Pods-BobCamAgent-BobCamAgentUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9D2EA8F04CE73DEDCB31A44153DB9305 /* Pods-BobCamAgent-BobCamAgentUITests.modulemap */,
+				7B38728EDA00D3471072070988BD5F8A /* Pods-BobCamAgent-BobCamAgentUITests-acknowledgements.markdown */,
+				775D38967DD72412D873C58432D663A8 /* Pods-BobCamAgent-BobCamAgentUITests-acknowledgements.plist */,
+				CC3EF051700008DD231FFAE0E3A2EF87 /* Pods-BobCamAgent-BobCamAgentUITests-dummy.m */,
+				E6D9C4DB4E74DF354197FBAA2A3003A0 /* Pods-BobCamAgent-BobCamAgentUITests-Info.plist */,
+				60F3BC1FD25315C30B160A8453AEDF17 /* Pods-BobCamAgent-BobCamAgentUITests-umbrella.h */,
+				06751909041B2BD493313D509B0075E8 /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */,
+				6FA64BADBBB4D7039B67A3506785224D /* Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig */,
+			);
+			name = "Pods-BobCamAgent-BobCamAgentUITests";
+			path = "Target Support Files/Pods-BobCamAgent-BobCamAgentUITests";
+			sourceTree = "<group>";
+		};
+		7C219CBA203926AEE399C414C909C092 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C3F0043902F0A9733103ECA4FF152632 /* Pods-BobCamAgent */,
+				530F1A40391B6D67DA84B4E819641156 /* Pods-BobCamAgent-BobCamAgentUITests */,
+				4B7C0528F14A92F64297B5E31B2BE392 /* Pods-BobCamAgentTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */,
+				7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftLint";
+			sourceTree = "<group>";
+		};
+		965877409E01FB3D85D85E90E6B30185 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D96179D43A67C5D5323B0682D32C133C /* SwiftLint */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9AABF76581C0E9C45BFADA0635AFEF2C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B0DD548B76E89BD4BC14421B20360FA1 /* Pods-BobCamAgent */,
+				A16106BF5A79B2EE2ACC10013FCBAA32 /* Pods-BobCamAgent-BobCamAgentUITests */,
+				5A35DC4B093CE6801C0531DF95B1CBAD /* Pods-BobCamAgentTests */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3F0043902F0A9733103ECA4FF152632 /* Pods-BobCamAgent */ = {
+			isa = PBXGroup;
+			children = (
+				068727714BE33E038C6C55C89D09EA0E /* Pods-BobCamAgent.modulemap */,
+				48F8FCD73559F4CF34EB925216AD8071 /* Pods-BobCamAgent-acknowledgements.markdown */,
+				5EA1BE122210945F46D077E0E67E1B47 /* Pods-BobCamAgent-acknowledgements.plist */,
+				E4C075C5D38DE0EAE994C3E3F34E725E /* Pods-BobCamAgent-dummy.m */,
+				162A67653BAAFAFE789E981D4DF3AAA5 /* Pods-BobCamAgent-Info.plist */,
+				0083FC5FEB19A953B03BB4FEE5CBB665 /* Pods-BobCamAgent-umbrella.h */,
+				F39535DE95B05F47D210C6F72D4A1FB8 /* Pods-BobCamAgent.debug.xcconfig */,
+				8CA595DE6162908D628E6EF48D71BC93 /* Pods-BobCamAgent.release.xcconfig */,
+			);
+			name = "Pods-BobCamAgent";
+			path = "Target Support Files/Pods-BobCamAgent";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				965877409E01FB3D85D85E90E6B30185 /* Pods */,
+				9AABF76581C0E9C45BFADA0635AFEF2C /* Products */,
+				7C219CBA203926AEE399C414C909C092 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4801F62A6B08CD9B5410329F1A18FDE /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D96179D43A67C5D5323B0682D32C133C /* SwiftLint */ = {
+			isa = PBXGroup;
+			children = (
+				7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */,
+			);
+			name = SwiftLint;
+			path = SwiftLint;
+			sourceTree = "<group>";
+		};
+		E4801F62A6B08CD9B5410329F1A18FDE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		81AF94609B8D4A1BAD7136718D4470CD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F5B97D18232DA583FE1044B83D8A2C8 /* Pods-BobCamAgent-BobCamAgentUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7D272536100535F950EBDE8AB7CF225 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A2B1E8DE0F4CBCC68666DE6D3F5C1AB /* Pods-BobCamAgentTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B854D4276FEE961194A8906B4EBC32EA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C675F9D58FF43666B42820A9AABD4CF /* Pods-BobCamAgent-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3E75593E58C9EAD8D5655557DAF797BA /* Pods-BobCamAgent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF6AA2456356729C2FDB8DAAE3B252E4 /* Build configuration list for PBXNativeTarget "Pods-BobCamAgent" */;
+			buildPhases = (
+				B854D4276FEE961194A8906B4EBC32EA /* Headers */,
+				7758659A74118B9C587A8ACF17622729 /* Sources */,
+				C493C462EB6E59A15787CFFB451CEFF7 /* Frameworks */,
+				CE6C7D233A583AAB97B87A9207DB6A90 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				864835D87CCD72ED238490968A4CAE87 /* PBXTargetDependency */,
+			);
+			name = "Pods-BobCamAgent";
+			productName = Pods_BobCamAgent;
+			productReference = B0DD548B76E89BD4BC14421B20360FA1 /* Pods-BobCamAgent */;
+			productType = "com.apple.product-type.framework";
+		};
+		4EB789B591B83F01C74C374D43B85810 /* Pods-BobCamAgentTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7BB0C1C65C3704030670C78CBB16E3EA /* Build configuration list for PBXNativeTarget "Pods-BobCamAgentTests" */;
+			buildPhases = (
+				B7D272536100535F950EBDE8AB7CF225 /* Headers */,
+				B9BD7E93CF4BBD3330EB52D24630E64A /* Sources */,
+				8A0A5782D47E2BFA3237C2E9BB39B694 /* Frameworks */,
+				7CF9D1647C53EA945EFB939EAD923EF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65AACF106663C1F752E1AE6CB8BF0338 /* PBXTargetDependency */,
+			);
+			name = "Pods-BobCamAgentTests";
+			productName = Pods_BobCamAgentTests;
+			productReference = 5A35DC4B093CE6801C0531DF95B1CBAD /* Pods-BobCamAgentTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		7621447AC9C32C5AAD13C506712973B2 /* Pods-BobCamAgent-BobCamAgentUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C1C8B66CC960E0FE388E4315F39A760 /* Build configuration list for PBXNativeTarget "Pods-BobCamAgent-BobCamAgentUITests" */;
+			buildPhases = (
+				81AF94609B8D4A1BAD7136718D4470CD /* Headers */,
+				833B2BF19FC2CF353257F5CE736889AD /* Sources */,
+				2CEA5D9D8D75D2EA5B2F25A3737B366E /* Frameworks */,
+				C1468E0B99B6DD80C6228828939633F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C94544D094D11F377FE0E33099267099 /* PBXTargetDependency */,
+			);
+			name = "Pods-BobCamAgent-BobCamAgentUITests";
+			productName = Pods_BobCamAgent_BobCamAgentUITests;
+			productReference = A16106BF5A79B2EE2ACC10013FCBAA32 /* Pods-BobCamAgent-BobCamAgentUITests */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9AABF76581C0E9C45BFADA0635AFEF2C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3E75593E58C9EAD8D5655557DAF797BA /* Pods-BobCamAgent */,
+				7621447AC9C32C5AAD13C506712973B2 /* Pods-BobCamAgent-BobCamAgentUITests */,
+				4EB789B591B83F01C74C374D43B85810 /* Pods-BobCamAgentTests */,
+				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CF9D1647C53EA945EFB939EAD923EF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1468E0B99B6DD80C6228828939633F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6C7D233A583AAB97B87A9207DB6A90 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7758659A74118B9C587A8ACF17622729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08F90DB21B582040AE54CB4571D4929 /* Pods-BobCamAgent-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		833B2BF19FC2CF353257F5CE736889AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECF0750FCE15E5ED9A9793F78C40C5A0 /* Pods-BobCamAgent-BobCamAgentUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9BD7E93CF4BBD3330EB52D24630E64A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB90C75D77B192E55CC5959B049D8C23 /* Pods-BobCamAgentTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65AACF106663C1F752E1AE6CB8BF0338 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-BobCamAgent";
+			target = 3E75593E58C9EAD8D5655557DAF797BA /* Pods-BobCamAgent */;
+			targetProxy = 5D1B4A73F83669BFB6678863602AC314 /* PBXContainerItemProxy */;
+		};
+		864835D87CCD72ED238490968A4CAE87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftLint;
+			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
+			targetProxy = 0880A775D409B9577504293F5673F536 /* PBXContainerItemProxy */;
+		};
+		C94544D094D11F377FE0E33099267099 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftLint;
+			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
+			targetProxy = 00FF874997FAC662F710B7138B155D67 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2D1C64AAEFF483EA5B42B002356979AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF3152AAA9BFCF00E1429784F43ADE46 /* Pods-BobCamAgentTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		59619FF05234376C3EAC921AE49A2A96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_BITCODE = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		727E9EFAE142DEFB93521A6BC6246E94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B83B8DBD1B7D12E2B15F5A4C68C9B718 /* Pods-BobCamAgentTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BobCamAgentTests/Pods-BobCamAgentTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		95083CB1DB89E9E2E80581D5FED41C76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8CA595DE6162908D628E6EF48D71BC93 /* Pods-BobCamAgent.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9553C89E183877A5CB2F3C6801BEC129 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		C3A2CD79AF7F47C3498A795FCAAAE956 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F39535DE95B05F47D210C6F72D4A1FB8 /* Pods-BobCamAgent.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BobCamAgent/Pods-BobCamAgent.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C6FBF57609FAD2D3D39907BBB069F498 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FA64BADBBB4D7039B67A3506785224D /* Pods-BobCamAgent-BobCamAgentUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D42E89482A9D2E1CC44A02CF082F8E99 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06751909041B2BD493313D509B0075E8 /* Pods-BobCamAgent-BobCamAgentUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BobCamAgent-BobCamAgentUITests/Pods-BobCamAgent-BobCamAgentUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D834AEAA334DEA04A1BF19DFA0DD207F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGNING_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGNING_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_BITCODE = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXPANDED_CODE_SIGN_IDENTITY = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0C1C8B66CC960E0FE388E4315F39A760 /* Build configuration list for PBXNativeTarget "Pods-BobCamAgent-BobCamAgentUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D42E89482A9D2E1CC44A02CF082F8E99 /* Debug */,
+				C6FBF57609FAD2D3D39907BBB069F498 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90D4D09BCB6A4660E43ACBE9ECB6FE9A /* Debug */,
+				9553C89E183877A5CB2F3C6801BEC129 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7BB0C1C65C3704030670C78CBB16E3EA /* Build configuration list for PBXNativeTarget "Pods-BobCamAgentTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				727E9EFAE142DEFB93521A6BC6246E94 /* Debug */,
+				2D1C64AAEFF483EA5B42B002356979AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE7B4FB01588B9E6DF09CB79FC7CE7BD /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59619FF05234376C3EAC921AE49A2A96 /* Debug */,
+				D834AEAA334DEA04A1BF19DFA0DD207F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF6AA2456356729C2FDB8DAAE3B252E4 /* Build configuration list for PBXNativeTarget "Pods-BobCamAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A2CD79AF7F47C3498A795FCAAAE956 /* Debug */,
+				95083CB1DB89E9E2E80581D5FED41C76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

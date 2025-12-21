@@ -1,0 +1,6 @@
+framework module Pods_BobCamAgent_BobCamAgentUITests {
+  umbrella header "Pods-BobCamAgent-BobCamAgentUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
