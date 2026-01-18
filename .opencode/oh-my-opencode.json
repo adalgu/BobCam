@@ -1,0 +1,105 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+
+  "agents": {
+    "Sisyphus": {
+      "model": "google/antigravity-claude-opus-4-5-thinking-high",
+      "temperature": 0.3,
+      "description": "Main orchestrator with extended thinking for complex iOS and algorithm tasks"
+    },
+    "oracle": {
+      "model": "openai/gpt-5.2",
+      "temperature": 0.1,
+      "description": "Architecture review and strategic reasoning for system design"
+    },
+    "librarian": {
+      "model": "google/antigravity-claude-sonnet-4-5",
+      "description": "Documentation lookup and codebase exploration for iOS and Python code"
+    },
+    "explore": {
+      "model": "google/antigravity-gemini-3-flash",
+      "description": "Fast codebase exploration and pattern matching"
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "google/antigravity-gemini-3-pro-high",
+      "temperature": 0.7,
+      "description": "SwiftUI and iOS interface development with creative design"
+    },
+    "document-writer": {
+      "model": "google/antigravity-gemini-3-flash",
+      "description": "Technical documentation and markdown writing"
+    },
+    "multimodal-looker": {
+      "model": "google/antigravity-gemini-3-flash",
+      "description": "Visual content analysis for UI mockups and diagrams"
+    }
+  },
+
+  "categories": {
+    "visual": {
+      "model": "google/antigravity-gemini-3-pro-high",
+      "temperature": 0.7,
+      "prompt_append": "Focus on SwiftUI, iOS design patterns, and user experience. Use Apple Human Interface Guidelines."
+    },
+    "business-logic": {
+      "model": "openai/gpt-5.2",
+      "temperature": 0.1,
+      "prompt_append": "Focus on backend logic, algorithm optimization, and computer vision implementation."
+    },
+    "ios-native": {
+      "model": "google/antigravity-claude-opus-4-5-thinking-medium",
+      "temperature": 0.2,
+      "prompt_append": "Focus on iOS native development with Swift, AVFoundation, Vision Framework, and Apple frameworks."
+    },
+    "python-ml": {
+      "model": "openai/gpt-5.2",
+      "temperature": 0.2,
+      "prompt_append": "Focus on Python development, OpenCV, MediaPipe, and computer vision algorithms."
+    }
+  },
+
+  "background_task": {
+    "defaultConcurrency": 5,
+    "providerConcurrency": {
+      "google": 10,
+      "anthropic": 3,
+      "openai": 5
+    },
+    "modelConcurrency": {
+      "google/antigravity-claude-opus-4-5-thinking-high": 2,
+      "google/antigravity-gemini-3-flash": 10,
+      "openai/gpt-5.2": 3
+    }
+  },
+
+  "sisyphus_agent": {
+    "disabled": false,
+    "default_builder_enabled": false,
+    "planner_enabled": true,
+    "replace_plan": true
+  },
+
+  "ralph_loop": {
+    "enabled": true,
+    "default_max_iterations": 100
+  },
+
+  "git_master": {
+    "commit_footer": true,
+    "include_co_authored_by": true
+  },
+
+  "disabled_hooks": [],
+
+  "disabled_mcps": [],
+
+  "disabled_agents": [],
+
+  "disabled_skills": [],
+
+  "experimental": {
+    "truncate_all_tool_outputs": false,
+    "aggressive_truncation": false,
+    "auto_resume": true
+  }
+}
