@@ -1,57 +1,90 @@
+#!/usr/bin/env ruby
 require 'xcodeproj'
 
-# 프로젝트 파일 경로
-project_path = 'BobCam-iOS/BobCamAgent/BobCamAgent.xcodeproj'
+project_path = 'BobCamAgent.xcodeproj'
 project = Xcodeproj::Project.open(project_path)
 
-# 파일을 추가할 메인 타겟
-target = project.targets.first
+target = project.targets.find { |t| t.name == 'BobCamAgent' }
 
-# 파일을 추가할 그룹 (프로젝트의 'BobCamAgent' 그룹)
-group = project.groups.find { |g| g.display_name == 'BobCamAgent' } || project.main_group.new_group('BobCamAgent')
+# Find main group
+main_group = project.main_group.find_subpath('BobCamAgent', true)
 
-# 기존 파일 참조 삭제 (템플릿 파일)
-group.files.find { |f| f.path.end_with?('BobCamAgentApp.swift') }&.remove_from_project
-group.files.find { |f| f.path.end_with?('ContentView.swift') }&.remove_from_project
+# Create new group structure
+def find_or_create_group(parent, name, path)
+  existing = parent.children.find { |c| c.is_a?(Xcodeproj::Project::Object::PBXGroup) && c.name == name }
+  return existing if existing
+  parent.new_group(name, path)
+end
 
-# 추가할 파일 및 폴더 목록
-files_to_add = Dir.glob("BobCam-iOS/BobCamAgent/BobCamAgent/*.swift")
-folders_to_add = ["BobCam-iOS/BobCamAgent/BobCamAgent/Monitoring", "BobCam-iOS/BobCamAgent/BobCamAgent/Utils"]
+app_group = find_or_create_group(main_group, 'App', 'App')
+views_group = find_or_create_group(main_group, 'Views', 'Views')
+components_group = find_or_create_group(views_group, 'Components', 'Components')
+services_group = find_or_create_group(main_group, 'Services', 'Services')
+protocols_group = find_or_create_group(services_group, 'Protocols', 'Protocols')
+models_group = find_or_create_group(main_group, 'Models', 'Models')
+utilities_group = find_or_create_group(main_group, 'Utilities', 'Utilities')
 
-# 파일 추가
-files_to_add.each do |file_path|
-  file_name = File.basename(file_path)
-  # 이미 존재하는지 확인
-  unless group.files.any? { |f| f.path == file_name }
+# Define files to add
+files = {
+  app_group => ['BobCamAgent/App/BobCamAgentApp.swift'],
+  views_group => [
+    'BobCamAgent/Views/MainView.swift',
+    'BobCamAgent/Views/SettingsView.swift',
+    'BobCamAgent/Views/StatisticsView.swift',
+    'BobCamAgent/Views/VideoSelectionView.swift'
+  ],
+  components_group => [
+    'BobCamAgent/Views/Components/NudgeOverlay.swift',
+    'BobCamAgent/Views/Components/ParentControlBar.swift',
+    'BobCamAgent/Views/Components/PraiseOverlay.swift',
+    'BobCamAgent/Views/Components/TouchBlockingView.swift',
+    'BobCamAgent/Views/Components/VideoPlayerView.swift',
+    'BobCamAgent/Views/Components/YouTubePlayerView.swift'
+  ],
+  services_group => [
+    'BobCamAgent/Services/CameraService.swift',
+    'BobCamAgent/Services/FeedbackService.swift',
+    'BobCamAgent/Services/StatisticsService.swift',
+    'BobCamAgent/Services/VideoService.swift',
+    'BobCamAgent/Services/VisionService.swift'
+  ],
+  protocols_group => [
+    'BobCamAgent/Services/Protocols/CameraServiceProtocol.swift',
+    'BobCamAgent/Services/Protocols/FeedbackServiceProtocol.swift',
+    'BobCamAgent/Services/Protocols/VideoServiceProtocol.swift',
+    'BobCamAgent/Services/Protocols/VisionServiceProtocol.swift'
+  ],
+  models_group => [
+    'BobCamAgent/Models/AppSettings.swift',
+    'BobCamAgent/Models/EatingState.swift',
+    'BobCamAgent/Models/FeedbackState.swift',
+    'BobCamAgent/Models/MealSession.swift'
+  ],
+  utilities_group => [
+    'BobCamAgent/Utilities/Constants.swift'
+  ]
+}
+
+# Add files to groups and target
+files.each do |group, file_paths|
+  file_paths.each do |file_path|
+    next unless File.exist?(file_path)
+    
+    file_name = File.basename(file_path)
+    
+    # Check if file already exists in group
+    existing = group.files.find { |f| f.path == file_name }
+    if existing
+      puts "Skipping existing: #{file_path}"
+      next
+    end
+    
     file_ref = group.new_file(file_path)
-    target.add_file_references([file_ref])
+    target.source_build_phase.add_file_reference(file_ref)
+    puts "Added: #{file_path}"
   end
 end
 
-# 폴더(그룹) 추가
-folders_to_add.each do |folder_path|
-    folder_name = File.basename(folder_path)
-    # 이미 존재하는지 확인
-    unless group.find_subpath(folder_name)
-        folder_group = group.new_group(folder_name, folder_path)
-        
-        # 폴더 내의 swift 파일들을 찾아서 프로젝트와 타겟에 추가
-        swift_files_in_folder = Dir.glob("#{folder_path}/**/*.swift")
-        swift_files_in_folder.each do |swift_file|
-            file_ref = folder_group.new_file(swift_file)
-            target.add_file_references([file_ref])
-        end
-    end
-end
-
-# Info.plist 추가
-info_plist_path = "BobCam-iOS/BobCamAgent/BobCamAgent/Info.plist"
-unless group.files.any? { |f| f.path == 'Info.plist' }
-    file_ref = group.new_file(info_plist_path)
-    # Info.plist는 빌드 타겟에 직접 추가하지 않고, 빌드 설정에서 경로를 지정합니다.
-    # 여기서는 파일 참조만 추가합니다.
-end
-
-
 project.save
-puts "Xcode project updated successfully."
+
+puts "\nProject updated successfully!"
